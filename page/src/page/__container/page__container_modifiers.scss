@@ -1,0 +1,46 @@
+// http://www.mademyday.de/css-height-equals-width-with-pure-css.html
+@mixin size-ratio($ratioW, $ratioH) {
+	position: relative;
+	width: 100%;
+
+	&:before{
+		content: "";
+		display: block;
+		padding-top: ($ratioH / $ratioW) * 100%;
+	}
+
+	> .page__container__content{
+		position:  absolute;
+		top: 0;
+		left: 0;
+		bottom: 0;
+		right: 0;
+	}
+}
+
+.page__container_scaling-width{
+	width: 100%;
+	@include size-ratio(16, 9);
+}
+
+.page__container_full-width{
+	width: 100%;
+	min-width: 650px;
+}
+
+.page__container_fixed-width{
+	width: 950px;
+}
+
+.page__container_ratio-16-9{
+	@include size-ratio(16, 9);
+}
+
+.page__container_ratio-3-2{
+	@include size-ratio(3, 2);
+}
+
+.page__container_ratio-4-3{
+	@include size-ratio(4, 3);
+}
+
