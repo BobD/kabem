@@ -30,7 +30,7 @@ module.exports = function(grunt) {
     copy: {
       html: {
         src: 'src/page/page.html',
-        dest: 'build/page.html'
+        dest: 'build/page/page.html'
       },
       css: {
         expand: true,
@@ -89,7 +89,7 @@ module.exports = function(grunt) {
       },
       sass: {
         files: ['src/page/**/**.scss'],
-        tasks: ['sass', 'build-pages']
+        tasks: ['sass', 'page']
       },
       css: {
          files: ['src/page/**/**.css'],
@@ -102,12 +102,12 @@ module.exports = function(grunt) {
 
   });
 
-  grunt.registerTask('build-pages', 'Creating HTML files for all possible modifiers', function() {
+  grunt.registerTask('page', 'Generate Page HTML for each BEM modifier', function() {
     var _ = require("underscore");
     var CSSOM = require('cssom');
     var CSSFile = grunt.file.read('build/css/page.css');
     var CSSTree = CSSOM.parse(CSSFile);
-    var dir = 'build/pages/';
+    var dir = 'build/page/modifiers/';
     var createPage = false;
     var tasks = [];
 
@@ -129,23 +129,13 @@ module.exports = function(grunt) {
       BEM = BEM.join('__');
       modifier = modifier[0];
 
-      var blockElements;
-
       // Only create pages with a single 'BEM' including a modifier
       createPage = (selector.indexOf(' ') === -1 ) && (modifier !== undefined);
 
       // Create pages for testing, and apply the relevant modifier classes
       if(createPage){ 
-
-        // BOB::20140414  - perhaps aggregate all the different page modifiers first
-        blockElements = BEM.split('__');
-
-        if(blockElements.length > 0){
-          // console.log('files', grunt.file.expand('build/pages/**/*.*'));
-        }
-
         grunt.config('dom_munger.' + selector + '.options', {suffix: {selector: '.' + BEM, attribute: 'class', value: ' ' + selector}});
-        grunt.config('dom_munger.' + selector + '.src', 'build/page.html');
+        grunt.config('dom_munger.' + selector + '.src', 'build/page/page.html');
         grunt.config('dom_munger.' + selector + '.dest', dir + selector + '.html');
         tasks.push('dom_munger:' + selector);
       }
@@ -155,11 +145,12 @@ module.exports = function(grunt) {
     grunt.task.run(tasks);
   });
 
+
   // https://www.npmjs.org/package/load-grunt-tasks
   require('load-grunt-tasks')(grunt);
 
   grunt.registerTask('prepare-css', ['copy:css', 'sass']);
-  grunt.registerTask('prepare-html', ['copy:html', 'build-pages']);
+  grunt.registerTask('prepare-html', ['copy:html', 'page']);
   grunt.registerTask('default', ['clean', 'prepare-css', 'prepare-html']);
 
 };
