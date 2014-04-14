@@ -29,12 +29,12 @@ module.exports = function(grunt) {
 
     copy: {
       html: {
-        src: 'src/page/page.html',
-        dest: 'build/page/page.html'
+        src: 'src/index.html',
+        dest: 'build/index.html'
       },
       css: {
         expand: true,
-        src: 'src/page/*.css',
+        src: 'src/*.css',
         dest: 'build/css/',
         flatten: true,
         filter: 'isFile'
@@ -46,7 +46,19 @@ module.exports = function(grunt) {
         options: {                      
           style: 'expanded'
         },
-        files: [{'./build/css/page.css': './src/page/page.scss'}]
+        files: [{'./build/css/index.css': './src/index.scss'}]
+      }
+    },
+
+    // http://nateeagle.com/2013/03/30/import-a-whole-directory-with-sass-using-grunt/
+    sass_directory_import: {
+      test: {
+        // Target-specific file lists and/or options go here.
+        files: {
+          // The file pattern to add @imports to.
+          // The name of the file is arbitrary - I like "all".
+          src: ['src/**/_all.scss']
+        }
       }
     },
 
@@ -73,10 +85,10 @@ module.exports = function(grunt) {
 
     uncss: {
       dist: {
-        src: 'build/pages/page.html',
-        dest: 'build/css/page.css',
+        src: 'build/index.html',
+        dest: 'build/css/index.css',
         options: {
-          stylesheets: ['css/page.css']
+          stylesheets: ['css/index.css']
           // report: 'min' // optional: include to report savings
         }
       }
@@ -84,15 +96,15 @@ module.exports = function(grunt) {
 
     watch: {
       html: {
-        files: ['src/page/page.html'],
+        files: ['src/index.html'],
         tasks: ['copy:html', 'sass', 'build-pages']
       },
       sass: {
-        files: ['src/page/**/**.scss'],
+        files: ['src/**/**.scss'],
         tasks: ['sass', 'page']
       },
       css: {
-         files: ['src/page/**/**.css'],
+         files: ['src/**/**.css'],
          tasks: ['copy:css']
       },
       options: {
@@ -105,9 +117,9 @@ module.exports = function(grunt) {
   grunt.registerTask('page', 'Generate Page HTML for each BEM modifier', function() {
     var _ = require("underscore");
     var CSSOM = require('cssom');
-    var CSSFile = grunt.file.read('build/css/page.css');
+    var CSSFile = grunt.file.read('build/css/index.css');
     var CSSTree = CSSOM.parse(CSSFile);
-    var dir = 'build/page/modifiers/';
+    var dir = 'build/modifiers/';
     var createPage = false;
     var tasks = [];
 
@@ -135,7 +147,7 @@ module.exports = function(grunt) {
       // Create pages for testing, and apply the relevant modifier classes
       if(createPage){ 
         grunt.config('dom_munger.' + selector + '.options', {suffix: {selector: '.' + BEM, attribute: 'class', value: ' ' + selector}});
-        grunt.config('dom_munger.' + selector + '.src', 'build/page/page.html');
+        grunt.config('dom_munger.' + selector + '.src', 'build/index.html');
         grunt.config('dom_munger.' + selector + '.dest', dir + selector + '.html');
         tasks.push('dom_munger:' + selector);
       }
