@@ -10,14 +10,8 @@
   text-align: right;
 }
 
-.page_align-justify {
-  text-align: justify;
-}
-
 .page__container {
-  min-width: 600px;
-  min-height: 10px;
-  background-color: green;
+  display: inline-block;
 }
 
 .page__container_scaling-width {
@@ -96,6 +90,30 @@
   left: 0;
   bottom: 0;
   right: 0;
+}
+
+.page__container__content {
+  margin: 0;
+}
+
+.page__background_cover {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-image: url("http://www.viewbook.com/workspace/uploads/media/images/home/chiyinsim_hd.jpg");
+  background-size: cover;
+}
+
+.page__background_center {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-image: url("http://www.viewbook.com/workspace/uploads/media/images/home/chiyinsim_hd.jpg");
+  background-position: center top;
 }
 
 html, body {

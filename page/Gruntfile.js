@@ -25,10 +25,19 @@ module.exports = function(grunt) {
       }
     },
 
+    clean: ['build'],
+
     copy: {
       html: {
         src: 'src/page/page.html',
-        dest: 'build/index.html'
+        dest: 'build/page.html'
+      },
+      css: {
+        expand: true,
+        src: 'src/page/*.css',
+        dest: 'build/css/',
+        flatten: true,
+        filter: 'isFile'
       }
     },
 
@@ -64,7 +73,7 @@ module.exports = function(grunt) {
 
     uncss: {
       dist: {
-        src: 'build/index.html',
+        src: 'build/pages/page.html',
         dest: 'build/css/page.css',
         options: {
           stylesheets: ['css/page.css']
@@ -82,6 +91,10 @@ module.exports = function(grunt) {
         files: ['src/page/**/**.scss'],
         tasks: ['sass', 'build-pages']
       },
+      css: {
+         files: ['src/page/**/**.css'],
+         tasks: ['copy:css']
+      },
       options: {
         livereload: true
       }
@@ -94,9 +107,13 @@ module.exports = function(grunt) {
     var CSSOM = require('cssom');
     var CSSFile = grunt.file.read('build/css/page.css');
     var CSSTree = CSSOM.parse(CSSFile);
-    var dir = 'build/modifiers/';
+    var dir = 'build/pages/';
+    var createPage = false;
+    var tasks = [];
 
-    grunt.file.delete(dir);
+    if(grunt.file.isDir(dir)){
+      grunt.file.delete(dir);
+    }    
 
     _.each(CSSTree.cssRules, function(rule){
       var selector = rule.selectorText;
@@ -106,29 +123,43 @@ module.exports = function(grunt) {
       }
 
       // Split the seletor in their BEM elements.. nasty, but the regex is even more frightful..
-      var selectorSansModifier = selector.split('__');
-      var modifier = selectorSansModifier.pop().split('_');
-      selectorSansModifier.push(modifier.shift());
-      selectorSansModifier = selectorSansModifier.join('__');
+      var BEM = selector.split('__');
+      var modifier = BEM.pop().split('_');
+      BEM.push(modifier.shift());
+      BEM = BEM.join('__');
       modifier = modifier[0];
 
-      // Create matching HTML file for testing, and apply the relevant modifier classes
-      if(modifier !== undefined){ 
-        grunt.config('dom_munger.' + selector + '.options', {suffix: {selector: '.' + selectorSansModifier, attribute: 'class', value: ' ' + selector}});
-        grunt.config('dom_munger.' + selector + '.src', 'build/index.html');
-        grunt.config('dom_munger.' + selector + '.dest', dir + selector + '/index.html');
-        grunt.task.run('dom_munger:' + selector);
+      var blockElements;
+
+      // Only create pages with a single 'BEM' including a modifier
+      createPage = (selector.indexOf(' ') === -1 ) && (modifier !== undefined);
+
+      // Create pages for testing, and apply the relevant modifier classes
+      if(createPage){ 
+
+        // BOB::20140414  - perhaps aggregate all the different page modifiers first
+        blockElements = BEM.split('__');
+
+        if(blockElements.length > 0){
+          // console.log('files', grunt.file.expand('build/pages/**/*.*'));
+        }
+
+        grunt.config('dom_munger.' + selector + '.options', {suffix: {selector: '.' + BEM, attribute: 'class', value: ' ' + selector}});
+        grunt.config('dom_munger.' + selector + '.src', 'build/page.html');
+        grunt.config('dom_munger.' + selector + '.dest', dir + selector + '.html');
+        tasks.push('dom_munger:' + selector);
       }
 
     });
 
+    grunt.task.run(tasks);
   });
 
   // https://www.npmjs.org/package/load-grunt-tasks
-  // Loads all tasks straight from the package.json. Make sure all needed ones are installed locally instead of globally
   require('load-grunt-tasks')(grunt);
 
-  // Default task.
-  grunt.registerTask('default', []);
+  grunt.registerTask('prepare-css', ['copy:css', 'sass']);
+  grunt.registerTask('prepare-html', ['copy:html', 'build-pages']);
+  grunt.registerTask('default', ['clean', 'prepare-css', 'prepare-html']);
 
 };
