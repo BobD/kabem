@@ -105,7 +105,7 @@ module.exports = function(grunt) {
       },
       sass: {
         files: ['src/**/**.scss'],
-        tasks: ['sass', 'build-bem-pages']
+        tasks: ['import-all-sass', 'sass', 'build-bem-pages']
       },
       css: {
          files: ['src/**/**.css'],
@@ -117,6 +117,33 @@ module.exports = function(grunt) {
     }
 
   });
+
+
+  // Simplified version of https://www.npmjs.org/package/grunt-sass-directory-import
+  grunt.registerTask('import-all-sass', 'Generates a _all.scss file with all sass files imported', function() {
+    var _ = require("underscore");
+    var dir = 'src';
+    var filepath = 'src/_all.scss';
+    var filesToInclude = grunt.file.expand({cwd: dir}, ['**/_*.scss', '!_all.scss']);
+    var imports = ['// Auto generated, see grunt "import-all-sass task" '], segments, file, importFile;
+
+    _.each(filesToInclude, function(path){
+      segments = path.split('/');
+      file = segments.pop();
+
+      if(file.charAt(0) == '_'){
+        file = file.substring(1);
+      }
+
+      file = file.replace('.scss', '');
+      segments.push(file);
+      importFile = segments.join('/');
+      imports.push('@import "' + importFile + '";');
+    });
+
+    grunt.file.write(filepath, imports.join('\n'));
+  });
+
 
   grunt.registerTask('build-bem-pages', 'Generate HTML pages for each BEM modifier', function() {
     var _ = require("underscore");
@@ -166,7 +193,7 @@ module.exports = function(grunt) {
   // https://www.npmjs.org/package/load-grunt-tasks
   require('load-grunt-tasks')(grunt);
 
-  grunt.registerTask('prepare-css', ['copy:css', 'sass_directory_import', 'sass']);
+  grunt.registerTask('prepare-css', ['copy:css', 'import-all-sass', 'sass']);
   grunt.registerTask('prepare-html', ['copy:html', 'build-bem-pages']);
   grunt.registerTask('default', ['clean', 'prepare-css', 'prepare-html']);
 
