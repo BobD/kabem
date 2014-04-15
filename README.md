@@ -16,7 +16,7 @@ BEM is no golden egg approach of course. It's long classnames can bloat your HTM
 
 <h2>Why kaBEM?</h2>
 
-Using a single HTML file with meaningful kaBEM classes it can scaffold all the needed SASS files inside a nice 'BEM' folder structure. It also generates HTML files for all the BEM modifiers in your CSS.
+Using a single HTML file with meaningful kaBEM classes it can scaffold all the needed SASS files inside a nice 'BEM' folder structure. It also generates HTML files for all the BEM modifiers in your CSS for easy testing. And of course it (will) include all the relevant grunt.js niceties like running a local server with livereload and HTML/CSS validation and cleaning.
 
 
 <h2>kaBEM naming conventions</h2>
