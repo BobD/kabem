@@ -13,7 +13,6 @@ module.exports = function(grunt) {
       '<%= pkg.homepage ? "* " + pkg.homepage + "\\n" : "" %>' +
       '* Copyright (c) <%= grunt.template.today("yyyy") %> <%= pkg.author.name %>;' +
       ' Licensed <%= _.pluck(pkg.licenses, "type").join(", ") %> */\n',
-    // Task configuration.
 
     connect: {
       server: {
@@ -38,6 +37,15 @@ module.exports = function(grunt) {
         dest: 'build/css/',
         flatten: true,
         filter: 'isFile'
+      }
+    },
+
+    dom_munger: {
+      index: {
+        options: {
+          append: {selector: 'head', html: '<link rel="stylesheet" href="/css/debug.css">'}
+        },
+        src: 'build/index.html'
       }
     },
 
@@ -84,8 +92,8 @@ module.exports = function(grunt) {
         src: 'build/index.html',
         dest: 'build/css/index.css',
         options: {
-          stylesheets: ['css/index.css']
-          // report: 'min' // optional: include to report savings
+          stylesheets: ['css/index.css'],
+          report: 'min' 
         }
       }
     },
@@ -93,11 +101,11 @@ module.exports = function(grunt) {
     watch: {
       html: {
         files: ['src/index.html'],
-        tasks: ['copy:html', 'sass', 'build-pages']
+        tasks: ['copy:html', 'dom_munger:index', 'sass', 'build-bem-pages']
       },
       sass: {
         files: ['src/**/**.scss'],
-        tasks: ['sass', 'page']
+        tasks: ['sass', 'build-bem-pages']
       },
       css: {
          files: ['src/**/**.css'],
@@ -110,7 +118,7 @@ module.exports = function(grunt) {
 
   });
 
-  grunt.registerTask('page', 'Generate Page HTML for each BEM modifier', function() {
+  grunt.registerTask('build-bem-pages', 'Generate HTML pages for each BEM modifier', function() {
     var _ = require("underscore");
     var CSSOM = require('cssom');
     var CSSFile = grunt.file.read('build/css/index.css');
@@ -142,6 +150,7 @@ module.exports = function(grunt) {
 
       // Create pages for testing, and apply the relevant modifier classes
       if(createPage){ 
+        grunt.config('dom_munger.' + selector + '.options', {append: {selector: 'head', html: '<link rel="stylesheet" href="/css/debug.css">'}});
         grunt.config('dom_munger.' + selector + '.options', {suffix: {selector: '.' + BEM, attribute: 'class', value: ' ' + selector}});
         grunt.config('dom_munger.' + selector + '.src', 'build/index.html');
         grunt.config('dom_munger.' + selector + '.dest', dir + selector + '.html');
@@ -158,7 +167,7 @@ module.exports = function(grunt) {
   require('load-grunt-tasks')(grunt);
 
   grunt.registerTask('prepare-css', ['copy:css', 'sass_directory_import', 'sass']);
-  grunt.registerTask('prepare-html', ['copy:html', 'page']);
+  grunt.registerTask('prepare-html', ['copy:html', 'build-bem-pages']);
   grunt.registerTask('default', ['clean', 'prepare-css', 'prepare-html']);
 
 };
