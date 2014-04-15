@@ -50,14 +50,10 @@ module.exports = function(grunt) {
       }
     },
 
-    // http://nateeagle.com/2013/03/30/import-a-whole-directory-with-sass-using-grunt/
     sass_directory_import: {
-      test: {
-        // Target-specific file lists and/or options go here.
+      index: {
         files: {
-          // The file pattern to add @imports to.
-          // The name of the file is arbitrary - I like "all".
-          src: ['src/**/_all.scss']
+          src: ['src/_all.scss']
         }
       }
     },
@@ -161,7 +157,7 @@ module.exports = function(grunt) {
   // https://www.npmjs.org/package/load-grunt-tasks
   require('load-grunt-tasks')(grunt);
 
-  grunt.registerTask('prepare-css', ['copy:css', 'sass']);
+  grunt.registerTask('prepare-css', ['copy:css', 'sass_directory_import', 'sass']);
   grunt.registerTask('prepare-html', ['copy:html', 'page']);
   grunt.registerTask('default', ['clean', 'prepare-css', 'prepare-html']);
 
