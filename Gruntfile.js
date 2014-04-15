@@ -24,7 +24,7 @@ module.exports = function(grunt) {
       }
     },
 
-    clean: ['build', 'src/sass'],
+    clean: ['build', 'src/_all.scss', 'src/sass'],
 
     copy: {
       html: {
@@ -146,7 +146,7 @@ module.exports = function(grunt) {
 
     _.each(BEList, function(be){
       beSplit = be.split('__');
-      dirPath = dir + beSplit.join('/');
+      dirPath = dir + 'sass/' + beSplit.join('/');
       bePath = dirPath + '/_' + be + '.scss';
       mPath = dirPath + '/_' + be + '_modifiers.scss';
 
