@@ -36,7 +36,8 @@ So this is what a kaBEM class can look like: '__page__container_your-name'
 <ol>
   <li><a href="http://nodejs.org/">install node.js</a></li>
   <li><a href="http://gruntjs.com/getting-started">install grunt.js</a></li>
-  <li>Take a look at the index.html in src folder, notice the example kaBEM classes, and hit 'grunt'</li>
+  <li>Run 'npm install'</li>
+  <li>Take a look at the index.html in src folder, notice the example kaBEM classes, and run 'grunt'</li>
 </ol>
 
 <h2>TODO</h2>
