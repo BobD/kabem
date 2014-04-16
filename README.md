@@ -12,7 +12,15 @@ BEM stands for Block Element Modifier and was originally thought up by the peopl
 <li>See a BEM classname and know which purpose it has</li>
 </ul>
 
-BEM is no golden egg approach of course. It's long classnames can bloat your HTML, besides looking slightly ugly to a developers eye ;). And I personally very much like the Cascading nature of C(ascading)SS. So in that respect the single classname approach of BEM seems a bit like a cheap way out. But luckily when can use both together using kaBEM.
+BEM is no golden highway to utter development bliss of course. It's (long) classnames help in understanding your CSS, but it will also bloat your HTML a bit. It's single classname approach can prevent CSS specifity hell and helps with an OOCSS approach, but also ignores the useful cascading nature of C(cascading)SS. Luckily (ka)BEM is pretty flexible and does not prevent you from using it in the way you want.
+
+For some more BEM reading:
+
+<ul>
+<li><a href="http://bem.info/method/">BEM Methodology</a></li>
+<li><a href="http://www.slideshare.net/MaxShirshin/bem-dm">BEM it!, BEM Methodology for small companies with high expectations</a></li>
+<li><a href="http://csswizardry.com/2013/01/mindbemding-getting-your-head-round-bem-syntax/">MindBEMding – getting your head ’round BEM syntax</a></li>
+</ul>
 
 <h2>Why kaBEM?</h2>
 
