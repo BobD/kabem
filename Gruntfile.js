@@ -26,18 +26,18 @@ module.exports = function(grunt) {
 
     clean: {
       build: ['build'],
-      source: ['src/_all.scss', 'src/sass']
+      source: ['.sass-cache', 'src/_all.scss', 'src/sass']
     },
 
     copy: {
       html: {
         src: 'src/index.html',
-        dest: 'build/index.html'
+        dest: 'build/live/index.html'
       },
       css: {
         expand: true,
         src: 'src/*.css',
-        dest: 'build/css/',
+        dest: 'build/live/css/',
         flatten: true,
         filter: 'isFile'
       }
@@ -48,7 +48,7 @@ module.exports = function(grunt) {
         options: {
           append: {selector: 'head', html: '<link rel="stylesheet" href="/css/debug.css">'}
         },
-        src: 'build/index.html'
+        src: 'build/live/index.html'
       }
     },
 
@@ -57,7 +57,7 @@ module.exports = function(grunt) {
         options: {                      
           style: 'expanded'
         },
-        files: [{'./build/css/index.css': './src/index.scss'}]
+        files: [{'./build/live/css/index.css': './src/index.scss'}]
       }
     },
 
@@ -92,8 +92,8 @@ module.exports = function(grunt) {
 
     uncss: {
       dist: {
-        src: 'build/index.html',
-        dest: 'build/css/index.css',
+        src: 'build/live/index.html',
+        dest: 'build/live/css/index.css',
         options: {
           stylesheets: ['css/index.css'],
           report: 'min' 
@@ -104,7 +104,7 @@ module.exports = function(grunt) {
     watch: {
       html: {
         files: ['src/index.html'],
-        tasks: ['clean:build', 'copy:html', 'dom_munger:index', 'sass', 'scaffold-html']
+        tasks: ['html']
       },
       sass: {
         files: ['src/**/**.scss'],
@@ -130,7 +130,7 @@ module.exports = function(grunt) {
     var html = grunt.file.read(file);
     var doc = jsdom(html).parentWindow.document;
     var bemClasses = doc.querySelectorAll('body[class^="__"], body *[class^="__"]');
-    var classList, BEList = [], beSplit, dirPath;
+    var classList, BEList = [], beSplit, dirPath, bePath, mPath;
 
     // parse the BEM classes
     _.each(bemClasses, function(el){
@@ -150,14 +150,22 @@ module.exports = function(grunt) {
 
     _.each(BEList, function(be){
       beSplit = be.split('__');
-      dirPath = dir + 'sass/' + beSplit.join('/');
+      dirPath = dir + 'sass' + beSplit.join('/');
+      bePath = dirPath + '/' + be + '.scss';
+      mPath = dirPath + '/' + be + '_modifiers.scss';
 
       if(!grunt.file.isDir(dirPath)){
         grunt.file.mkdir(dirPath);
       }
 
-      grunt.file.write(dirPath + '/_' + be + '.scss', '.' + be + '{\n}');
-      grunt.file.write(dirPath + '/_' + be + '_modifiers.scss', '.' + be + '_modifier-name{\n}');
+      if(!grunt.file.exists(bePath)){
+        grunt.file.write(bePath, '.' + be + '{\n}');
+      }
+
+      if(!grunt.file.exists(mPath)){
+        grunt.file.write(mPath, '.' + be + '_modifier-name{\n}');
+      }
+
     });
 
   });
@@ -192,11 +200,11 @@ module.exports = function(grunt) {
   grunt.registerTask('scaffold-html', 'Generate HTML pages for each BEM modifier', function() {
     var _ = require("underscore");
     var CSSOM = require('cssom');
-    var CSSFile = grunt.file.read('build/css/index.css');
+    var CSSFile = grunt.file.read('build/live/css/index.css');
     var CSSTree = CSSOM.parse(CSSFile);
-    var dir = 'build/modifiers/';
+    var dir = 'build/testing/';
     var createPage = false;
-    var defaultModifiers = [];
+    var defaultModifiers = ['__page_align_right', '__page__container_fixed-width'];
     var tasks = [], bem;
 
     if(grunt.file.isDir(dir)){
@@ -236,7 +244,7 @@ module.exports = function(grunt) {
           append: {selector: 'head', html: '<link rel="stylesheet" href="/css/debug.css">'}, 
           suffix: suffix
         });
-        grunt.config('dom_munger.a' + selector + '.src', 'build/index.html');
+        grunt.config('dom_munger.a' + selector + '.src', 'build/live/index.html');
         grunt.config('dom_munger.a' + selector + '.dest', dir + selector + '.html');
         tasks.push('dom_munger:a' + selector);
       }
@@ -261,9 +269,27 @@ module.exports = function(grunt) {
   // https://www.npmjs.org/package/load-grunt-tasks
   require('load-grunt-tasks')(grunt);
 
-  grunt.registerTask('scaffold', ['scaffold-sass']);
-  grunt.registerTask('prepare-css', ['copy:css', 'import-all-sass', 'sass']);
-  grunt.registerTask('prepare-html', ['copy:html', 'sass', 'scaffold-html']);
-  grunt.registerTask('default', ['clean', 'scaffold-sass', 'prepare-css', 'prepare-html']);
+  // TASK FLOW INIT
+  // 1. clean:build
+  // 2. copy
+  // 3. import-all-sass
+  // 4. sass
+  // 5. scaffold-html
+
+  // TASK FLOW MODIFY HTML
+  // 1. copy:html
+  // 2. scaffold-sass
+  // 3. import-all-sass
+  // 4. sass
+  // 5. scaffold-html
+
+  // TASK FLOW MODIFY CSS
+  // 1. copy:css
+  // 2. sass
+  // 3. scaffold-html
+
+  grunt.registerTask('html', ['copy:html', 'scaffold-sass', 'import-all-sass', 'sass', 'scaffold-html']);
+  grunt.registerTask('css', ['copy:css', 'sass', 'scaffold-html']);
+  grunt.registerTask('default', ['clean:build', 'copy', 'import-all-sass', 'sass', 'scaffold-html']);
 
 };
