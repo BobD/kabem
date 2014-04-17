@@ -196,6 +196,7 @@ module.exports = function(grunt) {
     var CSSTree = CSSOM.parse(CSSFile);
     var dir = 'build/modifiers/';
     var createPage = false;
+    var defaultModifiers = [];
     var tasks = [], bem;
 
     if(grunt.file.isDir(dir)){
@@ -204,6 +205,8 @@ module.exports = function(grunt) {
 
     _.each(CSSTree.cssRules, function(rule){
       var selector = rule.selectorText;
+      var suffix = [];
+      var beParts;
 
       if(selector.indexOf('.') == 0){
         selector = selector.substring(1);
@@ -211,13 +214,28 @@ module.exports = function(grunt) {
 
       bem = splitBEM(selector);
 
+      beParts = bem.be.split('__').length;
+
       // Only create pages with a single 'BEM' including a modifier
       createPage = (selector.indexOf(' ') === -1 ) && (bem.m !== undefined);
 
       // Create pages for testing, and apply the relevant modifier classes
       if(createPage){ 
-        grunt.config('dom_munger.a' + selector + '.options', {append: {selector: 'head', html: '<link rel="stylesheet" href="/css/debug.css">'}});
-        grunt.config('dom_munger.a' + selector + '.options', {suffix: {selector: '.' + bem.be, attribute: 'class', value: ' ' + selector}});
+        suffix.push({selector: '.' + bem.be, attribute: 'class', value: ' ' + selector});
+
+        _.each(defaultModifiers, function(sel){
+          var defaultBem = splitBEM(sel);
+          // Only apply the default if they are concerned with a parent of the current bem
+          if(defaultBem.be.split('__').length < beParts){
+            suffix.push({selector: '.' + defaultBem.be, attribute: 'class', value: ' ' + sel});
+          }
+
+        });
+
+        grunt.config('dom_munger.a' + selector + '.options', {
+          append: {selector: 'head', html: '<link rel="stylesheet" href="/css/debug.css">'}, 
+          suffix: suffix
+        });
         grunt.config('dom_munger.a' + selector + '.src', 'build/index.html');
         grunt.config('dom_munger.a' + selector + '.dest', dir + selector + '.html');
         tasks.push('dom_munger:a' + selector);
