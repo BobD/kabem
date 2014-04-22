@@ -150,7 +150,7 @@ module.exports = function(grunt) {
 
     _.each(BEList, function(be){
       beSplit = be.split('__');
-      dirPath = dir + 'sass' + beSplit.join('/');
+      dirPath = dir + 'sass' + beSplit.join('/__');
       bePath = dirPath + '/' + be + '.scss';
       mPath = dirPath + '/' + be + '_modifiers.scss';
 
