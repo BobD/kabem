@@ -269,27 +269,9 @@ module.exports = function(grunt) {
   // https://www.npmjs.org/package/load-grunt-tasks
   require('load-grunt-tasks')(grunt);
 
-  // TASK FLOW INIT
-  // 1. clean:build
-  // 2. copy
-  // 3. import-all-sass
-  // 4. sass
-  // 5. scaffold-html
-
-  // TASK FLOW MODIFY HTML
-  // 1. copy:html
-  // 2. scaffold-sass
-  // 3. import-all-sass
-  // 4. sass
-  // 5. scaffold-html
-
-  // TASK FLOW MODIFY CSS
-  // 1. copy:css
-  // 2. sass
-  // 3. scaffold-html
-
+  // BOB::TODO::20140422, the default task should re-use the html/css tasks
   grunt.registerTask('html', ['copy:html', 'scaffold-sass', 'import-all-sass', 'sass', 'scaffold-html']);
   grunt.registerTask('css', ['copy:css', 'sass', 'scaffold-html']);
-  grunt.registerTask('default', ['clean:build', 'copy', 'import-all-sass', 'sass', 'scaffold-html']);
+  grunt.registerTask('default', ['clean:build', 'copy', 'scaffold-sass', 'import-all-sass', 'sass', 'scaffold-html']);
 
 };
