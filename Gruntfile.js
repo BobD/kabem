@@ -125,14 +125,15 @@ module.exports = function(grunt) {
   grunt.registerTask('scaffold-sass', 'Generates folders for all sass files based on BEM classnames in index.html', function() {
     var _ = require("underscore");
     var jsdom = require('jsdom').jsdom;
-    var dir = 'src/';
-    var file = dir + 'index.html';
-    var html = grunt.file.read(file);
+    var cwd = 'src/';
+    var dir = cwd + 'sass/'
+    var index = cwd + 'index.html';
+    var html = grunt.file.read(index);
     var doc = jsdom(html).parentWindow.document;
     var bemClasses = doc.querySelectorAll('body[class^="__"], body *[class^="__"]');
     var classList, BEList = [], beSplit, dirPath, bePath, mPath;
 
-    // parse the BEM classes
+    // collect the BEM classes
     _.each(bemClasses, function(el){
       classList = el.getAttribute('class').split(' ');
 
@@ -148,9 +149,10 @@ module.exports = function(grunt) {
 
     BEList = _.uniq(BEList);
 
+    // generate sass folders
     _.each(BEList, function(be){
       beSplit = be.split('__');
-      dirPath = dir + 'sass' + beSplit.join('/__');
+      dirPath = dir + beSplit.join('/__');
       bePath = dirPath + '/' + be + '.scss';
       mPath = dirPath + '/' + be + '_modifiers.scss';
 
@@ -167,6 +169,10 @@ module.exports = function(grunt) {
       }
 
     });
+
+    // clean up unused sass folders
+    var dirs = grunt.file.expand({cwd: dir}, ['**/**']);
+    console.log(dirs);    
 
   });
 
