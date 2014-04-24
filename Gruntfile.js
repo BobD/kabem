@@ -121,6 +121,22 @@ module.exports = function(grunt) {
       options: {
         livereload: true
       }
+    },
+
+    prompt: {
+      clear_sass_scaffold: {
+        options: {
+          questions: [{
+              config: 'blah',
+              type: 'confirm',
+              message: 'This will remove your SASS ?',
+              then: function(){
+                console.log('then', arguments);
+              }
+            }
+          ]
+        }
+      }
     }
 
   });
@@ -197,6 +213,7 @@ module.exports = function(grunt) {
     _.each(dirs, function(path){
       dirName = path.split('/').pop();
       if(!doc.querySelector('.' + dirName)){
+        // grunt.task.run('prompt:clear_sass_scaffold');
         grunt.file.delete(dir + '/'+ path);
       }
     });  

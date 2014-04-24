@@ -21,6 +21,7 @@
     "grunt-execute": "^0.1.5",
     "grunt-newer": "^0.7.0",
     "grunt-notify": "^0.2.20",
+    "grunt-prompt": "^1.1.0",
     "grunt-shell": "^0.6.4",
     "grunt-uncss": "^0.3.3",
     "jsdom": "^0.10.5",
