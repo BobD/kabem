@@ -15,10 +15,17 @@ module.exports = function(grunt) {
       ' Licensed <%= _.pluck(pkg.licenses, "type").join(", ") %> */\n',
 
     connect: {
-      server: {
+      live: {
         options: {
           port: 9001,
-          base: 'build',
+          base: 'build/live',
+          keepalive: true
+        }
+      },
+      testing: {
+        options: {
+          port: 9002,
+          base: 'build/_modifiers',
           keepalive: true
         }
       }
@@ -38,6 +45,13 @@ module.exports = function(grunt) {
         expand: true,
         src: 'src/*.css',
         dest: 'build/live/css/',
+        flatten: true,
+        filter: 'isFile'
+      },
+      modifiers_css: {
+        expand: true,
+        src: 'build/live/css/*.css',
+        dest: 'build/_modifiers/css/',
         flatten: true,
         filter: 'isFile'
       }
@@ -108,7 +122,7 @@ module.exports = function(grunt) {
       },
       sass: {
         files: ['src/**/**.scss'],
-        tasks: ['import-all-sass', 'sass', 'scaffold-html']
+        tasks: ['import-all-sass', 'sass', 'scaffold-modifiers', 'copy:modifiers_css']
       },
       css: {
          files: ['src/**/**.css'],
@@ -169,13 +183,12 @@ module.exports = function(grunt) {
 
     BEList = _.uniq(BEList);
 
-
     // generate sass folders
     _.each(BEList, function(be){
       beSplit = be.split('__');
       dirPath = dir + beSplit.join('/__');
-      bePath = dirPath + '/__defaults.scss';
-      mPath = dirPath + '/_modifiers.scss';
+      bePath = dirPath + '/' + be + '.scss';
+      mPath = dirPath + '/' + be + '_modifiers.scss';
 
       if(!grunt.file.isDir(dirPath)){
         grunt.file.mkdir(dirPath);
@@ -232,19 +245,20 @@ module.exports = function(grunt) {
     grunt.file.write(filepath, imports.join('\n'));
   });
 
-  grunt.registerTask('scaffold-html', 'Generate HTML pages for each BEM modifier', function() {
+  grunt.registerTask('scaffold-modifiers', 'Generate HTML pages for each BEM modifier', function() {
     var _ = require("underscore");
     var CSSOM = require('cssom');
     var CSSFile = grunt.file.read('build/live/css/index.css');
     var CSSTree = CSSOM.parse(CSSFile);
-    var dir = 'build/testing/';
+    var dir = 'build/_modifiers/';
     var createPage = false;
-    var defaultModifiers = ['__page_align_right', '__page__container_fixed-width'];
+    var defaultModifiers = [];
     var tasks = [], bem;
 
-    if(grunt.file.isDir(dir)){
-      grunt.file.delete(dir);
-    }    
+    var currentModifierFiles = grunt.file.expand({cwd: dir}, '*.html');  
+    _.each(currentModifierFiles, function(file){
+      grunt.file.delete(dir + file);
+    });
 
     _.each(CSSTree.cssRules, function(rule){
       var selector = rule.selectorText;
@@ -306,8 +320,8 @@ module.exports = function(grunt) {
 
   // BOB::TODO::20140422, the default task should re-use the html/css tasks
   grunt.registerTask('dev', ['clear', 'scaffold-sass']);
-  grunt.registerTask('html', ['copy:html', 'scaffold-sass', 'import-all-sass', 'sass', 'scaffold-html']);
-  grunt.registerTask('css', ['copy:css', 'sass', 'scaffold-html']);
-  grunt.registerTask('default', ['clean:build', 'copy', 'scaffold-sass', 'import-all-sass', 'sass', 'scaffold-html']);
+  grunt.registerTask('html', ['copy:html', 'scaffold-sass', 'import-all-sass', 'sass', 'scaffold-modifiers']);
+  grunt.registerTask('css', ['copy:css', 'sass', 'scaffold-modifiers', 'copy:modifiers_css']);
+  grunt.registerTask('default', ['clean:build', 'copy', 'scaffold-sass', 'import-all-sass', 'sass', 'scaffold-modifiers', 'copy:modifiers_css']);
 
 };
