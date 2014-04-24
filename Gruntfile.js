@@ -173,23 +173,9 @@ module.exports = function(grunt) {
     // generate sass folders
     _.each(BEList, function(be){
       beSplit = be.split('__');
-      beSplit.shift();
-
-      copy = beSplit.slice(0);
-      path = '/';
-
-      _.each(copy, function(val, index){
-        if(index > 0){
-        path += '__' + beSplit.slice(0, index).join('__') + '/';
-        }
-
-      });
-
-      path += be;
-
-      dirPath = dir + path; // BOB::20140224, use  beSplit.join('/') for single block/element directory names
-      bePath = dirPath + '/' + be + '.scss';
-      mPath = dirPath + '/' + be + '_modifiers.scss';
+      dirPath = dir + beSplit.join('/__');
+      bePath = dirPath + '/__defaults.scss';
+      mPath = dirPath + '/_modifiers.scss';
 
       if(!grunt.file.isDir(dirPath)){
         grunt.file.mkdir(dirPath);
@@ -211,7 +197,7 @@ module.exports = function(grunt) {
         dirName;
 
     _.each(dirs, function(path){
-      dirName = path.split('/').pop();
+      dirName = path.split('/').join('');
       if(!doc.querySelector('.' + dirName)){
         // grunt.task.run('prompt:clear_sass_scaffold');
         grunt.file.delete(dir + '/'+ path);
