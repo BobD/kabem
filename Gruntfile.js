@@ -153,7 +153,6 @@ module.exports = function(grunt) {
 
     BEList = _.uniq(BEList);
 
-    
 
     // generate sass folders
     _.each(BEList, function(be){
@@ -172,7 +171,7 @@ module.exports = function(grunt) {
 
       path += be;
 
-      dirPath = dir + path;
+      dirPath = dir + path; // BOB::20140224, use  beSplit.join('/') for single block/element directory names
       bePath = dirPath + '/' + be + '.scss';
       mPath = dirPath + '/' + be + '_modifiers.scss';
 
@@ -190,20 +189,20 @@ module.exports = function(grunt) {
 
     });
 
-    // clean up unused sass folders
-    // '!*.scss', 
-    // , globDebug:true
-    var dirs = grunt.file.expand({cwd: dir}, ['**/**', '!**/*.scss']);
+    // clean up sass folders which are not referenced through the HTML bem classes
+    // BOB::TODO::20140324, will remove everything.. also custom css work, need to rethink this
+    var dirs = grunt.file.expand({cwd: dir}, ['**/*', '!**/*.scss']),
+        dirName;
+
     _.each(dirs, function(path){
-      // console.log(path);
+      dirName = path.split('/').pop();
+      if(!doc.querySelector('.' + dirName)){
+        grunt.file.delete(dir + '/'+ path);
+      }
     });  
 
   });
 
-
-  function getParents(arr){
-    return arr.slice(0, arr.length - 1);
-  }
 
   // Simplified version of https://www.npmjs.org/package/grunt-sass-directory-import
   grunt.registerTask('import-all-sass', 'Generates a _all.scss file with all sass files imported', function() {
@@ -229,7 +228,6 @@ module.exports = function(grunt) {
 
     grunt.file.write(filepath, imports.join('\n'));
   });
-
 
   grunt.registerTask('scaffold-html', 'Generate HTML pages for each BEM modifier', function() {
     var _ = require("underscore");
