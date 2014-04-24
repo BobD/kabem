@@ -22,7 +22,7 @@ module.exports = function(grunt) {
           keepalive: true
         }
       },
-      testing: {
+      modifiers: {
         options: {
           port: 9002,
           base: 'build/_modifiers',
@@ -71,7 +71,10 @@ module.exports = function(grunt) {
         options: {                      
           style: 'expanded'
         },
-        files: [{'./build/live/css/index.css': './src/index.scss'}]
+        files: [
+          {'./build/live/css/index.css': './src/index.scss'},
+          {'./build/live/css/debug.css': './src/debug.scss'}
+        ]
       }
     },
 
@@ -170,18 +173,17 @@ module.exports = function(grunt) {
     // collect the BEM classes
     _.each(bemClasses, function(el){
       classList = el.getAttribute('class').split(' ');
-
        _.each(classList, function(c){
-       
         if(c.indexOf('__') == 0){
           BEM = splitBEM(c);
           BEList.push(BEM.be);
         }
- 
-       });
+      });
     });
 
     BEList = _.uniq(BEList);
+
+    var debugSASS = '';
 
     // generate sass folders
     _.each(BEList, function(be){
@@ -202,7 +204,12 @@ module.exports = function(grunt) {
         grunt.file.write(mPath, '.' + be + '_modifier-name{\n}');
       }
 
+      debugSASS += '.' + be + '{@include debug();}\n';
+
     });
+
+    // write some debuging css outlines
+    grunt.file.write(cwd + '_debug.scss', debugSASS);
 
     // clean up sass folders which are not referenced through the HTML bem classes
     // BOB::TODO::20140324, will remove everything.. also custom css work, need to rethink this
@@ -225,7 +232,7 @@ module.exports = function(grunt) {
     var _ = require("underscore");
     var dir = 'src';
     var filepath = 'src/_all.scss';
-    var filesToInclude = grunt.file.expand({cwd: dir}, ['**/_*.scss', '!_all.scss']);
+    var filesToInclude = grunt.file.expand({cwd: dir}, ['**/_*.scss', '!_all.scss', '!_debug.scss']);
     var imports = ['// Auto generated, see grunt "import-all-sass task" '], segments, file, importFile;
 
     _.each(filesToInclude, function(path){
@@ -244,6 +251,7 @@ module.exports = function(grunt) {
 
     grunt.file.write(filepath, imports.join('\n'));
   });
+
 
   grunt.registerTask('scaffold-modifiers', 'Generate HTML pages for each BEM modifier', function() {
     var _ = require("underscore");
@@ -274,7 +282,7 @@ module.exports = function(grunt) {
       beParts = bem.be.split('__').length;
 
       // Only create pages with a single 'BEM' including a modifier
-      createPage = (selector.indexOf(' ') === -1 ) && (bem.m !== undefined);
+      createPage = (selector.indexOf(' ') === -1) && (bem.m !== undefined);
 
       // Create pages for testing, and apply the relevant modifier classes
       if(createPage){ 
