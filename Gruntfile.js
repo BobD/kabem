@@ -114,6 +114,10 @@ module.exports = function(grunt) {
          files: ['src/**/**.css'],
          tasks: ['copy:css']
       },
+      grunt: {
+        files: ['Gruntfile.js'],
+        tasks: ['dev']
+      },
       options: {
         livereload: true
       }
@@ -126,7 +130,7 @@ module.exports = function(grunt) {
     var _ = require("underscore");
     var jsdom = require('jsdom').jsdom;
     var cwd = 'src/';
-    var dir = cwd + 'sass/'
+    var dir = cwd + 'sass'
     var index = cwd + 'index.html';
     var html = grunt.file.read(index);
     var doc = jsdom(html).parentWindow.document;
@@ -149,10 +153,26 @@ module.exports = function(grunt) {
 
     BEList = _.uniq(BEList);
 
+    
+
     // generate sass folders
     _.each(BEList, function(be){
       beSplit = be.split('__');
-      dirPath = dir + beSplit.join('/__');
+      beSplit.shift();
+
+      copy = beSplit.slice(0);
+      path = '/';
+
+      _.each(copy, function(val, index){
+        if(index > 0){
+        path += '__' + beSplit.slice(0, index).join('__') + '/';
+        }
+
+      });
+
+      path += be;
+
+      dirPath = dir + path;
       bePath = dirPath + '/' + be + '.scss';
       mPath = dirPath + '/' + be + '_modifiers.scss';
 
@@ -171,11 +191,19 @@ module.exports = function(grunt) {
     });
 
     // clean up unused sass folders
-    var dirs = grunt.file.expand({cwd: dir}, ['**/**']);
-    console.log(dirs);    
+    // '!*.scss', 
+    // , globDebug:true
+    var dirs = grunt.file.expand({cwd: dir}, ['**/**', '!**/*.scss']);
+    _.each(dirs, function(path){
+      // console.log(path);
+    });  
 
   });
 
+
+  function getParents(arr){
+    return arr.slice(0, arr.length - 1);
+  }
 
   // Simplified version of https://www.npmjs.org/package/grunt-sass-directory-import
   grunt.registerTask('import-all-sass', 'Generates a _all.scss file with all sass files imported', function() {
@@ -274,7 +302,9 @@ module.exports = function(grunt) {
   // https://www.npmjs.org/package/load-grunt-tasks
   require('load-grunt-tasks')(grunt);
 
+
   // BOB::TODO::20140422, the default task should re-use the html/css tasks
+  grunt.registerTask('dev', ['clear', 'scaffold-sass']);
   grunt.registerTask('html', ['copy:html', 'scaffold-sass', 'import-all-sass', 'sass', 'scaffold-html']);
   grunt.registerTask('css', ['copy:css', 'sass', 'scaffold-html']);
   grunt.registerTask('default', ['clean:build', 'copy', 'scaffold-sass', 'import-all-sass', 'sass', 'scaffold-html']);

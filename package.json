@@ -5,6 +5,7 @@
   "devDependencies": {
     "cssom": "^0.3.0",
     "grunt": "~0.4.2",
+    "grunt-clear": "^0.2.1",
     "grunt-concurrent": "^0.5.0",
     "grunt-contrib-clean": "^0.5.0",
     "grunt-contrib-concat": "~0.3.0",
@@ -20,6 +21,7 @@
     "grunt-execute": "^0.1.5",
     "grunt-newer": "^0.7.0",
     "grunt-notify": "^0.2.20",
+    "grunt-shell": "^0.6.4",
     "grunt-uncss": "^0.3.3",
     "jsdom": "^0.10.5",
     "load-grunt-tasks": "^0.4.0",
