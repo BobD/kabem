@@ -73,7 +73,7 @@ module.exports = function(grunt) {
         },
         files: [
           {'./build/live/css/index.css': './src/sass/index.scss'},
-          {'./build/live/css/debug.css': './src/sass/debug.scss'}
+          {'./build/_modifiers/css/debug.css': './src/sass/debug.scss'}
         ]
       }
     },
@@ -81,7 +81,7 @@ module.exports = function(grunt) {
     sass_directory_import: {
       index: {
         files: {
-          src: ['src/_all.scss']
+          src: ['src/sass/_all.scss']
         }
       }
     },
@@ -205,7 +205,6 @@ module.exports = function(grunt) {
       }
 
       debugSASS += '.' + be + '{@include debug();}\n';
-
     });
 
     // write some debuging css outlines
@@ -230,9 +229,9 @@ module.exports = function(grunt) {
   // Simplified version of https://www.npmjs.org/package/grunt-sass-directory-import
   grunt.registerTask('import-all-sass', 'Generates a _all.scss file with all sass files imported', function() {
     var _ = require("underscore");
-    var dir = 'src/';
-    var filepath = dir + 'sass/_all.scss';
-    var filesToInclude = grunt.file.expand({cwd: dir}, ['**/_*.scss', '!_all.scss', '!_debug.scss']);
+    var dir = 'src/sass/';
+    var filepath = dir + '_all.scss';
+    var filesToInclude = grunt.file.expand({cwd: dir}, ['**/_**.scss', '!_all.scss', '!partials/_debug.scss']);
     var imports = ['// Auto generated, see grunt "import-all-sass task" '], segments, file, importFile;
 
     _.each(filesToInclude, function(path){
@@ -307,6 +306,13 @@ module.exports = function(grunt) {
       }
 
     });
+
+    grunt.config('dom_munger.index' + '.options', {
+      append: {selector: 'head', html: '<link rel="stylesheet" href="/css/debug.css">'}
+    });
+    grunt.config('dom_munger.index.src', 'build/live/index.html');
+    grunt.config('dom_munger.index.dest', dir + 'index.html');
+    tasks.push('dom_munger:index');
 
     grunt.task.run(tasks);
   });
