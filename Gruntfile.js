@@ -33,7 +33,7 @@ module.exports = function(grunt) {
 
     clean: {
       build: ['build'],
-      source: ['.sass-cache', 'src/_all.scss', 'src/sass']
+      source: ['.sass-cache', 'src/sass/_all.scss', 'src/sass/partials/_debug.scss', 'src/sass/bem']
     },
 
     copy: {
@@ -72,8 +72,8 @@ module.exports = function(grunt) {
           style: 'expanded'
         },
         files: [
-          {'./build/live/css/index.css': './src/index.scss'},
-          {'./build/live/css/debug.css': './src/debug.scss'}
+          {'./build/live/css/index.css': './src/sass/index.scss'},
+          {'./build/live/css/debug.css': './src/sass/debug.scss'}
         ]
       }
     },
@@ -163,7 +163,7 @@ module.exports = function(grunt) {
     var _ = require("underscore");
     var jsdom = require('jsdom').jsdom;
     var cwd = 'src/';
-    var dir = cwd + 'sass'
+    var dir = cwd + 'sass/bem'
     var index = cwd + 'index.html';
     var html = grunt.file.read(index);
     var doc = jsdom(html).parentWindow.document;
@@ -209,7 +209,7 @@ module.exports = function(grunt) {
     });
 
     // write some debuging css outlines
-    grunt.file.write(cwd + '_debug.scss', debugSASS);
+    grunt.file.write(cwd + 'sass/partials/_debug.scss', debugSASS);
 
     // clean up sass folders which are not referenced through the HTML bem classes
     // BOB::TODO::20140324, will remove everything.. also custom css work, need to rethink this
@@ -230,8 +230,8 @@ module.exports = function(grunt) {
   // Simplified version of https://www.npmjs.org/package/grunt-sass-directory-import
   grunt.registerTask('import-all-sass', 'Generates a _all.scss file with all sass files imported', function() {
     var _ = require("underscore");
-    var dir = 'src';
-    var filepath = 'src/_all.scss';
+    var dir = 'src/';
+    var filepath = dir + 'sass/_all.scss';
     var filesToInclude = grunt.file.expand({cwd: dir}, ['**/_*.scss', '!_all.scss', '!_debug.scss']);
     var imports = ['// Auto generated, see grunt "import-all-sass task" '], segments, file, importFile;
 
