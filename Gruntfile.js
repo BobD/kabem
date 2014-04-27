@@ -72,7 +72,7 @@ module.exports = function(grunt) {
           style: 'expanded'
         },
         files: [
-          {'./build/live/css/index.css': './src/sass/index.scss'},
+          {'./build/live/css/index.css': './src/index.scss'},
           {'./build/_modifiers/css/debug.css': './src/sass/debug.scss'}
         ]
       }
@@ -231,7 +231,7 @@ module.exports = function(grunt) {
     var _ = require("underscore");
     var dir = 'src/sass/';
     var filepath = dir + '_all.scss';
-    var filesToInclude = grunt.file.expand({cwd: dir}, ['**/_**.scss', '!_all.scss', '!partials/_debug.scss']);
+    var filesToInclude = grunt.file.expand({cwd: dir}, ['**/*.scss', '!_all.scss', '!partials/_debug.scss']);
     var imports = ['// Auto generated, see grunt "import-all-sass task" '], segments, file, importFile;
 
     _.each(filesToInclude, function(path){
