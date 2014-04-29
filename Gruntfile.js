@@ -33,7 +33,8 @@ module.exports = function(grunt) {
 
     clean: {
       build: ['build'],
-      source: ['.sass-cache', 'src/sass/_all.scss', 'src/sass/partials/_debug.scss', 'src/sass/bem']
+      source: ['.sass-cache', 'src/sass/_all.scss', 'src/sass/partials/_debug.scss', 'src/sass/bem'],
+      backup: ['backup']
     },
 
     copy: {
@@ -59,7 +60,7 @@ module.exports = function(grunt) {
         cwd: 'src/',
         expand: true,
         src: 'sass/**',
-        dest: 'backup/ <%= grunt.template.today("yyyymmddhMMss") %>/'
+        dest: 'backup/ <%= grunt.template.today("yyyymmddhMM") %>/'
       }
     },
 
