@@ -16,7 +16,7 @@ $debug-index: 1;
 		background-color: nth($debug-colors, $debug-index);
 	}
 
-	$debug-index: ($debug-index + 1) % length($debug-colors);
+	$debug-index: (($debug-index + 1) % length($debug-colors)) + 1;
 }
 
 @import "partials/_debug";
