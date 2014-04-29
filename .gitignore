@@ -3,3 +3,4 @@ node_modules
 .sass-cache
 .DS_Store
 src/sass/_all.scss
+src/sass/partials/_debug.scss
