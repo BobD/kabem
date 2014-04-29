@@ -275,10 +275,19 @@ module.exports = function(grunt) {
     var CSSOM = require('cssom');
     var CSSFile = grunt.file.read('build/live/css/index.css');
     var CSSTree = CSSOM.parse(CSSFile);
+    var classes = [{selector: 'body', attribute: 'class', value: ' debug'}];
+    var context = grunt.option('context') || 'default';
+    var contextBEM = grunt.file.readJSON('src/config/bem-context.json')[context] || [];
     var dir = 'build/develop/';
-    var createPage = false;
-    var defaultModifiers = [];
-    var tasks = [], bem;
+    var createPage= false;
+    var tasks = [];
+    var bem;
+
+
+    _.each(contextBEM, function(sel){
+      var context = splitBEM(sel);
+      classes.push({selector: '.' + context.be, attribute: 'class', value: ' ' + sel});
+    });
 
     var currentModifierFiles = grunt.file.expand({cwd: dir}, '*.html');  
     _.each(currentModifierFiles, function(file){
@@ -287,7 +296,7 @@ module.exports = function(grunt) {
 
     _.each(CSSTree.cssRules, function(rule){
       var selector = rule.selectorText;
-      var suffix = [];
+      var bemClasses = [];
       var beParts;
 
       if(selector.indexOf('.') == 0){
@@ -295,28 +304,25 @@ module.exports = function(grunt) {
       }
 
       bem = splitBEM(selector);
-
       beParts = bem.be.split('__').length;
 
       // Only create pages with a single 'BEM' including a modifier
       createPage = (selector.indexOf(' ') === -1) && (bem.m !== undefined);
 
       // Create pages for testing, and apply the relevant modifier classes
-      if(createPage){ 
-        suffix.push({selector: '.' + bem.be, attribute: 'class', value: ' ' + selector});
+      if(createPage){
 
-        _.each(defaultModifiers, function(sel){
-          var defaultBem = splitBEM(sel);
-          // Only apply the default if they are concerned with a parent of the current bem
-          if(defaultBem.be.split('__').length < beParts){
-            suffix.push({selector: 'body', attribute: 'class', value: ' debug'}, {selector: '.' + defaultBem.be, attribute: 'class', value: ' ' + sel});
+        // Only apply the context bem class if they are to be applied with a parent of the current bem element
+        _.each(classes, function(suffix){
+          if(suffix.selector.split('__').length < beParts){
+            bemClasses.push(suffix);
           }
-
         });
 
+        bemClasses.push({selector: '.' + bem.be, attribute: 'class', value: ' ' + selector});
         grunt.config('dom_munger.a' + selector + '.options', {
           append: {selector: 'head', html: '<link rel="stylesheet" href="/css/debug.css">'}, 
-          suffix: suffix
+          suffix: bemClasses
         });
         grunt.config('dom_munger.a' + selector + '.src', 'build/live/index.html');
         grunt.config('dom_munger.a' + selector + '.dest', dir + selector + '.html');
@@ -327,7 +333,7 @@ module.exports = function(grunt) {
 
     grunt.config('dom_munger.index' + '.options', {
       append: {selector: 'head', html: '<link rel="stylesheet" href="/css/debug.css">'},
-      suffix: {selector: 'body', attribute: 'class', value: ' debug'}
+      suffix: classes
     });
     grunt.config('dom_munger.index.src', 'build/live/index.html');
     grunt.config('dom_munger.index.dest', dir + 'main.html');
