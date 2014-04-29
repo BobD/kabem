@@ -22,10 +22,10 @@ module.exports = function(grunt) {
           keepalive: true
         }
       },
-      modifiers: {
+      develop: {
         options: {
           port: 9002,
-          base: 'build/_modifiers',
+          base: 'build/develop',
           keepalive: true
         }
       }
@@ -49,10 +49,10 @@ module.exports = function(grunt) {
         flatten: true,
         filter: 'isFile'
       },
-      modifiers_css: {
+      develop_css: {
         expand: true,
         src: 'build/live/css/*.css',
-        dest: 'build/_modifiers/css/',
+        dest: 'build/develop/css/',
         flatten: true,
         filter: 'isFile'
       },
@@ -80,7 +80,7 @@ module.exports = function(grunt) {
         },
         files: [
           {'./build/live/css/index.css': './src/index.scss'},
-          {'./build/_modifiers/css/debug.css': './src/sass/custom/debug.scss'}
+          {'./build/develop/css/debug.css': './src/sass/custom/debug.scss'}
         ]
       }
     },
@@ -132,7 +132,7 @@ module.exports = function(grunt) {
       },
       sass: {
         files: ['src/**/**.scss'],
-        tasks: ['import-all-sass', 'sass', 'scaffold-modifiers', 'copy:modifiers_css']
+        tasks: ['import-all-sass', 'sass', 'scaffold-develop', 'copy:develop_css']
       },
       css: {
          files: ['src/**/**.css'],
@@ -270,12 +270,12 @@ module.exports = function(grunt) {
   }
 
 
-  grunt.registerTask('scaffold-modifiers', 'Generate HTML pages for each BEM modifier', function() {
+  grunt.registerTask('scaffold-develop', 'Generate HTML pages for each BEM modifier', function() {
     var _ = require("underscore");
     var CSSOM = require('cssom');
     var CSSFile = grunt.file.read('build/live/css/index.css');
     var CSSTree = CSSOM.parse(CSSFile);
-    var dir = 'build/_modifiers/';
+    var dir = 'build/develop/';
     var createPage = false;
     var defaultModifiers = [];
     var tasks = [], bem;
@@ -329,7 +329,7 @@ module.exports = function(grunt) {
       append: {selector: 'head', html: '<link rel="stylesheet" href="/css/debug.css">'}
     });
     grunt.config('dom_munger.index.src', 'build/live/index.html');
-    grunt.config('dom_munger.index.dest', dir + 'index.html');
+    grunt.config('dom_munger.index.dest', dir + 'main.html');
     tasks.push('dom_munger:index');
 
     grunt.task.run(tasks);
@@ -350,10 +350,10 @@ module.exports = function(grunt) {
 
 
   // BOB::TODO::20140422, the default task should re-use the html/css tasks
-  // grunt.registerTask('dev', ['clear', 'scaffold-sass']);
-  grunt.registerTask('html', ['copy:html', 'scaffold-sass', 'import-all-sass', 'sass', 'scaffold-modifiers']);
-  grunt.registerTask('css', ['copy:css', 'sass', 'scaffold-modifiers', 'copy:modifiers_css']);
+  grunt.registerTask('dev', ['clear', 'scaffold-sass']);
+  grunt.registerTask('html', ['copy:html', 'scaffold-sass', 'import-all-sass', 'sass', 'scaffold-develop']);
+  grunt.registerTask('css', ['copy:css', 'sass', 'scaffold-develop', 'copy:develop_css']);
   grunt.registerTask('reset', ['copy:backup', 'clean']);
-  grunt.registerTask('default', ['clean:build', 'copy', 'scaffold-sass', 'import-all-sass', 'sass', 'scaffold-modifiers', 'copy:modifiers_css']);
+  grunt.registerTask('default', ['clean:build', 'copy', 'scaffold-sass', 'import-all-sass', 'sass', 'scaffold-develop', 'copy:develop_css']);
 
 };
