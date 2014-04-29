@@ -33,7 +33,7 @@ module.exports = function(grunt) {
 
     clean: {
       build: ['build'],
-      source: ['.sass-cache', 'src/sass/_all.scss', 'src/sass/partials/_debug.scss', 'src/sass/bem'],
+      source: ['.sass-cache', 'src/sass/_all.scss', 'src/sass/partials/_debug.scss'],
       backup: ['backup']
     },
 
