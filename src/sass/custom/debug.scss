@@ -4,6 +4,7 @@ $debug-index: 1;
 
 @mixin debug($block_element){
 	outline: thin solid black;
+	position: relative;
 
 	&:before{
 		content: '#{$block_element}';

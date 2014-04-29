@@ -1,2 +1,2 @@
-.__block{@include debug(__block);}
-.__block__element{@include debug(__block__element);}
+body.debug .__block{@include debug(__block);}
+body.debug .__block__element{@include debug(__block__element);}

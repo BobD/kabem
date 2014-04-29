@@ -211,7 +211,7 @@ module.exports = function(grunt) {
         grunt.file.write(mPath, '.' + be + '_modifier-name{\n}');
       }
 
-      debugSASS += '.' + be + '{@include debug(' + be + ');}\n';
+      debugSASS += 'body.debug .' + be + '{@include debug(' + be + ');}\n';
     });
 
     // write some debuging css outlines
@@ -309,7 +309,7 @@ module.exports = function(grunt) {
           var defaultBem = splitBEM(sel);
           // Only apply the default if they are concerned with a parent of the current bem
           if(defaultBem.be.split('__').length < beParts){
-            suffix.push({selector: '.' + defaultBem.be, attribute: 'class', value: ' ' + sel});
+            suffix.push({selector: 'body', attribute: 'class', value: ' debug'}, {selector: '.' + defaultBem.be, attribute: 'class', value: ' ' + sel});
           }
 
         });
@@ -326,7 +326,8 @@ module.exports = function(grunt) {
     });
 
     grunt.config('dom_munger.index' + '.options', {
-      append: {selector: 'head', html: '<link rel="stylesheet" href="/css/debug.css">'}
+      append: {selector: 'head', html: '<link rel="stylesheet" href="/css/debug.css">'},
+      suffix: {selector: 'body', attribute: 'class', value: ' debug'}
     });
     grunt.config('dom_munger.index.src', 'build/live/index.html');
     grunt.config('dom_munger.index.dest', dir + 'main.html');
