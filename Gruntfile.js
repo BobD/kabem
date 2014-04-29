@@ -54,6 +54,12 @@ module.exports = function(grunt) {
         dest: 'build/_modifiers/css/',
         flatten: true,
         filter: 'isFile'
+      },
+      backup: {
+        cwd: 'src/',
+        expand: true,
+        src: 'sass/**',
+        dest: 'backup/ <%= grunt.template.today("yyyymmddhMMss") %>/'
       }
     },
 
@@ -140,21 +146,21 @@ module.exports = function(grunt) {
       }
     },
 
-    prompt: {
-      clear_sass_scaffold: {
-        options: {
-          questions: [{
-              config: 'blah',
-              type: 'confirm',
-              message: 'This will remove your SASS ?',
-              then: function(){
-                console.log('then', arguments);
-              }
-            }
-          ]
-        }
-      }
-    }
+    // prompt: {
+    //   clear_sass_scaffold: {
+    //     options: {
+    //       questions: [{
+    //           config: 'blah',
+    //           type: 'confirm',
+    //           message: 'This will remove your SASS ?',
+    //           then: function(){
+    //             console.log('then', arguments);
+    //           }
+    //         }
+    //       ]
+    //     }
+    //   }
+    // }
 
   });
 
@@ -317,7 +323,6 @@ module.exports = function(grunt) {
     grunt.task.run(tasks);
   });
 
-
   function splitBEM(bemClass){
     var BE = bemClass.split('__');
     var M = BE.pop().split('_');
@@ -333,9 +338,10 @@ module.exports = function(grunt) {
 
 
   // BOB::TODO::20140422, the default task should re-use the html/css tasks
-  grunt.registerTask('dev', ['clear', 'scaffold-sass']);
+  // grunt.registerTask('dev', ['clear', 'scaffold-sass']);
   grunt.registerTask('html', ['copy:html', 'scaffold-sass', 'import-all-sass', 'sass', 'scaffold-modifiers']);
   grunt.registerTask('css', ['copy:css', 'sass', 'scaffold-modifiers', 'copy:modifiers_css']);
+  grunt.registerTask('reset', ['copy:backup', 'clean']);
   grunt.registerTask('default', ['clean:build', 'copy', 'scaffold-sass', 'import-all-sass', 'sass', 'scaffold-modifiers', 'copy:modifiers_css']);
 
 };
