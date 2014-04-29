@@ -79,7 +79,7 @@ module.exports = function(grunt) {
         },
         files: [
           {'./build/live/css/index.css': './src/index.scss'},
-          {'./build/_modifiers/css/debug.css': './src/sass/debug.scss'}
+          {'./build/_modifiers/css/debug.css': './src/sass/custom/debug.scss'}
         ]
       }
     },
@@ -214,7 +214,7 @@ module.exports = function(grunt) {
     });
 
     // write some debuging css outlines
-    grunt.file.write(cwd + 'sass/partials/_debug.scss', debugSASS);
+    grunt.file.write(cwd + 'sass/custom/partials/_debug.scss', debugSASS);
 
     // clean up sass folders which are not referenced through the HTML bem classes
     // BOB::TODO::20140324, will remove everything.. also custom css work, need to rethink this
@@ -234,13 +234,24 @@ module.exports = function(grunt) {
 
   // Simplified version of https://www.npmjs.org/package/grunt-sass-directory-import
   grunt.registerTask('import-all-sass', 'Generates a _all.scss file with all sass files imported', function() {
-    var _ = require("underscore");
     var dir = 'src/sass/';
     var filepath = dir + '_all.scss';
-    var filesToInclude = grunt.file.expand({cwd: dir}, ['**/*.scss', '!_all.scss', '!partials/_debug.scss']);
-    var imports = ['// Auto generated, see grunt "import-all-sass task" '], segments, file, importFile;
+    var customFiles = grunt.file.expand({cwd: dir}, ['custom/**/*.scss', '!_all.scss', '!partials/_debug.scss']);
+    var bemFiles = grunt.file.expand({cwd: dir}, ['bem/**/*.scss']);
+    var segments, file, importFile;
+    var imports = ['// Auto generated, see grunt "import-all-sass task" '];
+    
+    imports = imports.concat(getSASSimports(customFiles));
+    imports = imports.concat(getSASSimports(bemFiles));
 
-    _.each(filesToInclude, function(path){
+    grunt.file.write(filepath, imports.join('\n'));
+  });
+
+  function getSASSimports(files){
+    var _ = require("underscore");
+    var imports = [];
+
+    _.each(files, function(path){
       segments = path.split('/');
       file = segments.pop();
 
@@ -254,8 +265,8 @@ module.exports = function(grunt) {
       imports.push('@import "' + importFile + '";');
     });
 
-    grunt.file.write(filepath, imports.join('\n'));
-  });
+    return imports;
+  }
 
 
   grunt.registerTask('scaffold-modifiers', 'Generate HTML pages for each BEM modifier', function() {
