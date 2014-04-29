@@ -211,7 +211,7 @@ module.exports = function(grunt) {
         grunt.file.write(mPath, '.' + be + '_modifier-name{\n}');
       }
 
-      debugSASS += '.' + be + '{@include debug();}\n';
+      debugSASS += '.' + be + '{@include debug(' + be + ');}\n';
     });
 
     // write some debuging css outlines

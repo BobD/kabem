@@ -1,0 +1,33 @@
+
+$debug-colors: 	#F5FAFF, #EBF5FF, #E0F0FF, #D6EBFF, #CCE6FF;
+$debug-index: 1;
+
+@mixin debug($block_element){
+	outline: thin solid black;
+
+	&:before{
+		content: '#{$block_element}';
+		display: block;
+		position: absolute;
+		top: 0;
+		right: 0;
+		bottom: 0;
+		left: 0;
+		background-color: nth($debug-colors, $debug-index);
+	}
+
+	$debug-index: ($debug-index + 1) % length($debug-colors);
+}
+
+@import "partials/_debug";
+
+.__left-layout{}
+.__left-layout__background{}
+.__left-layout__holder{}
+.__left-layout__holder__sidebar{
+	min-height: 200px;
+}
+.__left-layout__holder__content{
+}
+.__left-layout__holder__content__title{}
+.__left-layout__holder__content__footer{}
