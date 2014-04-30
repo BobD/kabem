@@ -138,10 +138,10 @@ module.exports = function(grunt) {
          files: ['src/**/**.css'],
          tasks: ['copy:css']
       },
-      grunt: {
-        files: ['Gruntfile.js'],
-        tasks: ['dev']
-      },
+      // grunt: {
+      //   files: ['Gruntfile.js'],
+      //   tasks: ['dev']
+      // },
       options: {
         livereload: true
       }
@@ -204,11 +204,11 @@ module.exports = function(grunt) {
       }
 
       if(!grunt.file.exists(bePath)){
-        grunt.file.write(bePath, '.' + be + '{\n}');
+        grunt.file.write(bePath, '/*.' + be + '{\n}*/');
       }
 
       if(!grunt.file.exists(mPath)){
-        grunt.file.write(mPath, '.' + be + '_modifier-name{\n}');
+        grunt.file.write(mPath, '/*.' + be + '_modifier-name{\n}*/');
       }
 
       debugSASS += 'body.debug .' + be + '{@include debug(' + be + ');}\n';
@@ -302,7 +302,7 @@ module.exports = function(grunt) {
       beParts = bem.be.split('__').length;
       selector = bem.selector;
 
-      // Only create pages with a single 'BEM' including a modifier
+      // Only create pages for BEM modifiers
       createPage = (selector.indexOf(' ') === -1) && (bem.m !== undefined);
 
       // Create pages for testing, and apply the relevant modifier classes
@@ -344,7 +344,7 @@ module.exports = function(grunt) {
     var modifierFiles = grunt.file.expand([dir + 'bem/**/*_modifiers.scss']);
     var CSSOM = require('cssom');
     var CSSFile, CSSTree, bem;
-    var settings = [], json;
+    var settings = {}, json;
 
     _.each(modifierFiles, function(file){
       CSSFile = grunt.file.read(file);
@@ -352,13 +352,46 @@ module.exports = function(grunt) {
 
       _.each(CSSTree.cssRules, function(rule){
         bem = splitBEM(rule.selectorText);
-        settings.push({block_element: bem.be, setting: '', modifier: bem.m, value: ''});
+        if(!_.has(settings, bem.be)){
+          settings[bem.be] = {setting: '', values: []};
+        }
+        settings[bem.be].values.push({modifier: bem.m, value: ""});
       });
     });
 
     json = JSON.stringify({settings: settings}, null, 2);
-    grunt.file.write('src/config/bem-lookup.json', json);
+    grunt.file.write('build/backend/bem-lookup.json', json);
   });
+
+  grunt.registerTask('bem-view', 'Generate an ERB view for the backend to fill with the BEM/Setting values', function() {
+    var _ = require("underscore");
+    var jsdom = require("jsdom").jsdom;
+    var source = grunt.file.read('src/index.html');
+    var doc = jsdom(source);
+    var window = doc.parentWindow;
+    var blockElements = doc.querySelectorAll('body[class^="__"], body *[class^="__"]');
+    var block = blockElements[0]; // first element is the root BEM 'block'
+    var classList, output;
+
+
+    _.each(blockElements, function(el){
+      classList = el.getAttribute('class').split(' ');
+
+       _.each(classList, function(c, index){
+        if(c.indexOf('__') == 0){
+          classList[index] = "<%= presenter.classes_for('" + c + "') %>";
+        }
+      });
+
+      el.setAttribute('class', classList.join(' '));
+    });
+
+    output = block.outerHTML;
+    output = output.replace(/&lt;/g, "<");
+    output = output.replace(/&gt;/g, ">");
+    grunt.file.write('build/backend/bem-view.erb', output);
+
+  }); 
 
   function splitBEM(selector){
     if(selector.indexOf('.') == 0){
@@ -380,9 +413,10 @@ module.exports = function(grunt) {
 
   // BOB::TODO::20140422, the default task should re-use the html/css tasks
   grunt.registerTask('dev', ['clear', 'scaffold-sass']);
+  grunt.registerTask('backend', ['bem-lookup', 'bem-view']);
   grunt.registerTask('html', ['copy:html', 'scaffold-sass', 'import-all-sass', 'sass', 'scaffold-develop']);
   grunt.registerTask('css', ['copy:css', 'sass', 'scaffold-develop', 'copy:develop_css']);
   grunt.registerTask('reset', ['copy:backup', 'clean']);
-  grunt.registerTask('default', ['clean:build', 'copy', 'scaffold-sass', 'import-all-sass', 'sass', 'scaffold-develop', 'copy:develop_css']);
+  grunt.registerTask('default', ['clean:build', 'copy', 'scaffold-sass', 'import-all-sass', 'sass', 'scaffold-develop', 'copy:develop_css', 'backend']);
 
 };
