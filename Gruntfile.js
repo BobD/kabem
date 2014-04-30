@@ -283,7 +283,6 @@ module.exports = function(grunt) {
     var tasks = [];
     var bem;
 
-
     _.each(contextBEM, function(sel){
       var context = splitBEM(sel);
       classes.push({selector: '.' + context.be, attribute: 'class', value: ' ' + sel});
@@ -299,12 +298,9 @@ module.exports = function(grunt) {
       var bemClasses = [];
       var beParts;
 
-      if(selector.indexOf('.') == 0){
-        selector = selector.substring(1);
-      }
-
       bem = splitBEM(selector);
       beParts = bem.be.split('__').length;
+      selector = bem.selector;
 
       // Only create pages with a single 'BEM' including a modifier
       createPage = (selector.indexOf(' ') === -1) && (bem.m !== undefined);
@@ -342,14 +338,40 @@ module.exports = function(grunt) {
     grunt.task.run(tasks);
   });
 
-  function splitBEM(bemClass){
-    var BE = bemClass.split('__');
+  grunt.registerTask('bem-lookup', 'Generate a lookup file for all possible Modifiers belonging to a Block or Element', function() {
+    var _ = require("underscore");
+    var dir = 'src/sass/';
+    var modifierFiles = grunt.file.expand([dir + 'bem/**/*_modifiers.scss']);
+    var CSSOM = require('cssom');
+    var CSSFile, CSSTree, bem;
+    var settings = [], json;
+
+    _.each(modifierFiles, function(file){
+      CSSFile = grunt.file.read(file);
+      CSSTree = CSSOM.parse(CSSFile);
+
+      _.each(CSSTree.cssRules, function(rule){
+        bem = splitBEM(rule.selectorText);
+        settings.push({block_element: bem.be, setting: '', modifier: bem.m, value: ''});
+      });
+    });
+
+    json = JSON.stringify({settings: settings}, null, 2);
+    grunt.file.write('src/config/bem-lookup.json', json);
+  });
+
+  function splitBEM(selector){
+    if(selector.indexOf('.') == 0){
+      selector = selector.substring(1);
+    }
+
+    var BE = selector.split('__');
     var M = BE.pop().split('_');
     BE.push(M.shift());
     BE = BE.join('__');
     M = M[0];
 
-    return {be: BE, m: M};
+    return {be: BE, m: M, selector: selector};
   }
 
   // https://www.npmjs.org/package/load-grunt-tasks
