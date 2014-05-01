@@ -61,6 +61,7 @@ For example. Considder a paragraph with a title and some text. And it has to be 
 
 ####State
 * As a Visitor i want to see a paragraph strech the full width of the screen
+ * dd  
  * It should be 100% wide
  
 * As a Visitor i want to see a paragraph stay the same width even if the screen resizes.
