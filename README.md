@@ -55,13 +55,13 @@ For example. Considder a paragraph with a title and some text. And it has to be 
 
 ####Structure
 * As a Visitor i want to see a paragraph some text with a nice title above it
+
  * It should have a title
  * It should have some text
  * The title should be above the text
 
 ####State
 * As a Visitor i want to see a paragraph strech the full width of the screen
- * dd  
  * It should be 100% wide
  
 * As a Visitor i want to see a paragraph stay the same width even if the screen resizes.
@@ -78,12 +78,10 @@ Reading these User Stories you end up with three structurial elements, and two s
 
 Now you can startup a simple HTML structre like this (BEM classnames already suggest a structure to use):
 
-<pre>
- <section class='__paragraph'>
-  <header class='__paragraph__title'>title</header>
-  <p class='__paragraph__text'>text</p>
- </section>
-</pre>
+    <section class='__paragraph'>
+     <header class='__paragraph__title'>title</header>
+     <p class='__paragraph__text'>text</p>
+    </section>
 
 And hitting 'grunt' inside kaBEM would give you this folder structure:
 
