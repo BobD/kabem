@@ -80,13 +80,16 @@ Reading these User Stories you end up with three structurial elements, and two s
 
 Now you can startup a simple HTML structre like this (BEM classnames already suggest a structure to use):
 
+<pre>
 <section class='__paragraph'>
  <header class='__paragraph__title'>title</header>
  <p class='__paragraph__text'>text</p>
 </section>
+</pre>
 
 And hitting 'grunt' inside kaBEM would give you this folder structure:
 
+<pre>
 __paragraph
  __title
   __paragraph__title.scss
@@ -96,6 +99,7 @@ __paragraph
   __paragraph__text_modifiers.scss
 __paragraph.scss
 __paragraph_modifiers.scss
+</pre>
 
 And finally you can put the three BEM modifier class names inside the __paragraph_modifiers.scss file, and fill them with the CSS needed to pass the User Story. Nice.
 
