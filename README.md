@@ -1,15 +1,15 @@
 ##kaBEM
 
-kaBEM is a grunt.js environment for easy scaffolding, developing and testing HTML pages with BEM (Block, Element, Modifier) CSS syntax. And if you are using User Stories to define your project, and have written those in a Structure/Behaviour way, it's easy to get some initial BEM entities out of that to get a quick start scaffolding.
+kaBEM is a grunt.js environment for easy scaffolding, developing and testing HTML pages with BEM (Block, Element, Modifier) CSS syntax. And if you are using User Stories to define your project, and have written those in a Structure/State way, it's easy to get some initial BEM classnames for a quick start.
 
-kaBEM is mostly useful if you have a single HTML page which can have a lot of different visual states. For example if you want to develop a Gallery or Page Theme depending on a plethory of specific user defined settings.
+kaBEM is mostly useful if you have a single HTML page which can have a lot of different visual states. For example if you want to develop a Gallery or Page Theme depending on a list of different user defined settings.
 
 
 ###What does kaBEM do for you?
 
-kaBEM uses your initial HTML file with BEM classes to scaffold out a handy SASS folder structure to start working on. Each Block or Element get's it's own folder, and inside that is a seperate SASS file for Block/Element and modifier CSS. Each new Modifier BEM class you add get's translated into a separate HTML for easy testing. 
+kaBEM uses your initial HTML file with some BEM classes to scaffold out a handy SASS folder structure to start working on. Each Block or Element get's it's own folder, and inside that is a seperate SASS file for the block/element and modifiers CSS. Each new Modifier BEM class you add get's translated into a separate HTML file for easy testing. 
 
-And the kaBEM Grunt environment has all standard niceties like ~~validation~~, ~~minimizing~~, local servers and file change watches. And you can add your own specific tasks of course.
+The kaBEM Grunt environment also has all standard (grunt) niceties like ~~validation~~, ~~minimizing~~, local servers, file change watches and LiveReload. And you can add your own specific tasks of course.
 
 TODO
 * Add CSS validation, UglifyCSS and unCSS
@@ -25,7 +25,7 @@ BEM stands for Block Element Modifier and was originally thought up by the peopl
 * See a BEM classname in your HTML and know where to find it in your CSS files
 * See a BEM classname and know which purpose it has
 
-BEM is no golden highway to utter development bliss of course. It's (long) classnames help in understanding your CSS, but it will also bloat your HTML. It's single classname approach can prevent CSS specifity hell and helps with an OOCSS approach, but also ignores the useful cascading nature of C(cascading)SS. Luckily kaBEM nor BEM prevent you from using it in the way you want.
+BEM is no golden highway to utter development bliss though. It's (long) classnames help in understanding your CSS, but it will also bloat your HTML. It's single classname approach can prevent CSS specifity hell and helps with an OOCSS approach, but also ignores the useful cascading nature of C(cascading)SS. Luckily kaBEM nor BEM prevent you from using it with regular CSS in the way you want.
 
 For some more BEM reading:
 
@@ -42,14 +42,14 @@ kaBEM uses these class name conventions:
 * '_' starting a modifier
 * '-' for multi word block, elements and modifiers. 
 
-So this is what a kaBEM class can look like: '__page__container_your-name'
+So a kaBEM class would look like: '__page__container_your-name'
 
 
 ###Structure/Behaviour User Stories?
 
 kaBEM is essentially about managing the different visual states of a single HTML block using SASS. And if you would describe a visual state using User Stories, they would end up in two main categories: Structure and State.
 
-In essence Structure describes those elements always present on screen (unless you hide them with a state, don't be nitpicky), and State describes the different states those elements can have (duh). And it just happens that this closely matches the way BEM is thought up. Block and Elements are 'Structure', and Modifiers are 'State'. So how handy would it be if you could get some BEM classnames directly from the User Stories and get started scaffolding your HTML and SASS folder sctructure. Very handy.
+In essence Structure describes those elements always present on screen (unless you hide them with a state, don't be nitpicky), and State describes the different states and behaviours those elements can have. And it just happens that this closely matches what BEM is about. Block and Elements are 'Structure', and Modifiers are 'State'. So how handy would it be if you could derive some BEM classnames directly from the User Stories and get started scaffolding your HTML and SASS folder sctructure. Very handy.
 
 For example. Considder a paragraph with a title and some text. And it has to be able to expand the full width, or alternatively take a fixed width (a rather stupid example, i know. But stick with me). Then you could write the different User Stories this way
 
@@ -71,9 +71,7 @@ For example. Considder a paragraph with a title and some text. And it has to be 
  * It should be 600 pixels wide
 
  
- 
- 
-Reading these User Stories you end up with three structurial elements, and two states. And put those in kaBEM classnames you end up with this:
+Reading these User Stories you end up with three Structure elements, and two States. Putting those in kaBEM classnames you would end up with this:
 
 * __paragraph
 * __paragraph__title
@@ -81,7 +79,7 @@ Reading these User Stories you end up with three structurial elements, and two s
 * __paragraph_full-width
 * __paragraph_fixed-width
 
-Now you can startup a simple HTML structre like this (BEM classnames already suggest a structure to use):
+Now you can startup a simple HTML structre like this (BEM classnames already suggest a certain structure to use):
 
     <section class='__paragraph'>
      <header class='__paragraph__title'>title</header>
