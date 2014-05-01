@@ -19,14 +19,16 @@ module.exports = function(grunt) {
         options: {
           port: 9001,
           base: 'build/live',
-          keepalive: true
+          keepalive: true,
+          open: true
         }
       },
       modifiers: {
         options: {
           port: 9002,
           base: 'build/_modifiers',
-          keepalive: true
+          keepalive: true,
+          open: true
         }
       }
     },
