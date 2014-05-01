@@ -80,12 +80,12 @@ Reading these User Stories you end up with three structurial elements, and two s
 
 Now you can startup a simple HTML structre like this (BEM classnames already suggest a structure to use):
 
-<pre>
+<code>
 <section class='__paragraph'>
  <header class='__paragraph__title'>title</header>
  <p class='__paragraph__text'>text</p>
 </section>
-</pre>
+</code>
 
 And hitting 'grunt' inside kaBEM would give you this folder structure:
 
