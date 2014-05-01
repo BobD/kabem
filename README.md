@@ -7,7 +7,7 @@ kaBEM is mostly useful if you have a single HTML page which can have a lot of di
 
 ###What does kaBEM do for you?
 
-kaBEM uses your initial HTML file with BEM classes to scaffold out a handy SASS folder structure to start working on. Each Block or Element get's it's own folder, and inside that is a seperate SASS file for Block/Element and modifier CSS. Each new Modifier BEM class you add get's translated into a separate HTML for easy testing. The kaBEM Grunt environment has all standard niceties like validation/*, minimizing/*, local servers and file change watches. And you can add your own specific tasks of course
+kaBEM uses your initial HTML file with BEM classes to scaffold out a handy SASS folder structure to start working on. Each Block or Element get's it's own folder, and inside that is a seperate SASS file for Block/Element and modifier CSS. Each new Modifier BEM class you add get's translated into a separate HTML for easy testing. The kaBEM Grunt environment has all standard niceties like ~~validation~~, ~~minimizing~~, local servers and file change watches. And you can add your own specific tasks of course
 
 /* TODO
 * Add CSS validation, UglifyCSS and unCSS
