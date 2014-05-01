@@ -53,16 +53,17 @@ In essence Structure describes those elements always present on screen (unless y
 
 For example. Considder a paragraph with a title and some text. And it has to be able to expand the full width, or alternatively take a fixed width (a rather stupid example, i know. But stick with me). Then you could write the different User Stories this way
 
-####Structure
+#####Structure
 
 * As a Visitor i want to see a paragraph some text with a nice title above it
  * It should have a title
  * It should have some text
  * The title should be above the text
 
+#####State
+
 * As a Visitor i want to see a paragraph stretching the full width of the screen
  * It should be 100% wide
- 
  
 * As a Visitor i want to see a paragraph stay the same width even if the screen resizes.
  * It should be 600 pixels wide
