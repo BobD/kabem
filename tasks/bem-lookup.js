@@ -13,7 +13,7 @@ module.exports = function(grunt) {
       CSSTree = CSSOM.parse(CSSFile);
 
       _.each(CSSTree.cssRules, function(rule){
-        bem = splitBEM(rule.selectorText);
+        bem = grunt.splitBEM(rule.selectorText);
         if(!_.has(settings, bem.be)){
           settings[bem.be] = {setting: '', values: []};
         }
