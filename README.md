@@ -51,7 +51,7 @@ kaBEM is essentially about managing the different visual states of a single HTML
 
 In essence Structure describes those elements always present on screen (unless you hide them with a state, don't be nitpicky), and State describes the different states those elements can have (duh). And it just happens that this closely matches the way BEM is thought up. Block and Elements are 'Structure', and Modifiers are 'State'. So how handy would it be if you could get some BEM classnames directly from the User Stories and get started scaffolding your HTML and SASS folder sctructure. Very handy.
 
-For example. Considder a simple paragraph with a title and some text. And it has to be able to expand the full width, or alternatively take a fixed width (stupid example, i know. But stick with me). Then you could write the different User Stories this way
+For example. Considder a simple paragraph with a title and some text. And it has to be able to expand the full width, or alternatively take a fixed width (a rather stupid example, i know. But stick with me). Then you could write the different User Stories this way
 
 ####Structure
 * As a Visitor i want to see a paragraph some text with a nice title above it
@@ -61,10 +61,12 @@ For example. Considder a simple paragraph with a title and some text. And it has
 
 ####State
 * As a Visitor i want to see a paragraph strech the full width of the screen
-  * It should be 100% wide
+ * It should be 100% wide
+ * 
  
 * As a Visitor i want to see a paragraph stay the same width even if the screen resizes.
-  * It should be 600 pixels wide
+ * It should be 600 pixels wide
+ * 
 
 
 Reading these User Stories you end up with three structurial elements, and two states. And put those in kaBEM classnames you end up with this:
