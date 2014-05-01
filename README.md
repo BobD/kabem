@@ -34,14 +34,6 @@ For some more BEM reading:
 * [MindBEMding – getting your head ’round BEM syntax] (http://csswizardry.com/2013/01/mindbemding-getting-your-head-round-bem-syntax/)
 
 
-###Structure/Behaviour User Stories?
-
-
-###Why kaBEM?
-
-Using a single HTML file with meaningful kaBEM classes it can scaffold all the needed SASS files inside a nice 'BEM' folder structure. It also generates HTML files for all the BEM modifiers in your CSS for easy testing. And of course it (will) include all the relevant grunt.js niceties like running a local server with livereload and HTML/CSS validation and cleaning.
-
-
 ###kaBEM naming conventions
 
 kaBEM uses these class name conventions:
@@ -51,6 +43,14 @@ kaBEM uses these class name conventions:
 * '-' for multi word block, elements and modifiers. 
 
 So this is what a kaBEM class can look like: '__page__container_your-name'
+
+
+###Structure/Behaviour User Stories?
+
+kaBEM is essentially about managing the different visual states of a single HTML block using SASS. And if you would describe a visual state using User Stories, they would end up in two mean categories i guess: Structure and Behaviour.
+
+In essence the Structure describes those elements always present on screen (unless you hide them with a state, don't be nitpicky), and the Behaviour describes the different states those elements can have. And it just happens that this closely matches the way BEM is thought up. Block and Elements are 'Structure', and Modifiers are 'Behaviour'. So how handy would it be if you could distill some BEM classnames directly from the different User Stories, and use those to fill you initial HTML file, and start scaffolding? Very handy of course.
+
 
 ###Getting Stared
 
