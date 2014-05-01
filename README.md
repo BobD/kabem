@@ -54,14 +54,12 @@ In essence Structure describes those elements always present on screen (unless y
 For example. Considder a paragraph with a title and some text. And it has to be able to expand the full width, or alternatively take a fixed width (a rather stupid example, i know. But stick with me). Then you could write the different User Stories this way
 
 ####Structure
-
 * As a Visitor i want to see a paragraph some text with a nice title above it
  * It should have a title
  * It should have some text
  * The title should be above the text
 
 ####State
-
 * As a Visitor i want to see a paragraph strech the full width of the screen
  * It should be 100% wide
  
@@ -100,7 +98,7 @@ __paragraph.scss
 __paragraph_modifiers.scss
 </pre>
 
-And finally you can put the three BEM modifier class names inside the __paragraph_modifiers.scss file, and fill them with the CSS needed to pass the User Story.
+And finally you can put the three BEM modifier class names inside the __paragraph_modifiers.scss file, and fill them with the needed CSS to pass the User Story.
 
 <code>
 .__paragraph_full-width{
@@ -123,7 +121,3 @@ Nice.
   2. [install grunt.js] (http://gruntjs.com/getting-started)
   3. Run 'npm install'
   4. Take a look at the index.html in src folder, notice the example kaBEM classes, and run 'grunt'
-
-###TODO
-
-* Finish this readme
