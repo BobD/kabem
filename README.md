@@ -106,7 +106,9 @@ And finally you can put the three BEM modifier class names inside the __paragrap
 .__paragraph_full-width{
  width: 100%;
 }
+</code>
 
+<code>
 .__paragraph_fixed-width{
  width: 600px;
 }
