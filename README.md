@@ -62,7 +62,7 @@ For example. Considder a paragraph with a title and some text. And it has to be 
 
 ####State
 
-* As a Visitor i want to see a paragraph strech the full width of the screen
+* As a Visitor i want to see a paragraph stretching the full width of the screen
  + It should be 100% wide
  
  
