@@ -47,17 +47,24 @@ So this is what a kaBEM class can look like: '__page__container_your-name'
 
 ###Structure/Behaviour User Stories?
 
-kaBEM is essentially about managing the different visual states of a single HTML block using SASS. And if you would describe a visual state using User Stories, they would end up in two mean categories: Structure and State.
+kaBEM is essentially about managing the different visual states of a single HTML block using SASS. And if you would describe a visual state using User Stories, they would end up in two main categories: Structure and State.
 
-In essence Structure describes those elements always present on screen (unless you hide them with a state, don't be nitpicky), and State describes the different states (duh) those elements can have. And it just happens that this closely matches the way BEM is thought up. Block and Elements are 'Structure', and Modifiers are 'State'. So how handy would it be if you could get some BEM classnames directly from the User Stories, and use those to fill you initial HTML file and start scaffolding? Very handy of course. 
+In essence Structure describes those elements always present on screen (unless you hide them with a state, don't be nitpicky), and State describes the different states those elements can have (duh). And it just happens that this closely matches the way BEM is thought up. Block and Elements are 'Structure', and Modifiers are 'State'. So how handy would it be if you could get some BEM classnames directly from the User Stories and get started scaffolding your HTML and SASS folder sctructure. Very handy.
 
-For example. Considder a simple paragraph with a title and some text. And it has to be able to expand the full width, or alternatively take a fixed width. Then you could write the different User Stories this way
+For example. Considder a simple paragraph with a title and some text. And it has to be able to expand the full width, or alternatively take a fixed width (stupid example, i know. But stick with me). Then you could write the different User Stories this way
 
 ####Structure
-
+* As a Visitor i want to see a paragraph some text with a nice title above it
+ * It should have a title
+ * It should have some text
+ * The title should be above the text
 
 ####State
+* As a Visitor i want to see a paragraph strech the full width of the screen
+ * It should be 100% width
 
+* As a Visitor i want to see a paragraph strech the full width of the screen
+ * 
 
 ###Getting Stared
 
