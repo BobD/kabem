@@ -56,9 +56,11 @@ For example. Considder a paragraph with a title and some text. And it has to be 
 #####Structure
 
 * As a Visitor i want to see a paragraph some text with a nice title above it
+
  * It should have a title
  * It should have some text
  * The title should be above the text
+
 
 #####State
 
@@ -68,6 +70,8 @@ For example. Considder a paragraph with a title and some text. And it has to be 
 * As a Visitor i want to see a paragraph stay the same width even if the screen resizes.
  * It should be 600 pixels wide
 
+ 
+ 
  
 Reading these User Stories you end up with three structurial elements, and two states. And put those in kaBEM classnames you end up with this:
 
