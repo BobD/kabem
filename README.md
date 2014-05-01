@@ -117,7 +117,7 @@ And finally you can put the three BEM modifier class names inside the __paragrap
 Nice.
 
 
-###Getting Stared
+###Getting Started
 
   1. [install node.js] (http://nodejs.org/)
   2. [install grunt.js] (http://gruntjs.com/getting-started)
