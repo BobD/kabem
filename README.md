@@ -63,6 +63,8 @@ For example. Considder a simple paragraph with a title and some text. And it has
 * As a Visitor i want to see a paragraph strech the full width of the screen
  * It should be 100% wide
   
+* As a Visitor i want to see a paragraph some text with a nice title above it
+ * It should have a title
  
 * As a Visitor i want to see a paragraph stay the same width even if the screen resizes.
  * It should be 600 pixels wide
@@ -83,7 +85,7 @@ Now you can startup a simple HTML structre like this (BEM classnames already sug
  <p class='__paragraph__text'>text</p>
 </section>
 
-And finally hitting 'grunt' inside kaBEM would give you this folder structure:
+And hitting 'grunt' inside kaBEM would give you this folder structure:
 
 __paragraph
  __title
@@ -95,6 +97,7 @@ __paragraph
 __paragraph.scss
 __paragraph_modifiers.scss
 
+And finally you can put the three BEM modifier class names inside the __paragraph_modifiers.scss file, and fill them with the CSS needed to pass the User Story. Nice.
 
 
 ###Getting Stared
