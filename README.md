@@ -1,6 +1,19 @@
 ##kaBEM
 
-kaBEM is a grunt.js environment for easy scaffolding, developing and testing HTML pages with BEM CSS.
+kaBEM is a grunt.js environment for easy scaffolding, developing and testing HTML pages with BEM (Block, Element, Modifier) CSS syntax. And if you are using User Stories to define your project, and have written those in a Structure/Behaviour way, it's easy to get some initial BEM entities out of that to get a quick start scaffolding.
+
+kaBEM is mostly useful if you have a single HTML page which can have a lot of different visual states. For example if you want to develop a Gallery or Page Theme depending on a plethory of specific user defined settings.
+
+
+###What does kaBEM do for you?
+
+kaBEM uses your initial HTML file with BEM classes to scaffold out a handy SASS folder structure to start working on. Each Block or Element get's it's own folder, and inside that is a seperate SASS file for Block/Element and modifier CSS. Each new Modifier BEM class you add get's translated into a separate HTML for easy testing. The kaBEM Grunt environment has all standard niceties like validation/*, minimizing/*, local servers and file change watches. And you can add your own specific tasks of course
+
+/* TODO
+* Add CSS validation, UglifyCSS and unCSS
+* Add HTML validation
+* Add GIT Hooks for CSS/HTML validation before deploy
+
 
 ###Why BEM?
 
@@ -17,6 +30,10 @@ For some more BEM reading:
 * [linkBEM Methodology] (http://bem.info/method/)
 * [BEM it!, BEM Methodology for small companies with high expectations] ( href="http://www.slideshare.net/MaxShirshin/bem-dm")
 * [MindBEMding – getting your head ’round BEM syntax] (http://csswizardry.com/2013/01/mindbemding-getting-your-head-round-bem-syntax/)
+
+
+###Structure/Behaviour User Stories?
+
 
 ###Why kaBEM?
 
