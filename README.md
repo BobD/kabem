@@ -7,9 +7,11 @@ kaBEM is mostly useful if you have a single HTML page which can have a lot of di
 
 ###What does kaBEM do for you?
 
-kaBEM uses your initial HTML file with BEM classes to scaffold out a handy SASS folder structure to start working on. Each Block or Element get's it's own folder, and inside that is a seperate SASS file for Block/Element and modifier CSS. Each new Modifier BEM class you add get's translated into a separate HTML for easy testing. The kaBEM Grunt environment has all standard niceties like ~~validation~~, ~~minimizing~~, local servers and file change watches. And you can add your own specific tasks of course
+kaBEM uses your initial HTML file with BEM classes to scaffold out a handy SASS folder structure to start working on. Each Block or Element get's it's own folder, and inside that is a seperate SASS file for Block/Element and modifier CSS. Each new Modifier BEM class you add get's translated into a separate HTML for easy testing. 
 
-/* TODO
+And the kaBEM Grunt environment has all standard niceties like ~~validation~~, ~~minimizing~~, local servers and file change watches. And you can add your own specific tasks of course.
+
+TODO
 * Add CSS validation, UglifyCSS and unCSS
 * Add HTML validation
 * Add GIT Hooks for CSS/HTML validation before deploy
@@ -17,13 +19,13 @@ kaBEM uses your initial HTML file with BEM classes to scaffold out a handy SASS 
 
 ###Why BEM?
 
-BEM stands for Block Element Modifier and was originally thought up by the people of <a href="http://yandex.ru/">Yandex</a>. BEM is no more then a simple CSS class naming convention which gives them purpose and meaning to other developers, ideal for teams. In short the benefits are:
+BEM stands for Block Element Modifier and was originally thought up by the people of <a href="http://yandex.ru/">Yandex</a>. BEM is no more then a simple CSS class naming convention which gives them purpose and meaning to other developers. Ideal for teams. In short the benefits are:
  
 * See a BEM classname in your CSS and know where to use it in your HTML
 * See a BEM classname in your HTML and know where to find it in your CSS files
 * See a BEM classname and know which purpose it has
 
-BEM is no golden highway to utter development bliss of course. It's (long) classnames help in understanding your CSS, but it will also bloat your HTML a bit. It's single classname approach can prevent CSS specifity hell and helps with an OOCSS approach, but also ignores the useful cascading nature of C(cascading)SS. Luckily (ka)BEM is pretty flexible and does not prevent you from using it in the way you want.
+BEM is no golden highway to utter development bliss of course. It's (long) classnames help in understanding your CSS, but it will also bloat your HTML. It's single classname approach can prevent CSS specifity hell and helps with an OOCSS approach, but also ignores the useful cascading nature of C(cascading)SS. Luckily kaBEM nor BEM prevent you from using it in the way you want.
 
 For some more BEM reading:
 
