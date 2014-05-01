@@ -59,14 +59,6 @@ For example. Considder a simple paragraph with a title and some text. And it has
  * It should have some text
  * The title should be above the text
 
-
-####State
-
-* As a Visitor i want to see a paragraph some text with a nice title above it
- * It should have a title
- * It should have some text
- * The title should be above the text
-
 * As a Visitor i want to see a paragraph strech the full width of the screen
  * It should be 100% wide
  * 
