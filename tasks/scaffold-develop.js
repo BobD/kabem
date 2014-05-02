@@ -3,7 +3,7 @@ module.exports = function(grunt) {
   grunt.registerTask('scaffold-develop', 'Generate HTML pages for each BEM modifier', function() {
     var _ = require("underscore");
     var CSSOM = require('cssom');
-    var CSSFile = grunt.file.read('build/live/css/index.css');
+    var CSSFile = grunt.file.read('build/css/index.css');
     var CSSTree = CSSOM.parse(CSSFile);
     var classes = [{selector: 'body', attribute: 'class', value: ' debug'}];
     var context = grunt.option('context') || 'default';
@@ -58,7 +58,10 @@ module.exports = function(grunt) {
     });
 
     grunt.config('dom_munger.index' + '.options', {
-      append: {selector: 'head', html: '<link rel="stylesheet" href="/css/debug.css">'},
+      append: [
+        {selector: 'head', html: '<link rel="stylesheet" href="/css/debug.css">'},
+        {selector: 'head', html: '<link rel="stylesheet" href="/css/index.css">'}
+      ],
       suffix: classes
     });
     grunt.config('dom_munger.index.src', 'build/live/index.html');

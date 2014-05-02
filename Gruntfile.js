@@ -59,20 +59,6 @@ module.exports = function(grunt) {
         src: 'src/index.html',
         dest: 'build/live/index.html'
       },
-      css: {
-        expand: true,
-        src: 'src/*.css',
-        dest: 'build/live/css/',
-        flatten: true,
-        filter: 'isFile'
-      },
-      develop_css: {
-        expand: true,
-        src: 'build/live/css/*.css',
-        dest: 'build/develop/css/',
-        flatten: true,
-        filter: 'isFile'
-      },
       backup: {
         cwd: 'src/',
         expand: true,
@@ -84,7 +70,7 @@ module.exports = function(grunt) {
     dom_munger: {
       index: {
         options: {
-          append: {selector: 'head', html: '<link rel="stylesheet" href="/css/debug.css">'}
+          append: {selector: 'head', html: '<link rel="stylesheet" href="/css/index.min.css">'}
         },
         src: 'build/live/index.html'
       }
@@ -96,9 +82,23 @@ module.exports = function(grunt) {
           style: 'expanded'
         },
         files: [
-          {'./build/live/css/index.css': './src/index.scss'},
+          {'./build/css/index.css': './src/index.scss'},
+          {'./build/develop/css/index.css': './src/index.scss'},
           {'./build/develop/css/debug.css': './src/sass/custom/debug.scss'}
         ]
+      }
+    },
+
+    cssmin: {
+      minify: {
+        expand: true,
+        cwd: 'build/css/',
+        src: ['*.css', '!*.min.css'],
+        dest: 'build/live/css/',
+        ext: '.min.css',
+        options: {
+          banner: '/* Minified with https://www.npmjs.org/package/grunt-contrib-cssmin */'
+        }
       }
     },
 
@@ -135,9 +135,9 @@ module.exports = function(grunt) {
   // BOB::TODO::20140422, the default task should re-use the html/css tasks
   grunt.registerTask('dev', ['default']);
   grunt.registerTask('backend', ['bem-lookup', 'bem-view']);
-  grunt.registerTask('html', ['copy:html', 'scaffold-sass', 'import-all-sass', 'sass', 'scaffold-develop']);
-  grunt.registerTask('css', ['copy:css', 'sass', 'scaffold-develop', 'copy:develop_css']);
+  grunt.registerTask('html', ['copy:html', 'dom_munger:index', 'scaffold-sass', 'import-all-sass', 'sass', 'scaffold-develop']);
+  grunt.registerTask('css', ['sass', 'cssmin', 'scaffold-develop']);
   grunt.registerTask('reset', ['copy:backup', 'clean']);
-  grunt.registerTask('default', ['clean:build', 'copy', 'scaffold-sass', 'import-all-sass', 'sass', 'scaffold-develop', 'copy:develop_css', 'backend']);
+  grunt.registerTask('default', ['clean:build', 'copy', 'dom_munger:index', 'scaffold-sass', 'import-all-sass', 'sass', 'cssmin', 'scaffold-develop', 'backend']);
 
 };
