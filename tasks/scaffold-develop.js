@@ -3,7 +3,7 @@ module.exports = function(grunt) {
   grunt.registerTask('scaffold-develop', 'Generate HTML pages for each BEM modifier', function() {
     var _ = require("underscore");
     var CSSOM = require('cssom');
-    var CSSFile = grunt.file.read('build/css/index.css');
+    var CSSFile = grunt.file.read('build/css/index.source.css');
     var CSSTree = CSSOM.parse(CSSFile);
     var classes = [{selector: 'body', attribute: 'class', value: ' debug'}];
     var context = grunt.option('context') || 'default';

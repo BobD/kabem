@@ -59,6 +59,14 @@ module.exports = function(grunt) {
         src: 'src/index.html',
         dest: 'build/live/index.html'
       },
+      live: {
+        src: './build/css/index.prefixed.min.css',
+        dest: './build/live/css/index.css'
+      },
+      develop: {
+        src: './build/css/index.prefixed.css',
+        dest: './build/develop/css/index.css'
+      },
       backup: {
         cwd: 'src/',
         expand: true,
@@ -82,31 +90,26 @@ module.exports = function(grunt) {
           style: 'expanded'
         },
         files: [
-          {'./build/css/index.css': './src/index.scss'},
-          {'./build/develop/css/index.css': './src/index.scss'},
+          {'./build/css/index.source.css': './src/index.scss'},
           {'./build/develop/css/debug.css': './src/sass/custom/debug.scss'}
         ]
       }
     },
 
-    cssmin: {
-      minify: {
-        expand: true,
-        cwd: 'build/css/',
-        src: ['*.css', '!*.min.css'],
-        dest: 'build/live/css/',
-        ext: '.min.css',
-        options: {
-          banner: '/* Minified with https://www.npmjs.org/package/grunt-contrib-cssmin */'
-        }
-      }
+    autoprefixer: {
+      index: {
+        options: {},
+        src: 'build/css/index.source.css',
+        dest: 'build/css/index.prefixed.css',
+      },
     },
 
-
-    uncss: {
-      live: {
-        files: {
-          'build/live/css/index.min.css': ['build/live/index.html']
+    cssmin: {
+      index: {
+        expand: true,
+        files: {'build/css/index.prefixed.min.css': 'build/css/index.prefixed.css'},
+        options: {
+          banner: '/* Minified with https://www.npmjs.org/package/grunt-contrib-cssmin */'
         }
       }
     },
@@ -145,6 +148,6 @@ module.exports = function(grunt) {
   grunt.registerTask('dev', ['default']);
   grunt.registerTask('backend', ['bem-lookup', 'bem-view']);
   grunt.registerTask('reset', ['copy:backup', 'clean']);
-  grunt.registerTask('default', ['clean:build', 'copy', 'dom_munger:index', 'scaffold-sass', 'import-all-sass', 'sass', 'cssmin', 'scaffold-develop', 'backend']);
+  grunt.registerTask('default', ['clean:build', 'copy:html', 'dom_munger:index', 'scaffold-sass', 'import-all-sass', 'sass', 'autoprefixer', 'cssmin', 'copy:live', 'copy:develop', 'scaffold-develop']);
 
 };
