@@ -114,6 +114,31 @@ module.exports = function(grunt) {
       }
     },
 
+    // See https://www.npmjs.org/package/grunt-w3c-validation
+    'css-validation': {
+      options: {
+        stoponerror: false,
+        relaxerror: [],
+        profile: 'css3',
+        medium: 'all',
+        warnings: '2'
+      },
+      files: {
+        src: ['build/css/*.css']
+      }
+    },
+
+    'html-validation': {
+      options: {
+          stoponerror: false,
+          relaxerror: [] //ignores these errors
+      },
+      files: {
+          src: ['build/live/index.html']
+      }
+    },
+    // 
+
     watch: {
       html: {
         files: ['src/index.html'],
@@ -148,6 +173,7 @@ module.exports = function(grunt) {
   grunt.registerTask('dev', ['default']);
   grunt.registerTask('backend', ['bem-lookup', 'bem-view']);
   grunt.registerTask('reset', ['copy:backup', 'clean']);
+  grunt.registerTask('validate', ['html-validation', 'css-validation']);
   grunt.registerTask('default', ['clean:build', 'copy:html', 'dom_munger:index', 'scaffold-sass', 'import-all-sass', 'sass', 'autoprefixer', 'cssmin', 'copy:live', 'copy:develop', 'scaffold-develop']);
 
 };
