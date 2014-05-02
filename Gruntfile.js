@@ -139,6 +139,14 @@ module.exports = function(grunt) {
     },
     // 
 
+    cssmetrics: {
+      index: {
+        src: [
+            'build/css/index.source.css'
+        ]
+      }
+    },
+
     watch: {
       html: {
         files: ['src/index.html'],
@@ -173,7 +181,7 @@ module.exports = function(grunt) {
   grunt.registerTask('dev', ['default']);
   grunt.registerTask('backend', ['bem-lookup', 'bem-view']);
   grunt.registerTask('reset', ['copy:backup', 'clean']);
-  grunt.registerTask('validate', ['html-validation', 'css-validation']);
+  grunt.registerTask('validate', ['html-validation', 'cssmetrics', 'css-validation']);
   grunt.registerTask('default', ['clean:build', 'copy:html', 'dom_munger:index', 'scaffold-sass', 'import-all-sass', 'sass', 'autoprefixer', 'cssmin', 'copy:live', 'copy:develop', 'scaffold-develop']);
 
 };
