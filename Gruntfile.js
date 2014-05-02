@@ -102,6 +102,15 @@ module.exports = function(grunt) {
       }
     },
 
+
+    uncss: {
+      live: {
+        files: {
+          'build/live/css/index.min.css': ['build/live/index.html']
+        }
+      }
+    },
+
     watch: {
       html: {
         files: ['src/index.html'],
