@@ -144,8 +144,6 @@ module.exports = function(grunt) {
   // BOB::TODO::20140422, the default task should re-use the html/css tasks
   grunt.registerTask('dev', ['default']);
   grunt.registerTask('backend', ['bem-lookup', 'bem-view']);
-  grunt.registerTask('html', ['copy:html', 'dom_munger:index', 'scaffold-sass', 'import-all-sass', 'sass', 'scaffold-develop']);
-  grunt.registerTask('css', ['sass', 'cssmin', 'scaffold-develop']);
   grunt.registerTask('reset', ['copy:backup', 'clean']);
   grunt.registerTask('default', ['clean:build', 'copy', 'dom_munger:index', 'scaffold-sass', 'import-all-sass', 'sass', 'cssmin', 'scaffold-develop', 'backend']);
 
