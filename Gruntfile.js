@@ -30,18 +30,18 @@ module.exports = function(grunt) {
       ' Licensed <%= _.pluck(pkg.licenses, "type").join(", ") %> */\n',
 
     connect: {
-      live: {
+      develop: {
         options: {
           port: 9001,
-          base: 'build/live',
+          base: 'build/develop',
           keepalive: true,
           open: true
         }
       },
-      develop: {
+      live: {
         options: {
           port: 9002,
-          base: 'build/develop',
+          base: 'build/live',
           keepalive: true,
           open: true
         }
@@ -166,6 +166,13 @@ module.exports = function(grunt) {
       },
       options: {
         livereload: true
+      }
+    },
+
+    githooks: {
+      all: {
+        // Will run the jshint and test:unit tasks at every commit
+        'pre-commit': 'jshint test:unit',
       }
     }
 
