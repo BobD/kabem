@@ -45,7 +45,7 @@ kaBEM uses these class name conventions:
 So a kaBEM class would look like: '__page__container_your-name'
 
 
-###Structure/Behaviour User Stories?
+###Structure/State User Stories?
 
 kaBEM is essentially about managing the different visual states of a single HTML block using SASS. And if you would describe a visual state using User Stories, they would end up in two main categories: Structure and State.
 

@@ -30,18 +30,18 @@ module.exports = function(grunt) {
       ' Licensed <%= _.pluck(pkg.licenses, "type").join(", ") %> */\n',
 
     connect: {
-      live: {
+      develop: {
         options: {
           port: 9001,
-          base: 'build/live',
+          base: 'build/develop',
           keepalive: true,
           open: true
         }
       },
-      develop: {
+      live: {
         options: {
           port: 9002,
-          base: 'build/develop',
+          base: 'build/live',
           keepalive: true,
           open: true
         }
@@ -59,19 +59,13 @@ module.exports = function(grunt) {
         src: 'src/index.html',
         dest: 'build/live/index.html'
       },
-      css: {
-        expand: true,
-        src: 'src/*.css',
-        dest: 'build/live/css/',
-        flatten: true,
-        filter: 'isFile'
+      live: {
+        src: './build/css/index.prefixed.min.css',
+        dest: './build/live/css/index.css'
       },
-      develop_css: {
-        expand: true,
-        src: 'build/live/css/*.css',
-        dest: 'build/develop/css/',
-        flatten: true,
-        filter: 'isFile'
+      develop: {
+        src: './build/css/index.prefixed.css',
+        dest: './build/develop/css/index.css'
       },
       backup: {
         cwd: 'src/',
@@ -84,7 +78,7 @@ module.exports = function(grunt) {
     dom_munger: {
       index: {
         options: {
-          append: {selector: 'head', html: '<link rel="stylesheet" href="/css/debug.css">'}
+          append: {selector: 'head', html: '<link rel="stylesheet" href="/css/index.min.css">'}
         },
         src: 'build/live/index.html'
       }
@@ -96,8 +90,63 @@ module.exports = function(grunt) {
           style: 'expanded'
         },
         files: [
-          {'./build/live/css/index.css': './src/index.scss'},
+          {'./build/css/index.source.css': './src/index.scss'},
           {'./build/develop/css/debug.css': './src/sass/custom/debug.scss'}
+        ]
+      }
+    },
+
+    autoprefixer: {
+      index: {
+        options: {},
+        src: 'build/css/index.source.css',
+        dest: 'build/css/index.prefixed.css',
+      },
+    },
+
+    cssmin: {
+      index: {
+        expand: true,
+        files: {'build/css/index.prefixed.min.css': 'build/css/index.prefixed.css'},
+        options: {
+          banner: '/* Minified with https://www.npmjs.org/package/grunt-contrib-cssmin */'
+        }
+      }
+    },
+
+    // See https://www.npmjs.org/package/grunt-w3c-validation
+    'css-validation': {
+      options: {
+        path: './log/validation-css-status.json',
+        reportpath: './log/validation-css-report.json',
+        stoponerror: false,
+        relaxerror: [],
+        profile: 'css3',
+        medium: 'all',
+        warnings: '2'
+      },
+      files: {
+        src: ['build/css/*.css']
+      }
+    },
+
+    'html-validation': {
+      options: {
+          path: './log/validation-html-status.json',
+          reportpath: './log/validation-html-report.json',
+          stoponerror: false,
+          relaxerror: [] //ignores these errors
+      },
+      files: {
+          src: ['build/live/index.html']
+      }
+    },
+    // 
+
+    cssmetrics: {
+      index: {
+        src: [
+            'build/css/index.source.css'
         ]
       }
     },
@@ -122,6 +171,13 @@ module.exports = function(grunt) {
       options: {
         livereload: true
       }
+    },
+
+    githooks: {
+      all: {
+        // Will run the jshint and test:unit tasks at every commit
+        'pre-commit': 'jshint test:unit',
+      }
     }
 
   });
@@ -135,9 +191,8 @@ module.exports = function(grunt) {
   // BOB::TODO::20140422, the default task should re-use the html/css tasks
   grunt.registerTask('dev', ['default']);
   grunt.registerTask('backend', ['bem-lookup', 'bem-view']);
-  grunt.registerTask('html', ['copy:html', 'scaffold-sass', 'import-all-sass', 'sass', 'scaffold-develop']);
-  grunt.registerTask('css', ['copy:css', 'sass', 'scaffold-develop', 'copy:develop_css']);
   grunt.registerTask('reset', ['copy:backup', 'clean']);
-  grunt.registerTask('default', ['clean:build', 'copy', 'scaffold-sass', 'import-all-sass', 'sass', 'scaffold-develop', 'copy:develop_css', 'backend']);
+  grunt.registerTask('validate', ['html-validation', 'cssmetrics', 'css-validation']);
+  grunt.registerTask('default', ['clean:build', 'copy:html', 'dom_munger:index', 'scaffold-sass', 'import-all-sass', 'sass', 'autoprefixer', 'cssmin', 'copy:live', 'copy:develop', 'scaffold-develop']);
 
 };
