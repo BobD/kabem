@@ -117,6 +117,8 @@ module.exports = function(grunt) {
     // See https://www.npmjs.org/package/grunt-w3c-validation
     'css-validation': {
       options: {
+        path: './log/validation-css-status.json',
+        reportpath: './log/validation-css-report.json',
         stoponerror: false,
         relaxerror: [],
         profile: 'css3',
@@ -130,6 +132,8 @@ module.exports = function(grunt) {
 
     'html-validation': {
       options: {
+          path: './log/validation-html-status.json',
+          reportpath: './log/validation-html-report.json',
           stoponerror: false,
           relaxerror: [] //ignores these errors
       },

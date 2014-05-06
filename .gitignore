@@ -2,5 +2,6 @@ build
 node_modules
 .sass-cache
 .DS_Store
+log
 src/sass/bem
 src/sass/_all.scss
