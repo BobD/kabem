@@ -50,7 +50,7 @@ module.exports = function(grunt) {
           append: {selector: 'head', html: '<link rel="stylesheet" href="/css/debug.css">'}, 
           suffix: bemClasses
         });
-        grunt.config('dom_munger.a' + selector + '.src', 'build/live/index.html');
+        grunt.config('dom_munger.a' + selector + '.src', 'build/source/html/index.html');
         grunt.config('dom_munger.a' + selector + '.dest', dir + selector + '.html');
         tasks.push('dom_munger:a' + selector);
       }
@@ -64,7 +64,7 @@ module.exports = function(grunt) {
       ],
       suffix: classes
     });
-    grunt.config('dom_munger.index.src', 'build/live/index.html');
+    grunt.config('dom_munger.index.src', 'build/source/html/index.html');
     grunt.config('dom_munger.index.dest', dir + 'main.html');
     tasks.push('dom_munger:index');
 

@@ -93,9 +93,11 @@ module.exports = function(grunt) {
       options: {
         'unformatted': []
       },
-      index: {
-        src: 'build/source/html/index.html',
-        dest: 'build/source/html/index.html'
+      all: {
+        expand: true,
+        cwd: 'build/',
+        src: ['**/*.html'],
+        dest: 'build'
       }
     },
 
@@ -208,11 +210,26 @@ module.exports = function(grunt) {
   // https://www.npmjs.org/package/load-grunt-tasks
   require('load-grunt-tasks')(grunt);
 
-  // BOB::TODO::20140422, the default task should re-use the html/css tasks
   grunt.registerTask('dev', ['default']);
   grunt.registerTask('backend', ['bem-lookup', 'bem-view']);
   grunt.registerTask('reset', ['copy:backup', 'clean']);
   grunt.registerTask('validate', ['html-validation', 'cssmetrics', 'css-validation']);
-  grunt.registerTask('default', ['clean:build', 'copy:html', 'dom_munger:index', 'parse-index', 'prettify:index', 'scaffold-sass', 'import-all-sass', 'sass', 'autoprefixer', 'cssmin', 'copy:live', 'copy:develop', 'scaffold-develop']);
+  
+  // WOW... loads!
+  grunt.registerTask('default', [
+    'clean:build',      // clean up folders, needed so redundant folders and files do not linger
+    'parse-index',      // add stub data using underscore templates
+    'scaffold-sass',    // rip apart the src/index.html and create SASS files for each block/element and modifier
+    'import-all-sass',  // generate a css file with all needed sass @import's
+    'sass',             // SASS the resulting index.css
+    'autoprefixer',     // prefix CSS shizzle
+    'cssmin',           // minify CSS shizzle
+    'copy:html',        // copy the build/source/html/index.html to build/live/index.html
+    'dom_munger:index', // add the index.min.css to the build/live/index.html
+    'copy:live',        // copy a minified/prefixed CSS to the build/live for testing
+    'copy:develop',     // the same for the develop
+    'scaffold-develop', // generate a HTML page for each modifier you defined in the src/sss/bem
+    'prettify:all'      // clean the resulting HTML up a bit
+  ]);
 
 };
