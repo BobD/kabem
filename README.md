@@ -1,8 +1,8 @@
 ##kaBEM
 
-kaBEM is a grunt.js environment for easy scaffolding, developing and testing HTML pages with BEM (Block, Element, Modifier) CSS syntax. And if you are using User Stories to define your project, and have written those in a Structure/State way, it's easy to get some initial BEM classnames for a quick start.
+kaBEM is a grunt.js environment for easy scaffolding, developing and testing of HTML pages with BEM (Block, Element, Modifier) CSS syntax. And if you are using User Stories to define your project, and have written those in a [Structure/State] (http://bem.info/method/) Structure/State way, it's easy to get some initial BEM classnames for a quick start.
 
-kaBEM is mostly useful if you have a single HTML page which can have a lot of different visual states. For example if you want to develop a Gallery or Page Theme depending on a list of different user defined settings.
+kaBEM is mostly useful if you have a single HTML page which can have a lot of different visual states. For example if you want to develop a Gallery plugin or Page Theme depending on a list of different user defined settings.
 
 
 ###What does kaBEM do for you?
