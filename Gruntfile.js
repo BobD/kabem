@@ -59,15 +59,15 @@ module.exports = function(grunt) {
     // https://github.com/gruntjs/grunt-contrib-copy
     copy: {
       html: {
-        src: 'build/html/index.html',
+        src: 'build/source/html/index.html',
         dest: 'build/live/index.html'
       },
       live: {
-        src: './build/css/index.prefixed.min.css',
+        src: './build/source/css/index.prefixed.min.css',
         dest: './build/live/css/index.css'
       },
       develop: {
-        src: './build/css/index.prefixed.css',
+        src: './build/source/css/index.prefixed.css',
         dest: './build/develop/css/index.css'
       },
       backup: {
@@ -94,8 +94,8 @@ module.exports = function(grunt) {
         'unformatted': []
       },
       index: {
-        src: 'build/html/index.html',
-        dest: 'build/html/index.html'
+        src: 'build/source/html/index.html',
+        dest: 'build/source/html/index.html'
       }
     },
 
@@ -106,7 +106,7 @@ module.exports = function(grunt) {
           style: 'expanded'
         },
         files: [
-          {'./build/css/index.source.css': './src/index.scss'},
+          {'./build/source/css/index.source.css': './src/index.scss'},
           {'./build/develop/css/debug.css': './src/sass/custom/debug.scss'}
         ]
       }
@@ -116,8 +116,8 @@ module.exports = function(grunt) {
     autoprefixer: {
       index: {
         options: {},
-        src: 'build/css/index.source.css',
-        dest: 'build/css/index.prefixed.css',
+        src: 'build/source/css/index.source.css',
+        dest: 'build/source/css/index.prefixed.css',
       },
     },
 
@@ -125,7 +125,7 @@ module.exports = function(grunt) {
     cssmin: {
       index: {
         expand: true,
-        files: {'build/css/index.prefixed.min.css': 'build/css/index.prefixed.css'},
+        files: {'build/source/css/index.prefixed.min.css': 'build/source/css/index.prefixed.css'},
         options: {
           banner: '/* Minified with https://www.npmjs.org/package/grunt-contrib-cssmin */'
         }
@@ -144,7 +144,7 @@ module.exports = function(grunt) {
         warnings: '2'
       },
       files: {
-        src: ['build/css/*.css']
+        src: ['build/source/css/*.css']
       }
     },
 
@@ -164,7 +164,7 @@ module.exports = function(grunt) {
     cssmetrics: {
       index: {
         src: [
-            'build/css/index.source.css'
+            'build/source/css/index.source.css'
         ]
       }
     },

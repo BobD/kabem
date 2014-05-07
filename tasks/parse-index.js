@@ -9,6 +9,6 @@ module.exports = function(grunt) {
 		var compiled = _.template(html);
 		var res = compiled(data);
 
-		grunt.file.write('build/html/index.html', res);
+		grunt.file.write('build/source/html/index.html', res);
 	})
 }
