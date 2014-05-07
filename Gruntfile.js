@@ -56,7 +56,7 @@ module.exports = function(grunt) {
 
     copy: {
       html: {
-        src: 'src/index.html',
+        src: 'build/html/index.html',
         dest: 'build/live/index.html'
       },
       live: {
@@ -154,7 +154,7 @@ module.exports = function(grunt) {
     watch: {
       html: {
         files: ['src/index.html'],
-        tasks: ['html']
+        tasks: ['default']
       },
       sass: {
         files: ['src/**/**.scss'],
@@ -193,6 +193,6 @@ module.exports = function(grunt) {
   grunt.registerTask('backend', ['bem-lookup', 'bem-view']);
   grunt.registerTask('reset', ['copy:backup', 'clean']);
   grunt.registerTask('validate', ['html-validation', 'cssmetrics', 'css-validation']);
-  grunt.registerTask('default', ['clean:build', 'copy:html', 'dom_munger:index', 'scaffold-sass', 'import-all-sass', 'sass', 'autoprefixer', 'cssmin', 'copy:live', 'copy:develop', 'scaffold-develop']);
+  grunt.registerTask('default', ['clean:build', 'copy:html', 'dom_munger:index', 'parse-index', 'scaffold-sass', 'import-all-sass', 'sass', 'autoprefixer', 'cssmin', 'copy:live', 'copy:develop', 'scaffold-develop']);
 
 };
