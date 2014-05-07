@@ -14,9 +14,11 @@ module.exports = function(grunt) {
     var bem;
 
     _.each(contextBEM, function(sel){
-      var context = splitBEM(sel);
+      var context = grunt.splitBEM(sel);
       classes.push({selector: '.' + context.be, attribute: 'class', value: ' ' + sel});
     });
+
+    console.log(classes);
 
     var currentModifierFiles = grunt.file.expand({cwd: dir}, '*.html');  
     _.each(currentModifierFiles, function(file){
