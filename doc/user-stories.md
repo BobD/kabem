@@ -16,7 +16,7 @@
   * Each Structure story corresponds to a single Block and Element (__block__element)
   * Each acceptance test inside State stories describe a modifier (__block__element_state-name)
   
-* And since this document is about describing the visual nature of a page or plugin, the acceptance tests inside each user story can be used to get a head start filling the CSS of each corresponding BEM classname. See https://github.com/viewbook/dev-kabem#structurestate-user-stories
+* And since this document is about describing the visual nature of a page or plugin, the acceptance tests inside each user story can be used to get a head start filling the CSS of each corresponding BEM classname.
 
 See https://github.com/viewbook/kabem/blob/master/README.md for some more background on BEM and kaBEM.
 
