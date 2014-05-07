@@ -1,6 +1,6 @@
 ##kaBEM
 
-kaBEM is a grunt.js environment for easy scaffolding, developing and testing of HTML pages with BEM (Block, Element, Modifier) CSS syntax. And if you are using User Stories to define your project, and have written those in a [Structure/State] (http://bem.info/method/) Structure/State way, it's easy to get some initial BEM classnames for a quick start.
+kaBEM is a grunt.js environment for easy scaffolding, developing and testing of HTML pages with BEM (Block, Element, Modifier) CSS syntax. And if you are using User Stories to define your project, and have written those in a [Structure/State] (https://github.com/viewbook/dev-kabem/blob/master/README.md#structurestate-user-stories) way, it's easy to get some initial BEM classnames for a quick start.
 
 kaBEM is mostly useful if you have a single HTML page which can have a lot of different visual states. For example if you want to develop a Gallery plugin or Page Theme depending on a list of different user defined settings.
 
@@ -47,11 +47,11 @@ So a kaBEM class would look like: '__page__container_your-name'
 
 ###Structure/State User Stories?
 
-kaBEM is essentially about managing the different visual states of a single HTML block using SASS. And if you would describe a visual state using User Stories, they would end up in two main categories: Structure and State.
+Structure and State user stories? What are you babbling about? Well kaBEM is essentially about managing the different visual states of a single HTML block using SASS. And if you would describe a visual state using User Stories, they would end up in two main categories perhaps: Structure and State.
 
-In essence Structure describes those elements always present on screen (unless you hide them with a state, don't be nitpicky), and State describes the different states and behaviours those elements can have. And it just happens that this closely matches what BEM is about. Block and Elements are 'Structure', and Modifiers are 'State'. So how handy would it be if you could derive some BEM classnames directly from the User Stories and get started scaffolding your HTML and SASS folder sctructure. Very handy.
+In essence Structure describes those elements always present on screen (unless you hide them with a state, don't be nitpicky), and State describes the different states and behaviours those elements can have. And it just happens that this pretty much matches what BEM is about. Block and Elements are 'Structure', and Modifiers are 'State'. So how handy would it be if you could derive some BEM classnames directly from the User Stories and get started scaffolding your HTML and SASS folder sctructure. Very handy.
 
-For example. Considder a paragraph with a title and some text. And it has to be able to expand the full width, or alternatively take a fixed width (a rather stupid example, i know. But stick with me). Then you could write the different User Stories this way
+For example. Considder a paragraph with a title and some text. And it has to be able to expand the full width, or alternatively take a fixed widt. This is rather stupid example, i know. But stick with me. Then you could write your User Stories this way;
 
 #####Structure
 
@@ -116,10 +116,13 @@ And finally you can put the three BEM modifier class names inside the __paragrap
 
 Nice.
 
+During development you might find that the HTML markup needs additional elements to make things actually work of course, no problem there. You could either modify the relevant BEM classnames with new __elements if those elements are in need of some CSS, or skip them altogether.
+
 
 ###Getting Started
 
   1. [install node.js] (http://nodejs.org/)
   2. [install grunt.js] (http://gruntjs.com/getting-started)
   3. Run 'npm install'
-  4. Take a look at the index.html in src folder, notice the example kaBEM classes, and run 'grunt'
+  4. Run 'grunt connect:development'
+  6. Take a look at the index.html in src folder, notice the example kaBEM classes, and run 'grunt'
