@@ -29,6 +29,7 @@ module.exports = function(grunt) {
       '* Copyright (c) <%= grunt.template.today("yyyy") %> <%= pkg.author.name %>;' +
       ' Licensed <%= _.pluck(pkg.licenses, "type").join(", ") %> */\n',
 
+    // https://github.com/gruntjs/grunt-contrib-connect
     connect: {
       develop: {
         options: {
@@ -48,12 +49,14 @@ module.exports = function(grunt) {
       }
     },
 
+    // https://github.com/gruntjs/grunt-contrib-clean
     clean: {
       build: ['build'],
       source: ['.sass-cache', 'src/sass/_all.scss', 'src/sass/partials/_debug.scss'],
       backup: ['backup']
     },
 
+    // https://github.com/gruntjs/grunt-contrib-copy
     copy: {
       html: {
         src: 'build/html/index.html',
@@ -75,6 +78,7 @@ module.exports = function(grunt) {
       }
     },
 
+    // https://www.npmjs.org/package/grunt-dom-munger
     dom_munger: {
       index: {
         options: {
@@ -84,6 +88,7 @@ module.exports = function(grunt) {
       }
     },
 
+    // https://www.npmjs.org/package/grunt-prettify
     prettify: {
       options: {
         'unformatted': []
@@ -94,6 +99,7 @@ module.exports = function(grunt) {
       }
     },
 
+    // https://github.com/gruntjs/grunt-contrib-sass
     sass: {                             
       dist: {                           
         options: {                      
@@ -106,6 +112,7 @@ module.exports = function(grunt) {
       }
     },
 
+    // https://www.npmjs.org/package/grunt-autoprefixer
     autoprefixer: {
       index: {
         options: {},
@@ -114,6 +121,7 @@ module.exports = function(grunt) {
       },
     },
 
+    // https://github.com/gruntjs/grunt-contrib-cssmin
     cssmin: {
       index: {
         expand: true,
@@ -124,7 +132,7 @@ module.exports = function(grunt) {
       }
     },
 
-    // See https://www.npmjs.org/package/grunt-w3c-validation
+    // https://www.npmjs.org/package/grunt-w3c-validation
     'css-validation': {
       options: {
         path: './log/validation-css-status.json',
@@ -151,8 +159,8 @@ module.exports = function(grunt) {
           src: ['build/live/index.html']
       }
     },
-    // 
 
+    // https://github.com/phamann/grunt-css-metrics
     cssmetrics: {
       index: {
         src: [
@@ -161,6 +169,7 @@ module.exports = function(grunt) {
       }
     },
 
+    // https://github.com/gruntjs/grunt-contrib-watch
     watch: {
       html: {
         files: ['src/index.html'],
@@ -183,6 +192,7 @@ module.exports = function(grunt) {
       }
     },
 
+    // https://github.com/gruntjs/grunt-contrib-watch
     githooks: {
       all: {
         // Will run the jshint and test:unit tasks at every commit
