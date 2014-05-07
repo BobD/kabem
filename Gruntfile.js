@@ -217,16 +217,16 @@ module.exports = function(grunt) {
   
   // WOW... loads!
   grunt.registerTask('default', [
-    'clean:build',      // clean up folders, needed so redundant folders and files do not linger
-    'parse-index',      // add stub data using underscore templates
-    'scaffold-sass',    // rip apart the src/index.html and create SASS files for each block/element and modifier
-    'import-all-sass',  // generate a css file with all needed sass @import's
-    'sass',             // SASS the resulting index.css
+    'clean:build',      // clean up folders, redundant folders and files do not need to linger on
+    'parse-index',      // add stub data to build/source/html/index.html using underscore templates
+    'scaffold-sass',    // rip apart the build/source/html/index.html and create SASS files for each block/element and modifier in there
+    'import-all-sass',  // generate a CSS file with all needed SASS @import's
+    'sass',             // SASS up the resulting build/source/css/index.source.css
     'autoprefixer',     // prefix CSS shizzle
     'cssmin',           // minify CSS shizzle
     'copy:html',        // copy the build/source/html/index.html to build/live/index.html
     'dom_munger:index', // add the index.min.css to the build/live/index.html
-    'copy:live',        // copy a minified/prefixed CSS to the build/live for testing
+    'copy:live',        // copy a minified/prefixed CSS to the build/live
     'copy:develop',     // the same for the develop
     'scaffold-develop', // generate a HTML page for each modifier you defined in the src/sss/bem
     'prettify:all'      // clean the resulting HTML up a bit
