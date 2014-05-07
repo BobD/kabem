@@ -42,7 +42,7 @@ kaBEM uses these class name conventions:
 * '_' starting a modifier
 * '-' for multi word block, elements and modifiers. 
 
-So a kaBEM class would look like: '__page__container_your-name'
+So a kaBEM class would look like: '__page__container_modifier-name'
 
 
 ###Structure/State User Stories?
