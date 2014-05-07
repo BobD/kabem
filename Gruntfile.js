@@ -84,6 +84,16 @@ module.exports = function(grunt) {
       }
     },
 
+    prettify: {
+      options: {
+        'unformatted': []
+      },
+      index: {
+        src: 'build/html/index.html',
+        dest: 'build/html/index.html'
+      }
+    },
+
     sass: {                             
       dist: {                           
         options: {                      
@@ -193,6 +203,6 @@ module.exports = function(grunt) {
   grunt.registerTask('backend', ['bem-lookup', 'bem-view']);
   grunt.registerTask('reset', ['copy:backup', 'clean']);
   grunt.registerTask('validate', ['html-validation', 'cssmetrics', 'css-validation']);
-  grunt.registerTask('default', ['clean:build', 'copy:html', 'dom_munger:index', 'parse-index', 'scaffold-sass', 'import-all-sass', 'sass', 'autoprefixer', 'cssmin', 'copy:live', 'copy:develop', 'scaffold-develop']);
+  grunt.registerTask('default', ['clean:build', 'copy:html', 'dom_munger:index', 'parse-index', 'prettify:index', 'scaffold-sass', 'import-all-sass', 'sass', 'autoprefixer', 'cssmin', 'copy:live', 'copy:develop', 'scaffold-develop']);
 
 };
