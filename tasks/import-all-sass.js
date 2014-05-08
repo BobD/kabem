@@ -2,16 +2,19 @@
 module.exports = function(grunt) {
 	grunt.registerTask('import-all-sass', 'Generates a _all.scss file with all sass files imported', function() {
     var dir = 'src/sass/';
-    var filepath = dir + '_all.scss';
+    var allImportFile = dir + '_all.scss';
+    var bemImportFile = dir + 'bem.scss';
     var customFiles = grunt.file.expand({cwd: dir}, ['custom/**/*.scss', '!_all.scss', '!custom/debug.scss', '!custom/partials/_debug.scss']);
     var bemFiles = grunt.file.expand({cwd: dir}, ['bem/**/*.scss']);
     var segments, file, importFile;
-    var imports = ['// Auto generated, see grunt "import-all-sass task" '];
-    
-    imports = imports.concat(getSASSimports(customFiles));
-    imports = imports.concat(getSASSimports(bemFiles));
+    var leader = ['// Auto generated, see grunt "import-all-sass task" '];
 
-    grunt.file.write(filepath, imports.join('\n'));
+    var allImports = leader.concat(getSASSimports(customFiles));
+    var bemImports = leader.concat(getSASSimports(bemFiles));
+    allImports.push('@import "sass/bem";');
+
+    grunt.file.write(allImportFile, allImports.join('\n'));
+    grunt.file.write(bemImportFile, bemImports.join('\n'));
   });
 }
 

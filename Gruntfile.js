@@ -109,6 +109,7 @@ module.exports = function(grunt) {
         },
         files: [
           {'./build/source/css/index.source.css': './src/index.scss'},
+          {'./build/source/css/index.bem.css': './src/sass/bem.scss'},
           {'./build/develop/css/debug.css': './src/sass/custom/debug.scss'}
         ]
       }
@@ -179,7 +180,7 @@ module.exports = function(grunt) {
       },
       sass: {
         files: ['src/**/**.scss'],
-        tasks: ['import-all-sass', 'sass', 'scaffold-develop', 'copy:develop_css']
+        tasks: ['default']
       },
       css: {
          files: ['src/**/**.css'],
