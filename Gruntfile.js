@@ -31,10 +31,10 @@ module.exports = function(grunt) {
 
     // https://github.com/gruntjs/grunt-contrib-connect
     connect: {
-      develop: {
+      modifiers: {
         options: {
           port: 9001,
-          base: 'build/develop',
+          base: 'build/modifiers',
           keepalive: true,
           open: true
         }
@@ -63,12 +63,12 @@ module.exports = function(grunt) {
         dest: 'build/live/index.html'
       },
       live: {
-        src: './build/source/css/index.prefixed.min.css',
+        src: './build/source/css/index.source.prefixed.min.css',
         dest: './build/live/css/index.css'
       },
-      develop: {
-        src: './build/source/css/index.prefixed.css',
-        dest: './build/develop/css/index.css'
+      modifiers: {
+        src: './build/source/css/index.source.prefixed.css',
+        dest: './build/modifiers/css/index.css'
       },
       backup: {
         cwd: 'src/',
@@ -110,7 +110,7 @@ module.exports = function(grunt) {
         files: [
           {'./build/source/css/index.source.css': './src/index.scss'},
           {'./build/source/css/index.bem.css': './src/sass/bem.scss'},
-          {'./build/develop/css/debug.css': './src/sass/custom/debug.scss'}
+          {'./build/modifiers/css/debug.css': './src/sass/custom/debug.scss'}
         ]
       }
     },
@@ -120,7 +120,7 @@ module.exports = function(grunt) {
       index: {
         options: {},
         src: 'build/source/css/index.source.css',
-        dest: 'build/source/css/index.prefixed.css',
+        dest: 'build/source/css/index.source.prefixed.css',
       },
     },
 
@@ -128,7 +128,7 @@ module.exports = function(grunt) {
     cssmin: {
       index: {
         expand: true,
-        files: {'build/source/css/index.prefixed.min.css': 'build/source/css/index.prefixed.css'},
+        files: {'build/source/css/index.source.prefixed.min.css': 'build/source/css/index.source.prefixed.css'},
         options: {
           banner: '/* Minified with https://www.npmjs.org/package/grunt-contrib-cssmin */'
         }
@@ -218,19 +218,19 @@ module.exports = function(grunt) {
   
   // WOW... loads!
   grunt.registerTask('default', [
-    'clean:build',      // clean up folders, redundant folders and files do not need to linger on
-    'parse-index',      // add stub data to build/source/html/index.html using underscore templates
-    'scaffold-sass',    // rip apart the build/source/html/index.html and create SASS files for each block/element and modifier in there
-    'sass-imports',  // generate a CSS file with all needed SASS @import's
-    'sass',             // SASS up the resulting build/source/css/index.source.css
-    'autoprefixer',     // prefix CSS shizzle
-    'cssmin',           // minify CSS shizzle
-    'copy:html',        // copy the build/source/html/index.html to build/live/index.html
-    'dom_munger:index', // add the index.min.css to the build/live/index.html
-    'copy:live',        // copy a minified/prefixed CSS to the build/live
-    'copy:develop',     // the same for the develop
-    'scaffold-develop', // generate a HTML page for each modifier you defined in the src/sss/bem
-    'prettify:all'      // clean the resulting HTML up a bit
+    'clean:build',          // clean up folders, redundant folders and files do not need to linger on
+    'parse-index',          // add stub data to build/source/html/index.html using underscore templates
+    'scaffold-sass',        // rip apart the build/source/html/index.html and create SASS files for each block/element and modifier in there
+    'sass-imports',         // generate a CSS file with all needed SASS @import's
+    'sass',                 // SASS up the resulting build/source/css/index.source.css
+    'autoprefixer',         // prefix CSS shizzle
+    'cssmin',               // minify CSS shizzle
+    'copy:html',            // copy the build/source/html/index.html to build/live/index.html
+    'dom_munger:index',     // add the index.min.css to the build/live/index.html
+    'copy:live',            // copy a minified/prefixed CSS to the build/live
+    'copy:modifiers',       // the same for the modifiers
+    'scaffold-modifiers',   // generate a HTML page for each modifier you defined in the src/sss/bem
+    'prettify:all'          // clean the resulting HTML up a bit
   ]);
 
 };

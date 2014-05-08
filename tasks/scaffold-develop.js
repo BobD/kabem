@@ -1,6 +1,6 @@
 module.exports = function(grunt) {
 
-  grunt.registerTask('scaffold-develop', 'Generate HTML pages for each BEM modifier', function() {
+  grunt.registerTask('scaffold-modifiers', 'Generate HTML pages for each BEM modifier', function() {
     var _ = require("underscore");
     var CSSOM = require('cssom');
     var CSSFile = grunt.file.read('build/source/css/index.bem.css');
@@ -8,7 +8,7 @@ module.exports = function(grunt) {
     var classes = [{selector: 'body', attribute: 'class', value: ' debug'}];
     var context = grunt.option('context') || 'default';
     var contextBEM = grunt.file.readJSON('src/config/bem-context.json')[context] || [];
-    var dir = 'build/develop/';
+    var dir = 'build/modifiers/';
     var createPage= false;
     var tasks = [];
     var bem;
@@ -23,6 +23,8 @@ module.exports = function(grunt) {
       grunt.file.delete(dir + file);
     });
 
+    console.log(CSSTree.cssRules);
+
     _.each(CSSTree.cssRules, function(rule){
       var selector = rule.selectorText;
       var bemClasses = [];
@@ -31,6 +33,8 @@ module.exports = function(grunt) {
       bem = grunt.splitBEM(selector);
       beParts = bem.be.split('__').length;
       selector = bem.selector;
+
+      console.log('selector', selector);
       
       // Only create pages for BEM modifiers
       createPage = (selector.indexOf(' ') === -1) && (bem.m !== undefined);
