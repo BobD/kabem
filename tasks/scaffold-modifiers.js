@@ -52,7 +52,7 @@ module.exports = function(grunt) {
         }
 
         var selector = rule.selectorText;
-        var bemClasses = [];
+        var bemClasses = classes.slice(0);
         var beParts;
 
         bem = grunt.splitBEM(selector);
@@ -64,14 +64,6 @@ module.exports = function(grunt) {
 
         // Create pages for testing, and apply the relevant modifier classes
         if(createPage){
-
-          // Only apply the context BEM if they are to be applied with a parent of the current element
-          _.each(classes, function(suffix){
-            if(suffix.selector.split('__').length < beParts){
-              bemClasses.push(suffix);
-            }
-          });
-
           bemClasses.push({selector: '.' + bem.be, attribute: 'class', value: ' ' + selector});
           grunt.config('dom_munger.a' + selector + '.options', {
             append: append, 
