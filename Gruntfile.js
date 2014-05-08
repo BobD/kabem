@@ -221,7 +221,7 @@ module.exports = function(grunt) {
     'clean:build',      // clean up folders, redundant folders and files do not need to linger on
     'parse-index',      // add stub data to build/source/html/index.html using underscore templates
     'scaffold-sass',    // rip apart the build/source/html/index.html and create SASS files for each block/element and modifier in there
-    'import-all-sass',  // generate a CSS file with all needed SASS @import's
+    'sass-imports',  // generate a CSS file with all needed SASS @import's
     'sass',             // SASS up the resulting build/source/css/index.source.css
     'autoprefixer',     // prefix CSS shizzle
     'cssmin',           // minify CSS shizzle
