@@ -8,6 +8,11 @@ module.exports = function(grunt) {
       selector = selector.substring(1);
     }
 
+    // Only get the main BEM class name, not the descendants
+    if(selector.indexOf(' ') != -1){
+      selector = selector.split(' ')[0];
+    }
+
     var BE = selector.split('__');
     var M = BE.pop().split('_');
     BE.push(M.shift());
