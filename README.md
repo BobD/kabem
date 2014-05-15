@@ -17,6 +17,7 @@ TODO
 * Review grunt clean & backup after default grunt task (old SASS BEM folder linger on..) 
 * Add guidelines in readme for non-user-story related BEM classnames 
 * Add GIT Hooks for CSS/HTML validation before push
+* Add device detection CSS markers
 
 
 ###Why BEM?
