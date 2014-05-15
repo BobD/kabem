@@ -129,10 +129,8 @@ Every BEM modifier classname you fill with some CSS will get a seperate HTML pag
 
 ###Getting Started
 
-  1. [install node.js] (http://nodejs.org/)
-  2. [install grunt.js] (http://gruntjs.com/getting-started)
-  3. [install bower] (http://bower.io/)
-  4. Run 'npm install'
-  5. Run 'bower install'
-  6. Run 'grunt connect' and 'grunt watch'
-  7. Take a look at the index.html in src folder, notice the example kaBEM classes, and run 'grunt'
+  1. [install node.js] (http://nodejs.org/), [grunt.js] (http://gruntjs.com/getting-started) and [bower] (http://bower.io/)
+  2. Run 'npm install'
+  3. Run 'bower install'
+  4. Run 'grunt connect' and 'grunt watch'
+  5. Take a look at the index.html in src folder, notice the example kaBEM classes, and run 'grunt'
