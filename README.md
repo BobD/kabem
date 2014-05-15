@@ -7,11 +7,15 @@ kaBEM is mostly useful if you have a single HTML page which can have a lot of di
 
 ###What does kaBEM do for you?
 
-kaBEM uses your initial HTML file with some BEM classes to scaffold out a handy SASS folder structure to start working on. Each Block or Element get's it's own folder, and inside that is a seperate SASS file for the block/element and modifiers CSS. Each new Modifier BEM class you add get's translated into a separate HTML file for easy testing. 
+kaBEM uses a bit of HTML markup with some BEM classes to scaffold out a handy SASS folder structure to start working on. Each Block or Element get's it's own folder, and inside that is a seperate SASS file for the block/element and modifiers CSS. Each new Modifier BEM class you add get's translated into a separate HTML file for easy testing. 
 
 The kaBEM Grunt environment also has all standard (grunt) niceties like HTML/CSS validation and minimizing, local servers and LiveReload. And you can add your own specific tasks of course.
 
 TODO
+* Include SASS variables, SASS folder needs some restructuring no doubt
+* Clean up debug CSS so it does not conflict with production CSS
+* Review grunt clean & backup after default grunt task (old SASS BEM folder linger on..) 
+* Add guidelines in readme for non-user-story related BEM classnames 
 * Add GIT Hooks for CSS/HTML validation before push
 
 
