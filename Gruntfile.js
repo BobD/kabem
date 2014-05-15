@@ -63,13 +63,17 @@ module.exports = function(grunt) {
 
     // https://github.com/gruntjs/grunt-contrib-copy
     copy: {
+      normalize: {
+        src: 'bower_components/normalize.css/normalize.css',
+        dest: 'src/sass/vendor/normalize.scss'
+      },
       html: {
         src: 'build/source/html/index.html',
         dest: 'build/live/index.html'
       },
       live: {
         src: './build/source/css/index.source.prefixed.min.css',
-        dest: './build/live/css/index.css'
+        dest: './build/live/css/index.min.css'
       },
       modifiers: {
         src: './build/source/css/index.source.prefixed.css',
@@ -224,6 +228,7 @@ module.exports = function(grunt) {
   // WOW... loads!
   grunt.registerTask('default', [
     'clean:build',          // clean up folders, redundant folders and files do not need to linger on
+    'copy:normalize',       // copy the bower normalize into the src/sass/vender
     'parse-index',          // add stub data to build/source/html/index.html using underscore templates
     'scaffold-sass',        // rip apart the build/source/html/index.html and create SASS files for each block/element and modifier in there
     'sass-imports',         // generate a CSS file with all needed SASS @import's
