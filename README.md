@@ -12,7 +12,7 @@ kaBEM uses a bit of HTML markup with some BEM classes to scaffold out a handy SA
 The kaBEM Grunt environment also has all standard (grunt) niceties like HTML/CSS validation and minimizing, local servers and LiveReload. And you can add your own specific tasks of course.
 
 TODO
-* Include SASS variables, SASS folder needs some restructuring no doubt
+* ~~Include SASS variables, SASS folder needs some restructuring no doubt~~
 * Remove SASS utils, checkout bower to include them (possible for SASS?)
 * Clean up debug CSS so it does not conflict with production CSS
 * Review grunt clean & backup after default grunt task (old SASS BEM folder linger on..) 
