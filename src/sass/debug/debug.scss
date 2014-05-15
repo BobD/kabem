@@ -22,15 +22,5 @@ $debug-index: 1;
 	$debug-index: (($debug-index + 1) % length($debug-colors)) + 1;
 }
 
-@import "partials/_debug";
-
-.__left-layout{}
-.__left-layout__background{}
-.__left-layout__holder{}
-.__left-layout__holder__sidebar{
-	min-height: 200px;
-}
-.__left-layout__holder__content{
-}
-.__left-layout__holder__content__title{}
-.__left-layout__holder__content__footer{}
+@import "_debug";
+// @import "partials/_device-detection";

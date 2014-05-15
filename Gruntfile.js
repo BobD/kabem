@@ -57,7 +57,7 @@ module.exports = function(grunt) {
     // https://github.com/gruntjs/grunt-contrib-clean
     clean: {
       build: ['build'],
-      source: ['.sass-cache', 'src/sass/_all.scss', 'src/sass/partials/_debug.scss'],
+      source: ['.sass-cache', 'src/sass/_all.scss'],
       backup: ['backup']
     },
 
@@ -114,8 +114,8 @@ module.exports = function(grunt) {
         },
         files: [
           {'./build/source/css/index.source.css': './src/index.scss'},
-          {'./build/source/css/index.bem.css': './src/sass/bem.scss'},
-          {'./build/modifiers/css/debug.css': './src/sass/custom/debug.scss'}
+          {'./build/source/css/index.bem.css': './src/sass/bem_imports.scss'},
+          {'./build/modifiers/css/debug.css': './src/sass/debug/debug.scss'}
         ]
       }
     },
