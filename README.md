@@ -12,7 +12,7 @@ kaBEM uses a bit of HTML markup with some BEM classes to scaffold out a handy SA
 The kaBEM Grunt environment also has all standard (grunt) niceties like HTML/CSS validation and minimizing, local servers and LiveReload. And you can add your own specific tasks of course.
 
 TODO
-* Include SASS variables, SASS folder needs some restructuring no doubt
+* ~~Include SASS variables, SASS folder needs some restructuring no doubt~~
 * Clean up debug CSS so it does not conflict with production CSS
 * Review grunt clean & backup after default grunt task (old SASS BEM folder linger on..) 
 * Add guidelines in readme for non-user-story related BEM classnames 
@@ -129,8 +129,8 @@ Every BEM modifier classname you fill with some CSS will get a seperate HTML pag
 
 ###Getting Started
 
-  1. [install node.js] (http://nodejs.org/)
-  2. [install grunt.js] (http://gruntjs.com/getting-started)
-  3. Run 'npm install'
-  4. Run 'grunt connect:development'
-  6. Take a look at the index.html in src folder, notice the example kaBEM classes, and run 'grunt'
+  1. [install node.js] (http://nodejs.org/), [grunt.js] (http://gruntjs.com/getting-started) and [bower] (http://bower.io/)
+  2. Run 'npm install'
+  3. Run 'bower install'
+  4. Run 'grunt connect' and 'grunt watch'
+  5. Take a look at the index.html in src folder, notice the example kaBEM classes, and run 'grunt'
