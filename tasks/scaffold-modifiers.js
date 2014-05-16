@@ -12,7 +12,7 @@ module.exports = function(grunt) {
     var CSSTree = CSSOM.parse(CSSFile);
     var classes = [{selector: 'body', attribute: 'class', value: ' debug'}];
     var context = grunt.option('context') || 'default';
-    var contextBEM = grunt.file.readJSON('src/config/bem-context.json')[context] || [];
+    var contextBEM = grunt.file.readJSON('config/context.json')[context] || [];
     var tasks = [];
 
     _.each(contextBEM, function(sel){

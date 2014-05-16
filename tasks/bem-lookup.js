@@ -2,7 +2,7 @@ module.exports = function(grunt) {
 
   grunt.registerTask('bem-lookup', 'Generate a lookup file for all possible Modifiers belonging to a Block or Element', function() {
     var _ = require("underscore");
-    var dir = 'src/sass/';
+    var dir = 'src/css/';
     var modifierFiles = grunt.file.expand([dir + 'bem/**/*_modifiers.scss']);
     var CSSOM = require('cssom');
     var CSSFile, CSSTree, bem;

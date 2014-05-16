@@ -122,10 +122,10 @@ During development you might find that the HTML markup needs additional elements
 
 
 ###Adding some dynamic HTML
-kaBEM supports [underscore templates](http://underscorejs.org/#template) and you can put the data used in  src/config/data-stub.json. You can also tweak the parse-index task (see inside the tasks folder) to use some other template or load in dynamic JSON.
+kaBEM supports [underscore templates](http://underscorejs.org/#template) and you can put the data used in  config/data-stub.json. You can also tweak the parse-index task (see inside the tasks folder) to use some other template or load in dynamic JSON.
 
 ###Adding a BEM context for testing
-Every BEM modifier classname you fill with some CSS will get a seperate HTML page in the build/develop folder for easy testing. But some modifiers only make sense in combination with other modifiers. So you can sum these modifier classnames up in src/config/bem-context.json ("default") and they will be injected in every modifier page. Or you can add them under a different name and run grunt with --context=your-bem-context.
+Every BEM modifier classname you fill with some CSS will get a seperate HTML page in the build/develop folder for easy testing. But some modifiers only make sense in combination with other modifiers. So you can sum these modifier classnames up in config/bem-context.json ("default") and they will be injected in every modifier page. Or you can add them under a different name and run grunt with --context=your-bem-context.
 
 ###Getting Started
 

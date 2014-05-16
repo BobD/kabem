@@ -3,7 +3,7 @@ module.exports = function(grunt) {
     var _ = require("underscore");
     var jsdom = require('jsdom').jsdom;
     var cwd = 'src/';
-    var dir = cwd + 'sass/bem'
+    var dir = cwd + 'css/bem'
     var index = 'build/source/html/index.html';
     var html = grunt.file.read(index);
     var doc = jsdom(html).parentWindow.document;
@@ -48,7 +48,7 @@ module.exports = function(grunt) {
     });
 
     // write some debuging css outlines
-    grunt.file.write(cwd + 'sass/debug/_debug.scss', debugSASS);
+    grunt.file.write(cwd + 'css/debug/_debug.scss', debugSASS);
 
     // clean up sass folders which are not referenced through the HTML bem classes
     // BOB::TODO::20140324, will remove everything.. also custom css work, need to rethink this

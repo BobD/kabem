@@ -57,7 +57,7 @@ module.exports = function(grunt) {
     // https://github.com/gruntjs/grunt-contrib-clean
     clean: {
       build: ['build'],
-      source: ['.sass-cache', 'src/sass/_all.scss'],
+      source: ['.sass-cache', 'src/css/_all.scss'],
       backup: ['backup']
     },
 
@@ -65,7 +65,19 @@ module.exports = function(grunt) {
     copy: {
       normalize: {
         src: 'bower_components/normalize.css/normalize.css',
-        dest: 'src/sass/vendor/normalize.scss'
+        dest: 'src/css/vendor/normalize.scss'
+      },
+      scripts: {
+        files: [
+          {expand: true, cwd: 'src/scripts/', src: ['**/*'], dest: 'build/live/scripts/', filter: 'isFile'},
+          {expand: true, cwd: 'src/scripts/', src: ['**/*'], dest: 'build/modifiers/scripts/', filter: 'isFile'}
+        ]
+      },
+      images: {
+        files: [
+          {expand: true, cwd: 'src/images/', src: ['**/*'], dest: 'build/live/images/', filter: 'isFile'},
+          {expand: true, cwd: 'src/images/', src: ['**/*'], dest: 'build/modifiers/images/', filter: 'isFile'}
+        ]
       },
       html: {
         src: 'build/source/html/index.html',
@@ -82,7 +94,7 @@ module.exports = function(grunt) {
       backup: {
         cwd: 'src/',
         expand: true,
-        src: 'sass/**',
+        src: 'css/**',
         dest: 'backup/ <%= grunt.template.today("yyyymmddhMM") %>/'
       }
     },
@@ -118,8 +130,8 @@ module.exports = function(grunt) {
         },
         files: [
           {'./build/source/css/index.source.css': './src/index.scss'},
-          {'./build/source/css/index.bem.css': './src/sass/bem_imports.scss'},
-          {'./build/modifiers/css/debug.css': './src/sass/debug/debug.scss'}
+          {'./build/source/css/index.bem.css': './src/css/bem_imports.scss'},
+          {'./build/modifiers/css/debug.css': './src/css/debug/debug.scss'}
         ]
       }
     },
@@ -228,7 +240,9 @@ module.exports = function(grunt) {
   // WOW... loads!
   grunt.registerTask('default', [
     'clean:build',          // clean up folders, redundant folders and files do not need to linger on
-    'copy:normalize',       // copy the bower normalize into the src/sass/vender
+    'copy:normalize',       // copy a bower normalize package into the src/css/vendor
+    'copy:scripts',         // copy any src scrips into build/../scrips
+    'copy:images',          // copy any src images into build/../scrips
     'parse-index',          // add stub data to build/source/html/index.html using underscore templates
     'scaffold-sass',        // rip apart the build/source/html/index.html and create SASS files for each block/element and modifier in there
     'sass-imports',         // generate a CSS file with all needed SASS @import's
