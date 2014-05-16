@@ -14,7 +14,7 @@ $device-number: 0;
 @mixin device-type($type) {
 	$device-number: $device-number + 1;
 
-	#dev-#{$device-number} {
+	.device-#{$device-number} {
 		display: block !important;
 
 		&:before{
@@ -24,7 +24,7 @@ $device-number: 0;
 }
 
 
-#debug{
+#device-detection{
 	position: fixed;
 	top: 0;
 	left: 0;
@@ -44,7 +44,6 @@ $device-number: 0;
 		}
 	}
 }
-
 
 
 /* All Smartphones in portrait and landscape ----------- */

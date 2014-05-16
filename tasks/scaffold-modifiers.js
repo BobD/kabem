@@ -1,9 +1,18 @@
 module.exports = function(grunt) {
   var _ = require("underscore");
   var dir = 'build/modifiers/';
+
+  var deviceDetection = ['<div  id="device-detection">'];
+  // Keep the limit high enough to hold all possible devices in _device-detection.scss
+  for(var a=1; a <= 40; ++a){
+    deviceDetection.push('<div class="device-' + a + '"/>');
+  }
+  deviceDetection.push('</div>');
+
   var append = [
       {selector: 'head', html: '<link rel="stylesheet" href="/css/debug.css">'},
-      {selector: 'head', html: '<link rel="stylesheet" href="/css/index.css">'}
+      {selector: 'head', html: '<link rel="stylesheet" href="/css/index.css">'},
+      {selector: 'body', html: deviceDetection.join('')}
   ];
 
   grunt.registerTask('scaffold-modifiers', 'Generate HTML pages for each BEM modifier', function() {
