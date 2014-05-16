@@ -13,9 +13,9 @@ The kaBEM Grunt environment also has all standard (grunt) niceties like HTML/CSS
 
 TODO
 * ~~Include SASS variables, SASS folder needs some restructuring no doubt~~
-* Clean up debug CSS so it does not conflict with production CSS
-* Review grunt clean & backup after default grunt task (old SASS BEM folder linger on..) 
-* Add guidelines in readme for non-user-story related BEM classnames 
+* ~~Clean up debug CSS so it does not conflict with production CSS~~
+* Refactor retina device detection CSS for proper browser prefixes and dppx usage
+* Review grunt clean & backup after default grunt task (old SASS BEM folders linger on..) 
 * Add GIT Hooks for CSS/HTML validation before push
 
 
