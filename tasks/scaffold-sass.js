@@ -1,6 +1,8 @@
 module.exports = function(grunt) {
+  var _ = require("underscore");
+  var redundants;
+
   grunt.registerTask('scaffold-sass', 'Generates folders for all sass files based on BEM classnames in index.html', function() {
-    var _ = require("underscore");
     var jsdom = require('jsdom').jsdom;
     var cwd = 'src/';
     var dir = cwd + 'css/bem'
@@ -51,17 +53,57 @@ module.exports = function(grunt) {
     grunt.file.write(cwd + 'css/debug/_debug.scss', debugSASS);
 
     // clean up sass folders which are not referenced through the HTML bem classes
-    // BOB::TODO::20140324, will remove everything.. also custom css work, need to rethink this
-    var dirs = grunt.file.expand({cwd: dir}, ['**/*', '!**/*.scss']),
-        dirName;
+    var deletePaths = grunt.file.expand({cwd: dir}, ['**/*', '!**/*.scss']),
+        dirName, backupTasks = [], paths = [], taskName;
 
-    _.each(dirs, function(path){
+    redundants = [];
+
+    _.each(deletePaths, function(path){
       dirName = path.split('/').join('');
+
       if(!doc.querySelector('.' + dirName)){
-        // grunt.task.run('prompt:clear_sass_scaffold');
-        grunt.file.delete(dir + '/'+ path);
+        taskName = 'prompt.a' + path;
+
+        grunt.config(taskName + '.options', {
+          questions: [{
+              config: taskName + '.backup',
+              type: 'list',
+              message: 'It seems a CSS folder is not needed anymore with the current HTML (' + dirName + '). What do you want to do?',
+              choices: ['backup', 'delete', 'get a coffee'],
+              default: 'backup',
+              filter:  function(action){
+                redundants.push({path: path, action: action});
+                return true;
+              }
+            }
+          ]
+        });
+
+        backupTasks.push('prompt:a' + path);
       }
     });
 
+    backupTasks.push('bem_backup');
+    grunt.task.run(backupTasks);
   });
+
+  grunt.registerTask('bem_backup', 'Make a backup from a BEM SASS folder if it is not referenced in the HTML anymore', function(){
+    _.each(redundants, function(bem){
+
+      switch(bem.action){
+        case 'backup':
+          var cwd = 'src/css/bem/' + bem.path;
+          var files = grunt.file.expand({cwd: cwd}, ['*.scss']);
+          
+          _.each(files, function(file){
+            grunt.file.copy(cwd + file, 'backup');
+          });
+          break;
+        default: 
+          grunt.file.delete('src/' + bem.path);
+          break;
+      }
+    })
+  });
+
 };

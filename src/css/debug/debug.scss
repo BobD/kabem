@@ -3,17 +3,12 @@ $debug-colors: 	#F5FAFF, #EBF5FF, #E0F0FF, #D6EBFF, #CCE6FF;
 $debug-index: 1;
 
 @mixin debug($block_element){
-	outline: thin solid black;
-	position: relative;
+	outline: thin dotted black;
 
 	&:before{
 		content: '#{$block_element}';
-		display: block;
 		position: absolute;
-		top: 0;
-		right: 0;
-		bottom: 0;
-		left: 0;
+		display: inline;
 		background-color: nth($debug-colors, $debug-index);
 		font-size: 10px;
 		padding: 5px;

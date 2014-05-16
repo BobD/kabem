@@ -57,8 +57,7 @@ module.exports = function(grunt) {
     // https://github.com/gruntjs/grunt-contrib-clean
     clean: {
       build: ['build'],
-      source: ['.sass-cache', 'src/css/_all.scss'],
-      backup: ['backup']
+      source: ['src/css/_all.scss']
     },
 
     // https://github.com/gruntjs/grunt-contrib-copy
@@ -91,12 +90,12 @@ module.exports = function(grunt) {
         src: './build/source/css/index.source.prefixed.css',
         dest: './build/modifiers/css/index.css'
       },
-      backup: {
-        cwd: 'src/',
-        expand: true,
-        src: 'css/**',
-        dest: 'backup/ <%= grunt.template.today("yyyymmddhMM") %>/'
-      }
+      // backup: {
+      //   cwd: 'src/',
+      //   expand: true,
+      //   src: 'css/**',
+      //   dest: 'backup/ <%= grunt.template.today("yyyymmddhMM") %>/'
+      // }
     },
 
     // https://www.npmjs.org/package/grunt-dom-munger
@@ -233,12 +232,12 @@ module.exports = function(grunt) {
 
   grunt.registerTask('dev', ['default']);
   grunt.registerTask('backend', ['bem-lookup', 'bem-view']);
-  grunt.registerTask('reset', ['copy:backup', 'clean']);
+  // grunt.registerTask('reset', ['copy:backup', 'clean']);
   grunt.registerTask('validate', ['html-validation', 'cssmetrics', 'css-validation']);
   
   // WOW... loads!
   grunt.registerTask('default', [
-    'clean:build',          // clean up folders, redundant folders and files do not need to linger on
+    'clean:build',          // clean up folders
     'copy:normalize',       // copy a bower normalize package into the src/css/vendor
     'copy:scripts',         // copy any src scrips into build/../scrips
     'copy:images',          // copy any src images into build/../scrips

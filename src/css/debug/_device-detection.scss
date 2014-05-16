@@ -7,6 +7,7 @@ Sources:
 	+ http://www.google.com/url?q=http%3A%2F%2Fcode-tricks.com%2Fcss-media-queries-for-common-devices%2F&sa=D&sntz=1&usg=AFQjCNF5twyvhG-cP5SbRTI6WZ1VnD_Kqg
 	+ http://stackoverflow.com/questions/12539697/iphone-5-css-media-query
 	+ http://bjango.com/articles/min-device-pixel-ratio/
+	+ http://drewwells.net/blog/2013/working-with-dppx/
 */
 
 $device-number: 0;
@@ -23,8 +24,12 @@ $device-number: 0;
 	}
 }
 
-
 #device-detection{
+	display: none;
+}
+
+body.debug #device-detection{
+	display: block;
 	position: fixed;
 	top: 0;
 	left: 0;
