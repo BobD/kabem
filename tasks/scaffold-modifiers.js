@@ -11,7 +11,6 @@ module.exports = function(grunt) {
 
   var append = [
       {selector: 'head', html: '<link rel="stylesheet" href="/css/debug.css">'},
-      {selector: 'head', html: '<link rel="stylesheet" href="/css/index.css">'},
       {selector: 'body', html: deviceDetection.join('')}
   ];
 

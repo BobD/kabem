@@ -67,6 +67,10 @@ module.exports = function(grunt) {
         src: 'bower_components/normalize.css/normalize.css',
         dest: 'src/css/vendor/normalize.scss'
       },
+      html5shiv: {
+        src: 'bower_components/html5shiv/dist/html5shiv.min.js',
+        dest: 'src/scripts/vendor/html5shiv.min.js'
+      },
       scripts: {
         files: [
           {expand: true, cwd: 'src/scripts/', src: ['**/*'], dest: 'build/live/scripts/', filter: 'isFile'},
@@ -97,9 +101,12 @@ module.exports = function(grunt) {
     dom_munger: {
       index: {
         options: {
-          append: {selector: 'head', html: '<link rel="stylesheet" href="/css/index.min.css">'}
+          append: [
+            {selector: 'head', html: '<link rel="stylesheet" href="/css/index.min.css">'},
+            {selector: 'head', html: '<!--[if lt IE 9]><script src="/scripts/vendor/html5shiv.js"></script><![endif]-->'}
+          ]
         },
-        src: 'build/live/index.html'
+        src: 'build/source/html/index.html'
       }
     },
 
@@ -168,13 +175,13 @@ module.exports = function(grunt) {
 
     'html-validation': {
       options: {
-          path: './doc/log/validation-html-status.json',
-          reportpath: './doc/log/validation-html-report.json',
-          stoponerror: false,
-          relaxerror: [] //ignores these errors
+        path: './doc/log/validation-html-status.json',
+        reportpath: './doc/log/validation-html-report.json',
+        stoponerror: false,
+        relaxerror: [] //ignores these errors
       },
       files: {
-          src: ['build/live/index.html']
+        src: ['build/live/index.html']
       }
     },
 
@@ -182,7 +189,7 @@ module.exports = function(grunt) {
     cssmetrics: {
       index: {
         src: [
-            'build/source/css/index.source.css'
+          'build/source/css/index.source.css'
         ]
       }
     },
@@ -198,8 +205,8 @@ module.exports = function(grunt) {
         tasks: ['default']
       },
       css: {
-         files: ['src/**/**.css'],
-         tasks: ['copy:css']
+        files: ['src/**/**.css'],
+        tasks: ['copy:css']
       },
       grunt: {
         files: ['Gruntfile.js'],
@@ -233,6 +240,7 @@ module.exports = function(grunt) {
 
   });
 
+  // what the task title says..
   grunt.registerTask('do-reset', 'Clean working environment', function() {
     if(grunt.config('reset')){
       grunt.task.run('clean:reset');
@@ -246,7 +254,6 @@ module.exports = function(grunt) {
   require('load-grunt-tasks')(grunt);
 
   grunt.registerTask('dev', ['default']);
-  grunt.registerTask('backend', ['bem-lookup', 'bem-view']);
   grunt.registerTask('reset', ['prompt:reset', 'do-reset']);
   grunt.registerTask('validate', ['html-validation', 'cssmetrics', 'css-validation']);
   
@@ -254,6 +261,7 @@ module.exports = function(grunt) {
   grunt.registerTask('default', [
     'clean:build',          // clean up folders
     'copy:normalize',       // copy a bower normalize package into the src/css/vendor
+    'copy:html5shiv',       // copy a bower html5 shiv package into the src/script/vendor
     'copy:scripts',         // copy any src scrips into build/../scrips
     'copy:images',          // copy any src images into build/../scrips
     'parse-index',          // add stub data to build/source/html/index.html using underscore templates
@@ -263,7 +271,7 @@ module.exports = function(grunt) {
     'autoprefixer',         // prefix CSS shizzle
     'cssmin',               // minify CSS shizzle
     'copy:html',            // copy the build/source/html/index.html to build/live/index.html
-    'dom_munger:index',     // add the index.min.css to the build/live/index.html
+    'dom_munger:index',     // add default css and scripts to the index.html
     'copy:live',            // copy a minified/prefixed CSS to the build/live
     'copy:modifiers',       // the same for the modifiers
     'scaffold-modifiers',   // generate a HTML page for each modifier you defined in the src/sss/bem
