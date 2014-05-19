@@ -68,8 +68,8 @@ module.exports = function(grunt) {
           questions: [{
               config: taskName + '.backup',
               type: 'list',
-              message: 'It seems a CSS folder is not needed anymore with the current HTML (' + dirName + '). What do you want to do?',
-              choices: ['backup', 'delete', 'get a coffee'],
+              message: 'It seems the CSS for .' + dirName + ' is not needed anymore. What do you want to do?',
+              choices: ['backup', 'delete'],
               default: 'backup',
               filter:  function(action){
                 redundants.push({path: path, action: action});
@@ -88,22 +88,29 @@ module.exports = function(grunt) {
   });
 
   grunt.registerTask('bem_backup', 'Make a backup from a BEM SASS folder if it is not referenced in the HTML anymore', function(){
+
     _.each(redundants, function(bem){
+      var cwd = 'src/css/bem/' + bem.path + '/';
+      var files = grunt.file.expand({cwd: cwd}, ['*.scss']);
 
       switch(bem.action){
         case 'backup':
-          var cwd = 'src/css/bem/' + bem.path;
-          var files = grunt.file.expand({cwd: cwd}, ['*.scss']);
-          
+          var backupDir = 'backup/' + grunt.template.today('yyyy-mm-dd-h-MM') + '/' + bem.path + '/';
+
           _.each(files, function(file){
-            grunt.file.copy(cwd + file, 'backup');
+            grunt.file.copy(cwd + file,  backupDir + file);
           });
           break;
-        default: 
-          grunt.file.delete('src/' + bem.path);
-          break;
       }
-    })
+    });
+
+    _.each(redundants, function(bem){
+      var cwd = 'src/css/bem/' + bem.path + '/';
+      if(grunt.file.exists(cwd)){
+        grunt.file.delete(cwd);
+      }
+    });
+
   });
 
 };
