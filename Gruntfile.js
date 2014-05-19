@@ -57,7 +57,8 @@ module.exports = function(grunt) {
     // https://github.com/gruntjs/grunt-contrib-clean
     clean: {
       build: ['build'],
-      source: ['src/css/_all.scss']
+      backup: ['backup'],
+      reset: ['build', 'src/css/bem/**/*', 'src/css/_all.scss', 'src/css/bem_imports.scss']
     },
 
     // https://github.com/gruntjs/grunt-contrib-copy
@@ -89,13 +90,7 @@ module.exports = function(grunt) {
       modifiers: {
         src: './build/source/css/index.source.prefixed.css',
         dest: './build/modifiers/css/index.css'
-      },
-      // backup: {
-      //   cwd: 'src/',
-      //   expand: true,
-      //   src: 'css/**',
-      //   dest: 'backup/ <%= grunt.template.today("yyyymmddhMM") %>/'
-      // }
+      }
     },
 
     // https://www.npmjs.org/package/grunt-dom-munger
@@ -158,8 +153,8 @@ module.exports = function(grunt) {
     // https://www.npmjs.org/package/grunt-w3c-validation
     'css-validation': {
       options: {
-        path: './log/validation-css-status.json',
-        reportpath: './log/validation-css-report.json',
+        path: './doc/log/validation-css-status.json',
+        reportpath: './doc/log/validation-css-report.json',
         stoponerror: false,
         relaxerror: [],
         profile: 'css3',
@@ -173,8 +168,8 @@ module.exports = function(grunt) {
 
     'html-validation': {
       options: {
-          path: './log/validation-html-status.json',
-          reportpath: './log/validation-html-report.json',
+          path: './doc/log/validation-html-status.json',
+          reportpath: './doc/log/validation-html-report.json',
           stoponerror: false,
           relaxerror: [] //ignores these errors
       },
@@ -215,6 +210,20 @@ module.exports = function(grunt) {
       }
     },
 
+    prompt: {
+      reset: {
+        options: {
+          questions: [{
+              config: 'reset',
+              type: 'confirm',
+              message: 'This will throw all your work out, are you sure?',
+              default: true
+            }
+          ]
+        }
+      }
+    },
+
     // https://github.com/gruntjs/grunt-contrib-watch
     githooks: {
       all: {
@@ -222,6 +231,12 @@ module.exports = function(grunt) {
       }
     }
 
+  });
+
+  grunt.registerTask('do-reset', 'Clean working environment', function() {
+    if(grunt.config('reset')){
+      grunt.task.run('clean:reset');
+    }
   });
 
   // load all custom tasks
@@ -232,7 +247,7 @@ module.exports = function(grunt) {
 
   grunt.registerTask('dev', ['default']);
   grunt.registerTask('backend', ['bem-lookup', 'bem-view']);
-  // grunt.registerTask('reset', ['copy:backup', 'clean']);
+  grunt.registerTask('reset', ['prompt:reset', 'do-reset']);
   grunt.registerTask('validate', ['html-validation', 'cssmetrics', 'css-validation']);
   
   // WOW... loads!

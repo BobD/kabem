@@ -1,6 +1,7 @@
 // Simplified version of https://www.npmjs.org/package/grunt-sass-directory-import
 module.exports = function(grunt) {
-	grunt.registerTask('sass-imports', 'Generates a _all.scss file with all sass files needed', function() {
+    
+grunt.registerTask('sass-imports', 'Generates a _all.scss file with all sass files needed', function() {
     var dir = 'src/css/';
     var allImportFile = dir + '_all.scss';
     var bemImportFile = dir + 'bem_imports.scss';
