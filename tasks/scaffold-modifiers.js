@@ -1,7 +1,7 @@
 module.exports = function(grunt) {
   var _ = require("underscore");
   var dir = 'build/modifiers/';
-  var debugOn = true;
+  var debugOn = grunt.option('debug') == 1;
 
   var deviceDetection = ['<div  id="device-detection">'];
   // Keep the limit high enough to hold all possible devices in _device-detection.scss
