@@ -19,3 +19,34 @@ $debug-index: 1;
 
 @import "_debug";
 @import "_device-detection";
+
+#toggle-debug{
+	position: fixed;
+	top: 10px;
+	right: 10px;
+	background-color: yellow;
+	color: black;
+	padding: 4px;
+	font-family: verdana;
+	font-size: 9px;
+	cursor: pointer;
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+
+	&:before{
+		content: 'SHOW DEBUG';
+	}
+}
+
+#toggle-debug.on{
+	background-color: green;
+	color: white;
+
+	&:before{
+		content: 'HIDE DEBUG'
+	}
+}

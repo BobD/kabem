@@ -1,6 +1,7 @@
 module.exports = function(grunt) {
   var _ = require("underscore");
   var dir = 'build/modifiers/';
+  var debugOn = true;
 
   var deviceDetection = ['<div  id="device-detection">'];
   // Keep the limit high enough to hold all possible devices in _device-detection.scss
@@ -11,14 +12,15 @@ module.exports = function(grunt) {
 
   var append = [
       {selector: 'head', html: '<link rel="stylesheet" href="/css/debug.css">'},
-      {selector: 'body', html: deviceDetection.join('')}
+      {selector: 'body', html: deviceDetection.join('')},
+      {selector: 'body', html: '<div id="toggle-debug" class="' + (debugOn ? 'on' : '') + '" onclick="document.querySelector(\'#toggle-debug\').classList.toggle(\'on\');document.querySelector(\'body\').classList.toggle(\'debug\');"></div>'}
   ];
 
   grunt.registerTask('scaffold-modifiers', 'Generate HTML pages for each BEM modifier', function() {
     var CSSOM = require('cssom');
     var CSSFile = grunt.file.read('build/source/css/index.bem.css');
     var CSSTree = CSSOM.parse(CSSFile);
-    var classes = [{selector: 'body', attribute: 'class', value: ' debug'}];
+    var classes = [{selector: 'body', attribute: 'class', value: (debugOn ? ' debug' : '')}];
     var context = grunt.option('context') || 'default';
     var contextBEM = grunt.file.readJSON('config/context.json')[context] || [];
     var tasks = [];
