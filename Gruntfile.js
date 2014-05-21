@@ -248,10 +248,10 @@ module.exports = function(grunt) {
   });
 
   // load all custom tasks
-  grunt.task.loadTasks('tasks');
+  grunt.task.loadTasks(__dirname + '/tasks');
 
   // https://www.npmjs.org/package/load-grunt-tasks
-  require('load-grunt-tasks')(grunt);
+  require('load-grunt-tasks')(grunt, {config: __dirname + '/package.json', scope: 'peerDependencies'});
 
   grunt.registerTask('dev', ['default']);
   grunt.registerTask('reset', ['prompt:reset', 'do-reset']);
