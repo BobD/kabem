@@ -23,7 +23,7 @@ module.exports = function(grunt) {
   };
   
   // Project configuration.
-  grunt.initConfig({
+  grunt.config.merge({
 
     // Metadata.
     pkg: grunt.file.readJSON('package.json'),
