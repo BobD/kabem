@@ -17,6 +17,7 @@ TODO
 * Refactor retina device detection CSS for proper browser prefixes and dppx usage
 * Review grunt clean & backup after default grunt task (old SASS BEM folders linger on..) 
 * Add GIT Hooks for CSS/HTML validation before push
+* Add device detection CSS markers
 
 
 ###Why BEM?
