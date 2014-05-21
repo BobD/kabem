@@ -2,6 +2,13 @@
 module.exports = function(grunt) {
   require('time-grunt')(grunt);
 
+  grunt.config('build', grunt.config('build') || './build');
+  grunt.config('source', grunt.config('source') || './src');
+  grunt.config('backup', grunt.config('backup') || './backup');
+  grunt.config('config', grunt.config('config') || './config');
+
+  console.log(grunt.config('build'));
+
   // Splits a BEM selector inti it's Block, Element and Modifier parts
   grunt.splitBEM = function(selector){
     if(selector.indexOf('.') == 0){
