@@ -3,9 +3,13 @@
     "node": ">= 0.10.0"
   },
   "name": "vb-kabem",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Viewbook grunt.js environment for scaffolding with BEM CSS",
   "main": "Gruntfile.js",
+  "keywords": [
+    "bem",
+    "css"
+  ],
   "dependencies": {
     "bower": "^1.3.3",
     "cssom": "^0.3.0",
@@ -60,6 +64,11 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "developers@viewbook.com",
+  "contributors": [{
+    "name": "Bob Donderwinkel",
+    "email": "bob@viewbook.com"
+  }],
+  "homepage": "https://github.com/viewbook/dev-kabem",
   "private": true,
   "license": "ISC"
 }
