@@ -259,7 +259,7 @@ module.exports = function(grunt) {
   grunt.registerTask('validate', ['html-validation', 'cssmetrics', 'css-validation']);
   
   // WOW... loads!
-  grunt.registerTask('default', [
+  grunt.registerTask('vb-kabem', [
     'clean:build',          // clean up folders
     'copy:normalize',       // copy a bower normalize package into the src/css/vendor
     'copy:html5shiv',       // copy a bower html5 shiv package into the src/script/vendor
