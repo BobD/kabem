@@ -6,7 +6,7 @@ module.exports = function(grunt) {
     var jsdom = require('jsdom').jsdom;
     var cwd = 'src/';
     var dir = cwd + 'css/bem'
-    var index = 'build/source/html/index.html';
+    var index = grunt.option('build') + '/source/html/index.html';
     var html = grunt.file.read(index);
     var doc = jsdom(html).parentWindow.document;
     var bemClasses = doc.querySelectorAll('body[class^="__"], body *[class^="__"]');
