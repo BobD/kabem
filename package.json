@@ -5,7 +5,7 @@
   "name": "vb-kabem",
   "version": "0.0.2",
   "description": "Viewbook grunt.js environment for scaffolding with BEM CSS",
-  "main": "index.js",
+  "main": "Gruntfile.js",
   "devDependencies": {
     "bower": "^1.3.3",
     "cssom": "^0.3.0",
