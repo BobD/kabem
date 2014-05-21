@@ -4,9 +4,9 @@ module.exports = function(grunt) {
 
   grunt.registerTask('scaffold-sass', 'Generates folders for all sass files based on BEM classnames in index.html', function() {
     var jsdom = require('jsdom').jsdom;
-    var cwd = 'src/';
-    var dir = cwd + 'css/bem'
-    var index = grunt.option('build') + '/source/html/index.html';
+    var cwd = grunt.option('source-path');
+    var dir = cwd + '/css/bem'
+    var index = grunt.option('build-path') + '/source/html/index.html';
     var html = grunt.file.read(index);
     var doc = jsdom(html).parentWindow.document;
     var bemClasses = doc.querySelectorAll('body[class^="__"], body *[class^="__"]');
@@ -50,7 +50,7 @@ module.exports = function(grunt) {
     });
 
     // write some debuging css outlines
-    grunt.file.write(cwd + 'css/debug/_debug.scss', debugSASS);
+    grunt.file.write(cwd + '/css/debug/_debug.scss', debugSASS);
 
     // clean up sass folders which are not referenced through the HTML bem classes
     var deletePaths = grunt.file.expand({cwd: dir}, ['**/*', '!**/*.scss']),
@@ -90,12 +90,12 @@ module.exports = function(grunt) {
   grunt.registerTask('bem_backup', 'Make a backup from a BEM SASS folder if it is not referenced in the HTML anymore', function(){
 
     _.each(redundants, function(bem){
-      var cwd = 'src/css/bem/' + bem.path + '/';
+      var cwd = grunt.option('source-path') + '/css/bem/' + bem.path + '/';
       var files = grunt.file.expand({cwd: cwd}, ['*.scss']);
 
       switch(bem.action){
         case 'backup':
-          var backupDir = 'backup/' + grunt.template.today('yyyy-mm-dd-h-MM') + '/' + bem.path + '/';
+          var backupDir = grunt.option('backup-path') + '/' + grunt.template.today('yyyy-mm-dd-h-MM') + '/' + bem.path + '/';
 
           _.each(files, function(file){
             grunt.file.copy(cwd + file,  backupDir + file);
@@ -105,7 +105,7 @@ module.exports = function(grunt) {
     });
 
     _.each(redundants, function(bem){
-      var cwd = 'src/css/bem/' + bem.path + '/';
+      var cwd = grunt.option('source-path') + '/css/bem/' + bem.path + '/';
       if(grunt.file.exists(cwd)){
         grunt.file.delete(cwd);
       }

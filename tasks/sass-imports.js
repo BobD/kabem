@@ -2,7 +2,7 @@
 module.exports = function(grunt) {
     
 grunt.registerTask('sass-imports', 'Generates a _all.scss file with all sass files needed', function() {
-    var dir = grunt.option('source') + '/css/';
+    var dir = grunt.option('source-path') + '/css/';
     var allImportFile = dir + '_all.scss';
     var bemImportFile = dir + 'bem_imports.scss';
     var vendorFiles = grunt.file.expand({cwd: dir}, ['vendor/**/*.scss']);

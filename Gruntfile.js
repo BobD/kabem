@@ -8,8 +8,7 @@ module.exports = function(grunt) {
   grunt.option('backup-path', grunt.option('backup-path') || './backup');
   grunt.option('config-path', grunt.option('config-path') || './config');
 
-
-  // Splits a BEM selector inti it's Block, Element and Modifier parts
+  // Splits a CSS selector inti it's Block, Element and Modifier parts
   grunt.splitBEM = function(selector){
     if(selector.indexOf('.') == 0){
       selector = selector.substring(1);
@@ -46,7 +45,7 @@ module.exports = function(grunt) {
       modifiers: {
         options: {
           port: 9001,
-          base: grunt.option('build') + '/modifiers',
+          base: grunt.option('build-path') + '/modifiers',
           keepalive: true,
           open: true
         }
@@ -54,7 +53,7 @@ module.exports = function(grunt) {
       live: {
         options: {
           port: 9002,
-          base: grunt.option('build') + '/live',
+          base: grunt.option('build-path') + '/live',
           keepalive: true,
           open: true
         }
@@ -63,44 +62,44 @@ module.exports = function(grunt) {
 
     // https://github.com/gruntjs/grunt-contrib-clean
     clean: {
-      build: [grunt.option('build')],
-      backup: ['backup'],
-      reset: [grunt.option('build'), grunt.option('source') + '/css/bem/**/*', grunt.option('source') + '/css/_all.scss', grunt.option('source') + '/css/bem_imports.scss']
+      build: [grunt.option('build-path')],
+      backup: [grunt.option('backup-path')],
+      reset: [grunt.option('build-path'), grunt.option('source-path') + '/css/bem/**/*', grunt.option('source-path') + '/css/_all.scss', grunt.option('source-path') + '/css/bem_imports.scss']
     },
 
     // https://github.com/gruntjs/grunt-contrib-copy
     copy: {
       normalize: {
         src: 'bower_components/normalize.css/normalize.css',
-        dest: grunt.option('source') + '/css/vendor/normalize.scss'
+        dest: grunt.option('source-path') + '/css/vendor/normalize.scss'
       },
       html5shiv: {
         src: 'bower_components/html5shiv/dist/html5shiv.min.js',
-        dest: grunt.option('source') + '/scripts/vendor/html5shiv.min.js'
+        dest: grunt.option('source-path') + '/scripts/vendor/html5shiv.min.js'
       },
       scripts: {
         files: [
-          {expand: true, cwd: grunt.option('source') + '/scripts/', src: ['**/*'], dest: grunt.option('build') + '/live/scripts/', filter: 'isFile'},
-          {expand: true, cwd: grunt.option('source') + '/scripts/', src: ['**/*'], dest: grunt.option('build') + '/modifiers/scripts/', filter: 'isFile'}
+          {expand: true, cwd: grunt.option('source-path') + '/scripts/', src: ['**/*'], dest: grunt.option('build-path') + '/live/scripts/', filter: 'isFile'},
+          {expand: true, cwd: grunt.option('source-path') + '/scripts/', src: ['**/*'], dest: grunt.option('build-path') + '/modifiers/scripts/', filter: 'isFile'}
         ]
       },
       images: {
         files: [
-          {expand: true, cwd: grunt.option('source') + '/images/', src: ['**/*'], dest: grunt.option('build') + '/live/images/', filter: 'isFile'},
-          {expand: true, cwd: grunt.option('source') + '/images/', src: ['**/*'], dest: grunt.option('build') + '/modifiers/images/', filter: 'isFile'}
+          {expand: true, cwd: grunt.option('source-path') + '/images/', src: ['**/*'], dest: grunt.option('build-path') + '/live/images/', filter: 'isFile'},
+          {expand: true, cwd: grunt.option('source-path') + '/images/', src: ['**/*'], dest: grunt.option('build-path') + '/modifiers/images/', filter: 'isFile'}
         ]
       },
       html: {
-        src: grunt.option('build') + '/source/html/index.html',
-        dest: grunt.option('build') + '/live/index.html'
+        src: grunt.option('build-path') + '/source/html/index.html',
+        dest: grunt.option('build-path') + '/live/index.html'
       },
       live: {
-        src: grunt.option('build') + '/source/css/index.source.prefixed.min.css',
-        dest: grunt.option('build') + '/live/css/index.min.css'
+        src: grunt.option('build-path') + '/source/css/index.source.prefixed.min.css',
+        dest: grunt.option('build-path') + '/live/css/index.min.css'
       },
       modifiers: {
-        src: grunt.option('build') + '/source/css/index.source.prefixed.css',
-        dest: grunt.option('build') + '/modifiers/css/index.css'
+        src: grunt.option('build-path') + '/source/css/index.source.prefixed.css',
+        dest: grunt.option('build-path') + '/modifiers/css/index.css'
       }
     },
 
@@ -124,9 +123,9 @@ module.exports = function(grunt) {
       },
       all: {
         expand: true,
-        cwd: grunt.option('build'),
+        cwd: grunt.option('build-path'),
         src: ['**/*.html'],
-        dest: grunt.option('build')
+        dest: grunt.option('build-path')
       }
     },
 
@@ -134,9 +133,9 @@ module.exports = function(grunt) {
     sass: {                             
       dist: {                           
         files: [
-          {expand: true, cwd: grunt.option("source"), src: ['index.scss'], dest: grunt.option("build") + '/source/css/', ext: '.source.css'},
-          {expand: true, cwd: grunt.option("source") + '/css/', src: ['bem_imports.scss'], dest: grunt.option("build") + '/source/css/', ext: '.source.css'},
-          {expand: true, cwd: grunt.option("source") + '/css/debug/', src: ['debug.scss'], dest: grunt.option("build") + '/modifiers/css/', ext: '.css'}  
+          {expand: true, cwd: grunt.option('source-path'), src: ['index.scss'], dest: grunt.option('build-path') + '/source/css/', ext: '.source.css'},
+          {expand: true, cwd: grunt.option('source-path') + '/css/', src: ['bem_imports.scss'], dest: grunt.option('build-path') + '/source/css/', ext: '.source.css'},
+          {expand: true, cwd: grunt.option('source-path') + '/css/debug/', src: ['debug.scss'], dest: grunt.option('build-path') + '/modifiers/css/', ext: '.css'}  
         ]
       }
     },
@@ -145,8 +144,8 @@ module.exports = function(grunt) {
     autoprefixer: {
       index: {
         options: {},
-        src: grunt.option("build") + '/source/css/index.source.css',
-        dest: grunt.option("build") + '/source/css/index.source.prefixed.css',
+        src: grunt.option('build-path') + '/source/css/index.source.css',
+        dest: grunt.option('build-path') + '/source/css/index.source.prefixed.css',
       },
     },
 
@@ -154,7 +153,7 @@ module.exports = function(grunt) {
     cssmin: {
       index: {
         expand: true,
-        files: {'<%= grunt.option("build") %>/source/css/index.source.prefixed.min.css': '<%= grunt.option("build") %>/source/css/index.source.prefixed.css'},
+        files: {'<%= grunt.option("build-path") %>/source/css/index.source.prefixed.min.css': '<%= grunt.option("build-path") %>/source/css/index.source.prefixed.css'},
         options: {
           banner: '/* Minified with https://www.npmjs.org/package/grunt-contrib-cssmin */'
         }
@@ -173,7 +172,7 @@ module.exports = function(grunt) {
         warnings: '2'
       },
       files: {
-        src: [grunt.option("build") + '/source/css/*.css']
+        src: [grunt.option('build-path') + '/source/css/*.css']
       }
     },
 
@@ -185,29 +184,29 @@ module.exports = function(grunt) {
         relaxerror: [] //ignores these errors
       },
       files: {
-        src: [grunt.option("build") + '/live/index.html']
+        src: [grunt.option('build-path') + '/live/index.html']
       }
     },
 
     // https://github.com/phamann/grunt-css-metrics
     cssmetrics: {
       index: {
-        src: [grunt.option("build") + '/source/css/index.source.css']
+        src: [grunt.option('build-path') + '/source/css/index.source.css']
       }
     },
 
     // https://github.com/gruntjs/grunt-contrib-watch
     watch: {
       html: {
-        files: [grunt.option('source') + '/index.html'],
+        files: [grunt.option('source-path') + '/index.html'],
         tasks: ['default']
       },
       sass: {
-        files: [grunt.option('source') + '/**/**.scss'],
+        files: [grunt.option('source-path') + '/**/**.scss'],
         tasks: ['default']
       },
       css: {
-        files: [grunt.option('source') + '/**/**.css'],
+        files: [grunt.option('source-path') + '/**/**.css'],
         tasks: ['copy:css']
       },
       grunt: {
@@ -242,7 +241,7 @@ module.exports = function(grunt) {
 
   });
 
-  // what the task title says..
+  // what the task title says
   grunt.registerTask('do-reset', 'Clean working environment', function() {
     if(grunt.config('reset')){
       grunt.task.run('clean:reset');
