@@ -12,6 +12,9 @@ module.exports = function(grunt) {
     var bemClasses = doc.querySelectorAll('body[class^="__"], body *[class^="__"]');
     var classList, BEList = [], beSplit, dirPath, bePath, mPath;
 
+    // record the bem block element for properly naming shizzle elsewehere
+    grunt.option('bemBlock', bemClasses[0].getAttribute('class'));
+
     // collect the BEM classes
     _.each(bemClasses, function(el){
       classList = el.getAttribute('class').split(' ');

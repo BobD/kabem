@@ -46,10 +46,10 @@ module.exports = function(grunt) {
 
     // https://github.com/gruntjs/grunt-contrib-connect
     connect: {
-      modifiers: {
+      bem: {
         options: {
           port: 9001,
-          base: grunt.option('build-path') + '/modifiers',
+          base: grunt.option('build-path') + '/bem',
           keepalive: true,
           open: true
         }
@@ -87,13 +87,13 @@ module.exports = function(grunt) {
       scripts: {
         files: [
           {expand: true, cwd: grunt.option('source-path') + '/scripts/', src: ['**/*'], dest: grunt.option('build-path') + '/live/scripts/', filter: 'isFile'},
-          {expand: true, cwd: grunt.option('source-path') + '/scripts/', src: ['**/*'], dest: grunt.option('build-path') + '/modifiers/scripts/', filter: 'isFile'}
+          {expand: true, cwd: grunt.option('source-path') + '/scripts/', src: ['**/*'], dest: grunt.option('build-path') + '/bem/scripts/', filter: 'isFile'}
         ]
       },
       images: {
         files: [
           {expand: true, cwd: grunt.option('source-path') + '/images/', src: ['**/*'], dest: grunt.option('build-path') + '/live/images/', filter: 'isFile'},
-          {expand: true, cwd: grunt.option('source-path') + '/images/', src: ['**/*'], dest: grunt.option('build-path') + '/modifiers/images/', filter: 'isFile'}
+          {expand: true, cwd: grunt.option('source-path') + '/images/', src: ['**/*'], dest: grunt.option('build-path') + '/bem/images/', filter: 'isFile'}
         ]
       },
       html: {
@@ -104,15 +104,15 @@ module.exports = function(grunt) {
         src: grunt.option('build-path') + '/source/css/index.source.prefixed.min.css',
         dest: grunt.option('build-path') + '/live/css/index.min.css'
       },
-      modifiers: {
+      bem: {
         src: grunt.option('build-path') + '/source/css/index.source.prefixed.css',
-        dest: grunt.option('build-path') + '/modifiers/css/index.css'
+        dest: grunt.option('build-path') + '/bem/css/index.css'
       }
     },
 
     // https://www.npmjs.org/package/grunt-dom-munger
     dom_munger: {
-      index: {
+      source_index: {
         options: {
           append: [
             {selector: 'head', html: '<link rel="stylesheet" href="/css/index.min.css">'},
@@ -142,7 +142,7 @@ module.exports = function(grunt) {
         files: [
           {expand: true, cwd: grunt.option('source-path'), src: ['index.scss'], dest: grunt.option('build-path') + '/source/css/', ext: '.source.css'},
           {expand: true, cwd: grunt.option('source-path') + '/css/', src: ['bem_imports.scss'], dest: grunt.option('build-path') + '/source/css/', ext: '.source.css'},
-          {expand: true, cwd: grunt.option('source-path') + '/css/debug/', src: ['debug.scss'], dest: grunt.option('build-path') + '/modifiers/css/', ext: '.css'}  
+          {expand: true, cwd: grunt.option('source-path') + '/css/debug/', src: ['debug.scss'], dest: grunt.option('build-path') + '/bem/css/', ext: '.css'}  
         ]
       }
     },
@@ -267,23 +267,23 @@ module.exports = function(grunt) {
   
   // WOW... loads!
   grunt.registerTask('vb-kabem', [
-    'clean:build',          // clean up folders
-    'copy:normalize',       // copy a bower normalize package into the src/css/vendor
-    'copy:html5shiv',       // copy a bower html5 shiv package into the src/script/vendor
-    'copy:scripts',         // copy any src scrips into build/../scrips
-    'copy:images',          // copy any src images into build/../scrips
-    'parse-index',          // add stub data to build/source/html/index.html using underscore templates
-    'scaffold-sass',        // rip apart the build/source/html/index.html and create SASS files for each block/element and modifier in there
-    'sass-imports',         // generate a CSS file with all needed SASS @import's
-    'sass',                 // SASS up the resulting build/source/css/index.source.css
-    'autoprefixer',         // prefix CSS shizzle
-    'cssmin',               // minify CSS shizzle
-    'copy:html',            // copy the build/source/html/index.html to build/live/index.html
-    'dom_munger:index',     // add default css and scripts to the index.html
-    'copy:live',            // copy a minified/prefixed CSS to the build/live
-    'copy:modifiers',       // the same for the modifiers
-    'scaffold-modifiers',   // generate a HTML page for each modifier you defined in the src/sss/bem
-    'prettify:all'          // clean the resulting HTML up a bit
+    'clean:build',                  // clean up folders
+    'copy:normalize',               // copy a bower normalize package into the src/css/vendor
+    'copy:html5shiv',               // copy a bower html5 shiv package into the src/script/vendor
+    'copy:scripts',                 // copy any src scrips into build/../scrips
+    'copy:images',                  // copy any src images into build/../scrips
+    'parse-index',                  // add stub data to build/source/html/index.html using underscore templates
+    'scaffold-sass',                // rip apart the build/source/html/index.html and create SASS files for each block/element and modifier in there
+    'sass-imports',                 // generate a CSS file with all needed SASS @import's
+    'sass',                         // SASS up the resulting build/source/css/index.source.css
+    'autoprefixer',                 // prefix CSS shizzle
+    'cssmin',                       // minify CSS shizzle
+    'copy:html',                    // copy the build/source/html/index.html to build/live/index.html
+    'dom_munger:source_index',      // create a index HTML file used the source for all other pages
+    'copy:live',                    // copy a minified/prefixed CSS to the build/live
+    'copy:bem',                     // the same for the build/bem pages
+    'scaffold-bem',                 // generate testing pages for all defined BEM modifiers
+    'prettify:all'                  // clean the resulting HTML up a bit
   ]);
 
 };

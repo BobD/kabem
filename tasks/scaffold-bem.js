@@ -1,6 +1,6 @@
 module.exports = function(grunt) {
   var _ = require("underscore");
-  var dir = grunt.option('build-path') + '/modifiers/';
+  var dir = grunt.option('build-path') + '/bem/';
   var debugOn = grunt.option('debug') == 1;
 
   var deviceDetection = ['<div  id="device-detection">'];
@@ -16,7 +16,7 @@ module.exports = function(grunt) {
       {selector: 'body', html: '<div id="toggle-debug" class="' + (debugOn ? 'on' : '') + '" onclick="document.querySelector(\'#toggle-debug\').classList.toggle(\'on\');document.querySelector(\'body\').classList.toggle(\'debug\');"></div>'}
   ];
 
-  grunt.registerTask('scaffold-modifiers', 'Generate HTML pages for each BEM modifier', function() {
+  grunt.registerTask('scaffold-bem', 'Generate HTML pages for each BEM modifier', function() {
     var CSSOM = require('cssom');
     var CSSFile = grunt.file.read(grunt.option('build-path') + '/source/css/bem_imports.source.css');
     var CSSTree = CSSOM.parse(CSSFile);
@@ -40,6 +40,16 @@ module.exports = function(grunt) {
     });
 
     tasks = generateModifierFiles(CSSTree.cssRules, classes);
+
+    var block  = grunt.option('bemBlock');
+
+    grunt.config('dom_munger.a' + block + '.options', {
+      append: append,
+      suffix: classes
+    });
+    grunt.config('dom_munger.a' + block + '.src', 'build/source/html/index.html');
+    grunt.config('dom_munger.a' + block + '.dest', dir + block + '.html');
+    tasks.push('dom_munger:a' + block);
 
     grunt.task.run(tasks);
   });
