@@ -1,5 +1,8 @@
 /*global module:false*/
 module.exports = function(grunt) {
+  // http://stackoverflow.com/questions/17588466/grunt-task-dependencies
+  process.chdir(__dirname);
+
   require('time-grunt')(grunt);
 
   // grunt.option.init() method overwrites the entire internal option state, https://github.com/gruntjs/grunt/issues/1023
@@ -249,10 +252,10 @@ module.exports = function(grunt) {
   });
 
   // load all custom tasks
-  grunt.task.loadTasks(__dirname + '/tasks');
+  grunt.task.loadTasks('tasks');
 
   // https://www.npmjs.org/package/load-grunt-tasks
-  require('load-grunt-tasks')(grunt, {config: __dirname + '/package.json', scope: 'peerDependencies'});
+  require('load-grunt-tasks')(grunt, {config: __dirname + '/package.json'});
 
   grunt.registerTask('dev', ['default']);
   grunt.registerTask('reset', ['prompt:reset', 'do-reset']);
