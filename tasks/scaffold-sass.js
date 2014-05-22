@@ -96,7 +96,6 @@ module.exports = function(grunt) {
       switch(bem.action){
         case 'backup':
           var backupDir = grunt.option('backup-path') + '/' + grunt.template.today('yyyy-mm-dd-h-MM') + '/' + bem.path + '/';
-
           _.each(files, function(file){
             grunt.file.copy(cwd + file,  backupDir + file);
           });
@@ -107,7 +106,7 @@ module.exports = function(grunt) {
     _.each(redundants, function(bem){
       var cwd = grunt.option('source-path') + '/css/bem/' + bem.path + '/';
       if(grunt.file.exists(cwd)){
-        grunt.file.delete(cwd);
+        grunt.file.delete(cwd, {force: true});
       }
     });
 
