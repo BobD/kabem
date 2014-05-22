@@ -206,11 +206,11 @@ module.exports = function(grunt) {
     watch: {
       html: {
         files: [grunt.option('source-path') + '/index.html'],
-        tasks: ['default']
+        tasks: ['vb-kabem']
       },
       sass: {
         files: [grunt.option('source-path') + '/**/**.scss'],
-        tasks: ['default']
+        tasks: ['vb-kabem']
       },
       css: {
         files: [grunt.option('source-path') + '/**/**.css'],
@@ -261,7 +261,7 @@ module.exports = function(grunt) {
   // https://www.npmjs.org/package/load-grunt-tasks
   require('load-grunt-tasks')(grunt, {config: __dirname + '/package.json'});
 
-  grunt.registerTask('dev', ['default']);
+  grunt.registerTask('dev', ['vb-kabem']);
   grunt.registerTask('reset', ['prompt:reset', 'do-reset']);
   grunt.registerTask('validate', ['html-validation', 'cssmetrics', 'css-validation']);
   
