@@ -119,7 +119,7 @@ module.exports = function(grunt) {
             {selector: 'head', html: '<!--[if lt IE 9]><script src="/scripts/vendor/html5shiv.js"></script><![endif]-->'}
           ]
         },
-        src: 'build/source/html/index.html'
+        src: grunt.option('build-path') + '/source/html/index.html'
       }
     },
 
