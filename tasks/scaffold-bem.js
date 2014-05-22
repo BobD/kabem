@@ -47,7 +47,7 @@ module.exports = function(grunt) {
       append: append,
       suffix: classes
     });
-    grunt.config('dom_munger.a' + block + '.src', 'build/source/html/index.html');
+    grunt.config('dom_munger.a' + block + '.src', grunt.option('build-path') + '/source/html/index.html');
     grunt.config('dom_munger.a' + block + '.dest', dir + block + '.html');
     tasks.push('dom_munger:a' + block);
 
