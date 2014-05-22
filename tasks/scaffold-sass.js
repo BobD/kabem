@@ -39,11 +39,11 @@ module.exports = function(grunt) {
       }
 
       if(!grunt.file.exists(bePath)){
-        grunt.file.write(bePath, '.' + be + '{/* add your block/element CSS */}');
+        grunt.file.write(bePath, '.' + be + '{\n}');
       }
 
       if(!grunt.file.exists(mPath)){
-        grunt.file.write(mPath, '.' + be + '_modifier-name{/* add your modifier CSS */}');
+        grunt.file.write(mPath, '.' + be + '_modifier{\n}');
       }
 
       debugSASS += 'body.debug .' + be + '{@include debug(' + be + ');}\n';

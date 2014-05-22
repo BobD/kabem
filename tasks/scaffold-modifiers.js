@@ -41,14 +41,6 @@ module.exports = function(grunt) {
 
     tasks = generateModifierFiles(CSSTree.cssRules, classes);
 
-    grunt.config('dom_munger.index' + '.options', {
-      append: append,
-      suffix: classes
-    });
-    grunt.config('dom_munger.index.src', 'build/source/html/index.html');
-    grunt.config('dom_munger.index.dest', dir + 'main.html');
-    tasks.push('dom_munger:index');
-
     grunt.task.run(tasks);
   });
 
