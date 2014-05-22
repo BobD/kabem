@@ -105,8 +105,8 @@ module.exports = function(grunt) {
         dest: grunt.option('build-path') + '/live/css/index.min.css'
       },
       bem: {
-        src: grunt.option('build-path') + '/source/css/index.source.prefixed.css',
-        dest: grunt.option('build-path') + '/bem/css/index.css'
+        src: grunt.option('build-path') + '/source/css/index.source.prefixed.min.css',
+        dest: grunt.option('build-path') + '/bem/css/index.min.css'
       }
     },
 
