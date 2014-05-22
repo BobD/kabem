@@ -10,7 +10,7 @@
     "bem",
     "css"
   ],
-  "peerDependencies": {
+  "dependencies": {
     "bower": "^1.3.3",
     "cssom": "^0.3.0",
     "grunt": "~0.4.2",
