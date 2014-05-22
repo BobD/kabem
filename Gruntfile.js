@@ -1,15 +1,17 @@
 /*global module:false*/
 module.exports = function(grunt) {
+  var parentCWD = process.cwd();
+
   // http://stackoverflow.com/questions/17588466/grunt-task-dependencies
   process.chdir(__dirname);
 
   require('time-grunt')(grunt);
 
   // grunt.option.init() method overwrites the entire internal option state, https://github.com/gruntjs/grunt/issues/1023
-  grunt.option('build-path', grunt.option('build-path') || './build');
-  grunt.option('source-path', grunt.option('source-path') || './src');
-  grunt.option('backup-path', grunt.option('backup-path') || './backup');
-  grunt.option('config-path', grunt.option('config-path') || './config');
+  grunt.option('build-path', grunt.option('build-path') || parentCWD + '/build');
+  grunt.option('source-path', grunt.option('source-path') || parentCWD + '/src');
+  grunt.option('backup-path', grunt.option('backup-path') || parentCWD + '/backup');
+  grunt.option('config-path', grunt.option('config-path') || parentCWD + '/config');
 
   // Splits a CSS selector inti it's Block, Element and Modifier parts
   grunt.splitBEM = function(selector){
@@ -65,6 +67,9 @@ module.exports = function(grunt) {
 
     // https://github.com/gruntjs/grunt-contrib-clean
     clean: {
+      options:{
+        force: true
+      },
       build: [grunt.option('build-path')],
       backup: [grunt.option('backup-path')],
       reset: [grunt.option('build-path'), grunt.option('source-path') + '/css/bem/**/*', grunt.option('source-path') + '/css/_all.scss', grunt.option('source-path') + '/css/bem_imports.scss']
