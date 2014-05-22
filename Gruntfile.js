@@ -11,7 +11,6 @@ module.exports = function(grunt) {
   grunt.option('build-path', grunt.option('build-path') || parentCWD + '/build');
   grunt.option('source-path', grunt.option('source-path') || parentCWD + '/src');
   grunt.option('backup-path', grunt.option('backup-path') || parentCWD + '/backup');
-  grunt.option('config-path', grunt.option('config-path') || parentCWD + '/config');
 
   // Splits a CSS selector inti it's Block, Element and Modifier parts
   grunt.splitBEM = function(selector){
