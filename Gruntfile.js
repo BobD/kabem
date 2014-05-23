@@ -1,16 +1,16 @@
 /*global module:false*/
 module.exports = function(grunt) {
-  var parentCWD = process.cwd();
+  var rootCWD = process.cwd();
 
-  // http://stackoverflow.com/questions/17588466/grunt-task-dependencies
-  process.chdir(__dirname);
+  // Needed when kabem is used as a dependency module. Otherwise the loadTasks/loadNpmTasks will look for the needed node_modules in the wrong place (top level root)
+  grunt.file.setBase(__dirname);
 
   require('time-grunt')(grunt);
 
   // grunt.option.init() method overwrites the entire internal option state, https://github.com/gruntjs/grunt/issues/1023
-  grunt.option('build-path', grunt.option('build-path') || parentCWD + '/build');
-  grunt.option('source-path', grunt.option('source-path') || parentCWD + '/src');
-  grunt.option('backup-path', grunt.option('backup-path') || parentCWD + '/backup');
+  grunt.option('build-path', grunt.option('build-path') || rootCWD + '/build');
+  grunt.option('source-path', grunt.option('source-path') || rootCWD + '/src');
+  grunt.option('backup-path', grunt.option('backup-path') || rootCWD + '/backup');
 
   // Splits a CSS selector inti it's Block, Element and Modifier parts
   grunt.splitBEM = function(selector){
@@ -203,22 +203,26 @@ module.exports = function(grunt) {
     },
 
     // https://github.com/gruntjs/grunt-contrib-watch
+    // watch needs to reset it's cwd due to the grunt.file.setBase above, bit it's weird it does not work with cwd: grunt.option('source-path') directly..
     watch: {
       html: {
+        options: {cwd: rootCWD},
         files: [grunt.option('source-path') + '/index.html'],
         tasks: ['vb-kabem']
       },
-      sass: {
-        files: [grunt.option('source-path') + '/**/**.scss'],
+      sass_modifiers: {
+        options: {cwd: rootCWD},
+        files: [grunt.option('source-path') + '/**/*_modifiers.scss'],
         tasks: ['vb-kabem']
       },
-      css: {
-        files: [grunt.option('source-path') + '/**/**.css'],
-        tasks: ['copy:css']
+      sass_the_rest: {
+        options: {cwd: rootCWD},
+        files: [grunt.option('source-path') + '/**/**.scss', grunt.option('source-path') + '!/**/*_modifiers.scss'],
+        tasks: ['sass', 'autoprefixer', 'cssmin', 'copy:bem', 'copy:live']
       },
       grunt: {
-        files: ['Gruntfile.js'],
-        tasks: ['dev']
+        files: ['Gruntfile.js', 'tasks/*.js'],
+        tasks: ['vb-kabem']
       },
       options: {
         livereload: true
@@ -261,7 +265,6 @@ module.exports = function(grunt) {
   // https://www.npmjs.org/package/load-grunt-tasks
   require('load-grunt-tasks')(grunt, {config: __dirname + '/package.json'});
 
-  grunt.registerTask('dev', ['vb-kabem']);
   grunt.registerTask('reset', ['prompt:reset', 'do-reset']);
   grunt.registerTask('validate', ['html-validation', 'cssmetrics', 'css-validation']);
   
