@@ -53,7 +53,7 @@ module.exports = function(grunt) {
     });
 
     // write some debuging css outlines
-    grunt.file.write(cwd + '/css/debug/_debug.scss', debugSASS);
+    grunt.file.write(cwd + '/css/debug/_debug-elements.scss', debugSASS);
 
     // clean up sass folders which are not referenced through the HTML bem classes
     var deletePaths = grunt.file.expand({cwd: dir}, ['**/*', '!**/*.scss']),

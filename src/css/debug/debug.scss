@@ -17,7 +17,7 @@ $debug-index: 1;
 	$debug-index: (($debug-index + 1) % length($debug-colors)) + 1;
 }
 
-@import "_debug";
+@import "_debug-elements";
 @import "_device-detection";
 
 #toggle-debug{

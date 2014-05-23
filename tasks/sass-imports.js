@@ -5,11 +5,11 @@ grunt.registerTask('sass-imports', 'Generates a _all.scss file with all sass fil
     var dir = grunt.option('source-path') + '/css/';
     var allImportFile = dir + '_all.scss';
     var bemImportFile = dir + 'bem_imports.scss';
-    var vendorFiles = grunt.file.expand({cwd: dir}, ['vendor/**/*.scss']);
+    var normalFiles = grunt.file.expand({cwd: dir}, ['debug/debug.scss', '**/*.scss', '**/*.css', '!bem/**/*.scss', '!_all.scss', '!bem_imports.scss']);
     var bemFiles = grunt.file.expand({cwd: dir}, ['bem/**/*.scss']);
     var segments, file, importFile;
     var leader = ['// Auto generated, see grunt the sass-imports task '];
-    var allImports = getSASSimports(vendorFiles);
+    var allImports = getSASSimports(normalFiles);
     var bemImports = getSASSimports(bemFiles);
     
     bemImports.unshift('@import "helpers/variables";')
@@ -24,22 +24,22 @@ grunt.registerTask('sass-imports', 'Generates a _all.scss file with all sass fil
 
 
 function getSASSimports(files){
-	var _ = require("underscore");
-	var imports = [];
+    var _ = require("underscore");
+    var imports = [];
 
-	_.each(files, function(path){
-	  segments = path.split('/');
-	  file = segments.pop();
+    _.each(files, function(path){
+      segments = path.split('/');
+      file = segments.pop();
 
-	  if(file.charAt(0) == '_'){
-	    file = file.substring(1);
-	  }
+      if(file.charAt(0) == '_'){
+        file = file.substring(1);
+      }
 
-	  file = file.replace('.scss', '');
-	  segments.push(file);
-	  importFile = segments.join('/');
-	  imports.push('@import "' + importFile + '";');
-	});
+      file = file.replace('.scss', '');
+      segments.push(file);
+      importFile = segments.join('/');
+      imports.push('@import "' + importFile + '";');
+    });
 
-	return imports;
+    return imports;
 }
