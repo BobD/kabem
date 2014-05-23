@@ -5,7 +5,7 @@ grunt.registerTask('sass-imports', 'Generates a _all.scss file with all sass fil
     var dir = grunt.option('source-path') + '/css/';
     var allImportFile = dir + '_all.scss';
     var bemImportFile = dir + 'bem_imports.scss';
-    var normalFiles = grunt.file.expand({cwd: dir}, ['debug/debug.scss', '**/*.scss', '**/*.css', '!bem/**/*.scss', '!_all.scss', '!bem_imports.scss']);
+    var normalFiles = grunt.file.expand({cwd: dir}, ['**/*.scss', '**/*.css', '!debug/*.scss', '!bem/**/*.scss', '!_all.scss', '!bem_imports.scss']);
     var bemFiles = grunt.file.expand({cwd: dir}, ['bem/**/*.scss']);
     var segments, file, importFile;
     var leader = ['// Auto generated, see grunt the sass-imports task '];
