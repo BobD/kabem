@@ -12,7 +12,7 @@ grunt.registerTask('sass-imports', 'Generates a _all.scss file with all sass fil
     var allImports = getSASSimports(normalFiles);
     var bemImports = getSASSimports(bemFiles);
     
-    bemImports.unshift('@import "helpers/variables";')
+    bemImports.unshift('@import "helpers/variables";', '@import "helpers/utils";')
     bemImports.unshift(leader)
     allImports.push('@import "css/bem_imports";');
     allImports.unshift(leader)
