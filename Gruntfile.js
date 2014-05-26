@@ -259,6 +259,20 @@ module.exports = function(grunt) {
     }
   });
 
+  // https://www.npmjs.org/package/rework-npm
+  grunt.registerTask('rework-npm', 'Import CSS from npm modules using rework', function() {
+    var rework = require('rework'),
+        reworkNPM = require('rework-npm'),
+        filePath = grunt.option('build-path') + '/source/css/index.source.css';
+        source = grunt.file.read(filePath);
+    
+    var output = rework(source)
+        .use(reworkNPM())
+        .toString();
+
+    grunt.file.write(filePath, output);
+  });
+
   // load all custom tasks
   grunt.task.loadTasks('tasks');
 
@@ -279,6 +293,7 @@ module.exports = function(grunt) {
     'scaffold-sass',                // rip apart the build/source/html/index.html and create SASS files for each block/element and modifier in there
     'sass-imports',                 // generate a CSS file with all needed SASS @import's
     'sass',                         // SASS up the resulting build/source/css/index.source.css
+    'rework-npm',                   // import CSS from npm modules using rework
     'autoprefixer',                 // prefix CSS shizzle
     'cssmin',                       // minify CSS shizzle
     'copy:html',                    // copy the build/source/html/index.html to build/live/index.html
