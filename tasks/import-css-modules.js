@@ -6,11 +6,6 @@ module.exports = function(grunt) {
 	        reworkNPM = require('rework-npm'),
 	        filePath = grunt.option('build-path') + '/source/css/index.source.css';
 	        source = grunt.file.read(filePath);
-
-	    // BOB::20140526, need to improve in this replacing routine..
-	    source = source.replace(/url\(vb:/g, '');
-	    source = source.replace(/.css\)/g, '');
-	    // END
 	    
 	    var output = rework(source)
 	        .use(reworkNPM())
