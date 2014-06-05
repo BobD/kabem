@@ -34,7 +34,7 @@ BEM is no golden highway to utter front-end developer bliss, nothing is (well a 
 For some more BEM reading:
 
 * [linkBEM Methodology] (http://bem.info/method/)
-* [BEM it!, BEM Methodology for small companies with high expectations] ( href="http://www.slideshare.net/MaxShirshin/bem-dm")
+* [BEM it!, BEM Methodology for small companies with high expectations] (http://www.slideshare.net/MaxShirshin/bem-dm")
 * [MindBEMding – getting your head ’round BEM syntax] (http://csswizardry.com/2013/01/mindbemding-getting-your-head-round-bem-syntax/)
 
 
