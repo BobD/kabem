@@ -275,13 +275,6 @@ module.exports = function(grunt) {
           ]
         }
       }
-    },
-
-    // https://github.com/gruntjs/grunt-contrib-watch
-    githooks: {
-      all: {
-        // Will run the jshint and test:unit tasks at every commit
-      }
     }
 
   });
