@@ -1,5 +1,9 @@
 // Auto generated, see grunt the sass-imports task 
 @import "helpers/utils";
 @import "helpers/variables";
+@import "test";
+@import "blah.css";
 @import "vendor/normalize.css";
-@import "css/bem_imports";
+@import "helpers/variables";
+@import "helpers/utils";
+@import "kabem/bem_imports";

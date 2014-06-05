@@ -11,6 +11,7 @@ module.exports = function(grunt) {
   grunt.option('build-path', grunt.option('build-path') || rootCWD + '/build');
   grunt.option('source-path', grunt.option('source-path') || rootCWD + '/src');
   grunt.option('backup-path', grunt.option('backup-path') || rootCWD + '/backup');
+  grunt.option('kabem-path', grunt.option('source-path') + '/css/kabem');
 
   // Splits a CSS selector inti it's Block, Element and Modifier parts
   grunt.splitBEM = function(selector){
@@ -71,15 +72,21 @@ module.exports = function(grunt) {
       },
       build: [grunt.option('build-path')],
       backup: [grunt.option('backup-path')],
-      reset: [grunt.option('build-path'), grunt.option('source-path') + '/css/bem/**/*', grunt.option('source-path') + '/css/_all.scss', grunt.option('source-path') + '/css/bem_imports.scss']
+      reset: [
+        grunt.option('build-path'), 
+        grunt.option('kabem-path') + '/bem/**/*', 
+        grunt.option('kabem-path') + '/_all.scss', 
+        grunt.option('kabem-path') + '/bem_imports.scss'
+      ]
     },
 
     // https://github.com/gruntjs/grunt-contrib-copy
     copy: {
       css: {
         files: [
-          {expand: true, cwd: grunt.option('source-path') + '/css/vendor', src: ['**/*'], dest: grunt.option('build-path') + '/live/css/vendor', filter: 'isFile'},
-          {expand: true, cwd: grunt.option('source-path') + '/css/vendor', src: ['**/*'], dest: grunt.option('build-path') + '/bem/css/vendor', filter: 'isFile'}
+          // {expand: true, cwd: grunt.option('source-path') + '/css', src: ['**/*', '!**/*.scss'], dest: grunt.option('build-path') + '/live/css', filter: 'isFile'},
+          {expand: true, cwd: grunt.option('source-path') + '/css', src: ['**/*', '!**/*.scss'], dest: grunt.option('build-path') + '/source/css', filter: 'isFile'},
+          // {expand: true, cwd: grunt.option('source-path') + '/css', src: ['**/*', '!**/*.scss'], dest: grunt.option('build-path') + '/bem/css', filter: 'isFile'}
         ]
       },
       files: {
@@ -132,9 +139,27 @@ module.exports = function(grunt) {
     sass: {                             
       dist: {                           
         files: [
-          {expand: true, cwd: grunt.option('source-path'), src: ['index.scss'], dest: grunt.option('build-path') + '/source/css/', ext: '.source.css'},
-          {expand: true, cwd: grunt.option('source-path') + '/css/', src: ['bem_imports.scss'], dest: grunt.option('build-path') + '/source/css/', ext: '.source.css'},
-          {expand: true, cwd: grunt.option('source-path') + '/css/debug/', src: ['debug.scss'], dest: grunt.option('build-path') + '/bem/css/', ext: '.css'}  
+          {
+            expand: true, 
+            cwd: grunt.option('source-path'), 
+            src: ['index.scss'], 
+            dest: grunt.option('build-path') + '/source/css/', 
+            ext: '.source.css'
+          },
+          {
+            expand: true, 
+            cwd: grunt.option('kabem-path'), 
+            src: ['bem_imports.scss'], 
+            dest: grunt.option('build-path') + '/source/css/', 
+            ext: '.source.css'
+          },
+          {
+            expand: true, 
+            cwd: grunt.option('kabem-path') + '/debug/', 
+            src: ['debug.scss'], 
+            dest: grunt.option('build-path') + '/bem/css/', 
+            ext: '.css'
+          }  
         ]
       }
     },
@@ -204,12 +229,12 @@ module.exports = function(grunt) {
       },
       sass_modifiers: {
         options: {cwd: rootCWD},
-        files: [grunt.option('source-path') + '/**/*_modifiers.scss'],
+        files: [grunt.option('kabem-path') + '/**/*_modifiers.scss'],
         tasks: ['vb-kabem']
       },
       sass_the_rest: {
         options: {cwd: rootCWD},
-        files: [grunt.option('source-path') + '/**/**.scss', grunt.option('source-path') + '!/**/*_modifiers.scss'],
+        files: [grunt.option('source-path') + '/**/**.scss', '!kabem'],
         tasks: ['sass', 'import-css-modules', 'autoprefixer', 'cssmin', 'copy:bem', 'copy:live']
       },
       grunt: {
@@ -263,8 +288,8 @@ module.exports = function(grunt) {
   // WOW... loads!
   grunt.registerTask('vb-kabem', [
     'clean:build',                  // clean up folders
-    'copy:files:scripts',                 // copy any src scrips into build/../scrips
-    'copy:files:images',                   // copy any src images into build/../images
+    'copy:files:scripts',           // copy any src scrips into build/../scrips
+    'copy:files:images',            // copy any src images into build/../images
     'copy:css',                     // copy any vendor css files into build/../css/vendor
     'parse-index',                  // add stub data to build/source/html/index.html using underscore templates
     'scaffold-sass',                // rip apart the build/source/html/index.html and create SASS files for each block/element and modifier in there
