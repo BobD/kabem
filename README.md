@@ -1,15 +1,16 @@
 ##kaBEM
 
-kaBEM is a grunt.js environment for easy scaffolding, developing and testing of HTML pages with BEM (Block, Element, Modifier) CSS syntax. And if you are using User Stories to define your project, and have written those in a [Structure/State] (https://github.com/viewbook/dev-kabem/blob/master/README.md#structurestate-user-stories) way, it's easy to get some initial BEM classnames for a quick start.
-
-kaBEM is mostly useful if you have a single HTML page which can have a lot of different visual states. For example if you want to develop a Gallery plugin or Page Theme depending on a list of different user defined settings.
-
+kaBEM is a grunt.js environment for quick scaffolding and testing of HTML with BEM CSS (Block, Element, Modifier). kaBEM is mostly useful if you have a piece HTML which can have a lot of varying visual states. For example if you want to develop a plugin or theme depending on a list of different user defined settings. Or if you have a lot of responsive states to handle in your CSS.
 
 ###What does kaBEM do for you?
 
-kaBEM uses a bit of HTML markup with some BEM classes to scaffold out a handy SASS folder structure to start working on. Each Block or Element get's it's own folder, and inside that is a seperate SASS file for the block/element and modifiers CSS. Each new Modifier BEM class you add get's translated into a separate HTML file for easy testing. 
+kaBEM uses a bit of initial HTML markup with some BEM classes to scaffold out a SASS folder structure to start developing on. Each Block or Element get's it's own folder, and inside that is a seperate SASS file for the block/element and modifiers CSS. Each Modifier BEM class you add get's it's own HTML file for quick testing and tweaking of just that feature.
 
-The kaBEM Grunt environment also has all standard (grunt) niceties like HTML/CSS validation and minimizing, local servers and LiveReload. And you can add your own specific tasks of course.
+kaBEM also gives you single BEM classnames with mutliple modifiers. Something like '__block__elemend__modifier1_modifier2'. Just use a single BEM classname on each HTML element to rule all CSS (if you so desire).
+
+And if you are using User Stories to define your project, and have written those in a [Structure/State] (https://github.com/viewbook/dev-kabem/blob/master/README.md#structurestate-user-stories) kinda way, it's easy to get some initial BEM classnames for a quick start.
+
+And of course the kaBEM grunt.js environment also has all standard grunt niceties like HTML/CSS validation and minimizing, local servers and LiveReload. And you can add your own project specific task, just give it a whirl.
 
 TODO
 * ~~Include SASS variables, SASS folder needs some restructuring no doubt~~
@@ -22,13 +23,13 @@ TODO
 
 ###Why BEM?
 
-BEM stands for Block Element Modifier and was originally thought up by the people of <a href="http://yandex.ru/">Yandex</a>. BEM is no more then a simple CSS class naming convention which gives them purpose and meaning to other developers. Ideal for teams. In short the benefits are:
+BEM stands for Block Element Modifier and was originally thought up by the people of <a href="http://yandex.ru/">Yandex</a>. BEM is no more then a simple CSS class naming convention which gives them purpose and meaning to other developers. In short the benefits are:
  
 * See a BEM classname in your CSS and know where to use it in your HTML
 * See a BEM classname in your HTML and know where to find it in your CSS files
 * See a BEM classname and know which purpose it has
 
-BEM is no golden highway to utter development bliss though. It's (long) classnames help in understanding your CSS, but it will also bloat your HTML. It's single classname approach can prevent CSS specifity hell and helps with an OOCSS approach, but also ignores the useful cascading nature of C(cascading)SS. Luckily kaBEM nor BEM prevent you from using it with regular CSS in the way you want.
+BEM is no golden highway to utter front-end developer bliss, nothing is (well a decent mug of coffee get's close). It's long classnames help in understanding your CSS and HTML, but it will also bloat your HTML and CSS, if only from a HTML/CSS esthetic point of view. It's single classname approach can prevent CSS specifity hell and helps understand it's meaning and purpose, but also when used on it's own also ignores the useful cascading nature of C(cascading)SS. Luckily kaBEM nor BEM prevent you from using it with regular CSS in the way you want. I personally just scaffold and tweak out the main structure of my HTML with kaBEM, and then just augment it where needed with the Cascading power of CSS where needed, lovely.
 
 For some more BEM reading:
 
@@ -45,7 +46,34 @@ kaBEM uses these class name conventions:
 * '_' starting a modifier
 * '-' for multi word block, elements and modifiers. 
 
-So a kaBEM class would look like: '__page__container_modifier-name'
+So a kaBEM class would look like: '__page__container_modifier-name'. 
+
+kaBEM also support multople modifier classnames with a bit of semi clever-ish SASS @extend and CSS attribute selectors. It converts BEM class like these:
+
+.__block{
+	background-color: AliceBlue;
+}
+
+.__block_modifier1{
+	color: AntiqueWhite;
+}
+
+.__block_modifier2{
+	color: Aqua;
+}
+
+Into:
+
+.__block, *[class^="__block"] {
+  background-color: AliceBlue; }
+
+.__block_modifier1, *[class^="__block"][class*="_modifier1"] {
+  color: AntiqueWhite; }
+
+.__block_modifier2, *[class^="__block"][class*="_modifier2"] {
+  background-color: Aqua; }
+  
+So you can simply use '__block_modifier1_modifier2' as a BEM classname to get all CSS goodness, hooray. Well you get the point.
 
 
 ###Structure/State User Stories?
