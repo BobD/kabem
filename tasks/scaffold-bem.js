@@ -18,7 +18,7 @@ module.exports = function(grunt) {
 
   grunt.registerTask('scaffold-bem', 'Generate HTML pages for each BEM modifier', function() {
     var CSSOM = require('cssom');
-    var CSSFile = grunt.file.read(grunt.option('build-path') + '/source/css/bem_imports.source.css');
+    var CSSFile = grunt.file.read(grunt.option('build-path') + '/source/css/bem.source.css');
     var CSSTree = CSSOM.parse(CSSFile);
     var classes = [];
     var context = grunt.option('context') || 'default';

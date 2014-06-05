@@ -4,7 +4,7 @@ module.exports = function(grunt) {
 grunt.registerTask('sass-imports', 'Generates an _all.scss file with all sass files needed', function() {
     var dir = grunt.option('source-path');
     var allImportFile = dir + '/css/_all.scss';
-    var bemImportFile = grunt.option('kabem-path') + '/bem_imports.scss';
+    var bemImportFile = grunt.option('kabem-path') + '/bem.scss';
     var normalFiles = grunt.file.expand({cwd: dir + '/css'}, ['**/*.scss', '**/*.css' ,'!_all.scss', '!kabem/**/*.*']);
     var bemFiles = grunt.file.expand({cwd: grunt.option('kabem-path')}, ['bem/**/*.scss']);
     var segments, file, importFile;
@@ -14,7 +14,7 @@ grunt.registerTask('sass-imports', 'Generates an _all.scss file with all sass fi
     
     bemImports.unshift('@import "../helpers/variables";', '@import "../helpers/utils";');
     bemImports.unshift(leader);
-    allImports.push('@import "helpers/variables";', '@import "helpers/utils";', '@import "kabem/bem_compact";');
+    allImports.push('@import "helpers/variables";', '@import "helpers/utils";', '@import "kabem/bem.better";');
     allImports.unshift(leader);
 
     grunt.file.write(allImportFile, allImports.join('\n'));

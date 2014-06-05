@@ -84,7 +84,7 @@ module.exports = function(grunt) {
         grunt.option('build-path'), 
         grunt.option('kabem-path') + '/bem/**/*', 
         grunt.option('kabem-path') + '/_all.scss', 
-        grunt.option('kabem-path') + '/bem_imports.scss'
+        grunt.option('kabem-path') + '/bem.scss'
       ]
     },
 
@@ -148,7 +148,7 @@ module.exports = function(grunt) {
            {
             expand: true, 
             cwd: grunt.option('kabem-path'), 
-            src: ['bem_imports.scss'], 
+            src: ['bem.scss'], 
             dest: grunt.option('build-path') + '/source/css/', 
             ext: '.source.css'
           }
@@ -166,7 +166,7 @@ module.exports = function(grunt) {
           {
             expand: true, 
             cwd: grunt.option('kabem-path'), 
-            src: ['bem_compact.scss'], 
+            src: ['bem.better.scss'], 
             dest: grunt.option('build-path') + '/source/css/', 
             ext: '.source.css'
           },
@@ -312,7 +312,7 @@ module.exports = function(grunt) {
     'scaffold-sass',                // rip apart the build/source/html/index.html and create SASS files for each block/element and modifier in there
     'sass-imports',                 // generate a CSS file with all needed SASS @import's
     'sass:bem',                     // sass up a CSS with all BEM classes
-    'compact-bem',                  // use that CSS to generate CSS selectors for compact BEM 'multy modifier' classnames: block__element_modifier1_modifier_2
+    'better-bem',                   // use that CSS to generate CSS selectors for 'better' BEM classnames multy modifiers possible block__element_modifier1_modifier_2
     'sass:all',                     // SASS up the resulting build/source/css/index.source.css
     'import-css-modules',           // import CSS from npm modules using rework
     'autoprefixer',                 // prefix CSS shizzle
