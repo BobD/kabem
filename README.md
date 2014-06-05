@@ -80,7 +80,7 @@ Into:
   }
 </pre>
   
-So you can simply use '__block_modifier1_modifier2' as a single BEM classname to get all Block, Element and Modifier goodness, hooray. Well you get the point.
+So you can simply use '__block_modifier1_modifier2' as a single BEM classname to get all Block, Element and Modifier goodness, hooray.
 
 
 ###Structure/State User Stories?
