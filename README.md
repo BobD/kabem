@@ -85,7 +85,7 @@ So you can simply use '__block_modifier1_modifier2' as a single BEM classname to
 
 ###Structure/State User Stories?
 
-Structure and State user stories? What are you babbling about? Well kaBEM is essentially about managing the different visual states of a single HTML block using SASS. And if you would describe a visual state using User Stories, they would end up in two main categories perhaps: Structure and State.
+Structure and State user stories, what are you babbling about? Well kaBEM is essentially about managing the different visual states of a single HTML block using SASS. And if you would describe a visual state using User Stories, they would end up in two main categories perhaps: Structure and State.
 
 In essence Structure describes those elements always present on screen (unless you hide them with a state, don't be nitpicky), and State describes the different states and behaviours those elements can have. And it just happens that this pretty much matches what BEM is about. Block and Elements are 'Structure', and Modifiers are 'State'. So how handy would it be if you could derive some BEM classnames directly from the User Stories and get started scaffolding your HTML and SASS folder sctructure. Very handy.
 
