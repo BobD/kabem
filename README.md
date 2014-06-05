@@ -169,4 +169,4 @@ Every BEM modifier classname you fill with some CSS will get a seperate HTML pag
   3. Run 'npm install'
   4. Run 'grunt connect' and 'grunt watch'
   5. Take a look at the index.html in src folder, notice the example kaBEM classes, and run 'grunt'
-  6. Add your own HTMl and BEM classes, do your thing.
+  6. Add your own HTMl and BEM classes, do your thing and let me know how it works.
