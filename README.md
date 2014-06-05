@@ -85,18 +85,18 @@ So you can simply use '__block_modifier1_modifier2' as a single BEM classname to
 
 ###Structure/State User Stories?
 
-Structure and State user stories, what are you babbling about? Well kaBEM is essentially about managing the different visual states of a single HTML block using SASS. And if you would describe a visual state using User Stories, they would end up in two main categories perhaps: Structure and State.
+Structure and State user stories, what are you babbling about? Well kaBEM is essentially about managing the different visual states of a single HTML block using CSS. And if you would describe a visual state using User Stories, they would end up in two main categories i guess: Structure and State.
 
 In essence Structure describes those elements always present on screen (unless you hide them with a state, don't be nitpicky), and State describes the different states and behaviours those elements can have. And it just happens that this pretty much matches what BEM is about. Block and Elements are 'Structure', and Modifiers are 'State'. So how handy would it be if you could derive some BEM classnames directly from the User Stories and get started scaffolding your HTML and SASS folder sctructure. Very handy.
 
-For example. Considder a paragraph with a title and some text. And it has to be able to expand the full width, or alternatively take a fixed widt. This is rather stupid example, i know. But stick with me. Then you could write your User Stories this way;
+For example. Considder a paragraph with a title and some text. And it has to be able to expand the full width, or alternatively take a fixed width. This is rather painfully stupid example, but bare with me. Then you could write your User Stories this way;
 
 #####Structure
 
 * As a Visitor i want to see a paragraph some text with a nice title above it
 
- * It should have a title
- * It should have some text
+ * It should have a title element
+ * It should have a text element
  * The title should be above the text
 
 
@@ -138,7 +138,7 @@ __paragraph.scss
 __paragraph_modifiers.scss
 </pre>
 
-And finally you can put the three BEM modifier class names inside the __paragraph_modifiers.scss file, and fill them with the needed CSS to pass the User Story.
+And finally you can put the BEM modifier class names inside the __paragraph_modifiers.scss file, and fill them with the needed CSS to pass the User Story.
 
 <code>
 .__paragraph_full-width{
@@ -152,9 +152,9 @@ And finally you can put the three BEM modifier class names inside the __paragrap
 }
 </code>
 
-Nice.
+Nice, albeit a stupid example. But you get the drift.
 
-During development you might find that the HTML markup needs additional elements to make things actually work of course, no problem there. You could either modify the relevant BEM classnames with new __elements if those elements are in need of some CSS, or skip them altogether.
+During development you might find that the HTML markup needs additional elements to make things actually work, no problem there. You could either modify the relevant BEM classnames with new __elements if those elements are in need of some CSS, or skip them altogether. kaBEM does not mind.
 
 
 ###Adding some dynamic HTML
