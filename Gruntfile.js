@@ -19,6 +19,10 @@ module.exports = function(grunt) {
       selector = selector.substring(1);
     }
 
+    if(selector.indexOf('__') != 0){
+      return {selector: selector};
+    }
+
     // Only get the main BEM class name, not the descendants
     if(selector.indexOf(' ') != -1){
       selector = selector.split(' ')[0];
@@ -27,10 +31,14 @@ module.exports = function(grunt) {
     var BE = selector.split('__');
     var M = BE.pop().split('_');
     BE.push(M.shift());
-    BE = BE.join('__');
-    M = M[0];
 
-    return {be: BE, m: M, selector: selector};
+    var ret = {be: BE.join('__'), selector: selector};
+
+    if(M.length > 0){
+      ret.m = M[0];
+    }
+
+    return ret;
   };
   
   // Project configuration.
@@ -114,9 +122,7 @@ module.exports = function(grunt) {
       source_index: {
         options: {
           append: [
-            {selector: 'head', html: '<link rel="stylesheet" href="/css/index.min.css">'},
-            {selector: 'head', html: '<!--[if lt IE 9]><script src="/scripts/vendor/html5shiv.js"></script><![endif]-->'}
-          ]
+            {selector: 'head', html: '<link rel="stylesheet" href="/css/index.min.css">'}          ]
         },
         src: grunt.option('build-path') + '/source/html/index.html'
       }
@@ -136,8 +142,19 @@ module.exports = function(grunt) {
     },
 
     // https://github.com/gruntjs/grunt-contrib-sass
-    sass: {                             
-      dist: {                           
+    sass: {
+      bem: {
+        files: [
+           {
+            expand: true, 
+            cwd: grunt.option('kabem-path'), 
+            src: ['bem_imports.scss'], 
+            dest: grunt.option('build-path') + '/source/css/', 
+            ext: '.source.css'
+          }
+        ]
+      },                        
+      all: {                           
         files: [
           {
             expand: true, 
@@ -149,7 +166,7 @@ module.exports = function(grunt) {
           {
             expand: true, 
             cwd: grunt.option('kabem-path'), 
-            src: ['bem_imports.scss'], 
+            src: ['bem_compact.scss'], 
             dest: grunt.option('build-path') + '/source/css/', 
             ext: '.source.css'
           },
@@ -294,7 +311,9 @@ module.exports = function(grunt) {
     'parse-index',                  // add stub data to build/source/html/index.html using underscore templates
     'scaffold-sass',                // rip apart the build/source/html/index.html and create SASS files for each block/element and modifier in there
     'sass-imports',                 // generate a CSS file with all needed SASS @import's
-    'sass',                         // SASS up the resulting build/source/css/index.source.css
+    'sass:bem',                     // sass up a CSS with all BEM classes
+    'compact-bem',                  // use that CSS to generate CSS selectors for compact BEM 'multy modifier' classnames: block__element_modifier1_modifier_2
+    'sass:all',                     // SASS up the resulting build/source/css/index.source.css
     'import-css-modules',           // import CSS from npm modules using rework
     'autoprefixer',                 // prefix CSS shizzle
     'cssmin',                       // minify CSS shizzle

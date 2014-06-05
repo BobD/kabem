@@ -72,6 +72,10 @@ module.exports = function(grunt) {
         var beParts;
 
         bem = grunt.splitBEM(selector);
+        if(!_.has(bem, 'be')){
+          return;
+        } 
+
         beParts = bem.be.split('__').length;
         selector = bem.selector;
         

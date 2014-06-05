@@ -1,7 +1,7 @@
 // Simplified version of https://www.npmjs.org/package/grunt-sass-directory-import
 module.exports = function(grunt) {
     
-grunt.registerTask('sass-imports', 'Generates a _all.scss file with all sass files needed', function() {
+grunt.registerTask('sass-imports', 'Generates an _all.scss file with all sass files needed', function() {
     var dir = grunt.option('source-path');
     var allImportFile = dir + '/css/_all.scss';
     var bemImportFile = grunt.option('kabem-path') + '/bem_imports.scss';
@@ -14,7 +14,7 @@ grunt.registerTask('sass-imports', 'Generates a _all.scss file with all sass fil
     
     bemImports.unshift('@import "../helpers/variables";', '@import "../helpers/utils";');
     bemImports.unshift(leader);
-    allImports.push('@import "helpers/variables";', '@import "helpers/utils";', '@import "kabem/bem_imports";');
+    allImports.push('@import "helpers/variables";', '@import "helpers/utils";', '@import "kabem/bem_compact";');
     allImports.unshift(leader);
 
     grunt.file.write(allImportFile, allImports.join('\n'));
