@@ -50,6 +50,7 @@ So a kaBEM class would look like: '__page__container_modifier-name'.
 
 kaBEM also support multople modifier classnames with a bit of semi clever-ish SASS @extend and CSS attribute selectors. It converts BEM class like these:
 
+<pre>
 .__block{
 	background-color: AliceBlue;
 }
@@ -61,21 +62,25 @@ kaBEM also support multople modifier classnames with a bit of semi clever-ish SA
 .__block_modifier2{
 	color: Aqua;
 }
+</pre>
 
 Into:
 
 <pre>
 .__block, *[class^="__block"] {
-  background-color: AliceBlue; }
+  background-color: AliceBlue; 
+  }
 
 .__block_modifier1, *[class^="__block"][class*="_modifier1"] {
-  color: AntiqueWhite; }
+  color: AntiqueWhite; 
+  }
 
 .__block_modifier2, *[class^="__block"][class*="_modifier2"] {
-  background-color: Aqua; }
+  background-color: Aqua; 
+  }
 </pre>
   
-So you can simply use '__block_modifier1_modifier2' as a BEM classname to get all CSS goodness, hooray. Well you get the point.
+So you can simply use '__block_modifier1_modifier2' as a single BEM classname to get all Block, Element and Modifier goodness, hooray. Well you get the point.
 
 
 ###Structure/State User Stories?
