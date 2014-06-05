@@ -82,16 +82,10 @@ module.exports = function(grunt) {
           {expand: true, cwd: grunt.option('source-path') + '/css/vendor', src: ['**/*'], dest: grunt.option('build-path') + '/bem/css/vendor', filter: 'isFile'}
         ]
       },
-      scripts: {
+      files: {
         files: [
-          {expand: true, cwd: grunt.option('source-path') + '/scripts/', src: ['**/*'], dest: grunt.option('build-path') + '/live/scripts/', filter: 'isFile'},
-          {expand: true, cwd: grunt.option('source-path') + '/scripts/', src: ['**/*'], dest: grunt.option('build-path') + '/bem/scripts/', filter: 'isFile'}
-        ]
-      },
-      images: {
-        files: [
-          {expand: true, cwd: grunt.option('source-path') + '/images/', src: ['**/*'], dest: grunt.option('build-path') + '/live/images/', filter: 'isFile'},
-          {expand: true, cwd: grunt.option('source-path') + '/images/', src: ['**/*'], dest: grunt.option('build-path') + '/bem/images/', filter: 'isFile'}
+          {expand: true, cwd: grunt.option('source-path') + '/<%= grunt.task.current.args[0] %>/', src: ['**/*'], dest: grunt.option('build-path') + '/live/<%= grunt.task.current.args[0] %>/', filter: 'isFile'},
+          {expand: true, cwd: grunt.option('source-path') + '/<%= grunt.task.current.args[0] %>/', src: ['**/*'], dest: grunt.option('build-path') + '/bem/<%= grunt.task.current.args[0] %>/', filter: 'isFile'}
         ]
       },
       html: {
@@ -269,8 +263,8 @@ module.exports = function(grunt) {
   // WOW... loads!
   grunt.registerTask('vb-kabem', [
     'clean:build',                  // clean up folders
-    'copy:scripts',                 // copy any src scrips into build/../scrips
-    'copy:images',                  // copy any src images into build/../images
+    'copy:files:scripts',                 // copy any src scrips into build/../scrips
+    'copy:files:images',                   // copy any src images into build/../images
     'copy:css',                     // copy any vendor css files into build/../css/vendor
     'parse-index',                  // add stub data to build/source/html/index.html using underscore templates
     'scaffold-sass',                // rip apart the build/source/html/index.html and create SASS files for each block/element and modifier in there
