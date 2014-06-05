@@ -64,6 +64,7 @@ kaBEM also support multople modifier classnames with a bit of semi clever-ish SA
 
 Into:
 
+<pre>
 .__block, *[class^="__block"] {
   background-color: AliceBlue; }
 
@@ -72,6 +73,7 @@ Into:
 
 .__block_modifier2, *[class^="__block"][class*="_modifier2"] {
   background-color: Aqua; }
+</pre>
   
 So you can simply use '__block_modifier1_modifier2' as a BEM classname to get all CSS goodness, hooray. Well you get the point.
 
