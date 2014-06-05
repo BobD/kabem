@@ -76,13 +76,11 @@ module.exports = function(grunt) {
 
     // https://github.com/gruntjs/grunt-contrib-copy
     copy: {
-      normalize: {
-        src: 'bower_components/normalize.css/normalize.css',
-        dest: grunt.option('source-path') + '/css/vendor/normalize.scss'
-      },
-      html5shiv: {
-        src: 'bower_components/html5shiv/dist/html5shiv.min.js',
-        dest: grunt.option('source-path') + '/scripts/vendor/html5shiv.min.js'
+      css: {
+        files: [
+          {expand: true, cwd: grunt.option('source-path') + '/css/vendor', src: ['**/*'], dest: grunt.option('build-path') + '/live/css/vendor', filter: 'isFile'},
+          {expand: true, cwd: grunt.option('source-path') + '/css/vendor', src: ['**/*'], dest: grunt.option('build-path') + '/bem/css/vendor', filter: 'isFile'}
+        ]
       },
       scripts: {
         files: [
@@ -271,10 +269,9 @@ module.exports = function(grunt) {
   // WOW... loads!
   grunt.registerTask('vb-kabem', [
     'clean:build',                  // clean up folders
-    'copy:normalize',               // copy a bower normalize package into the src/css/vendor
-    'copy:html5shiv',               // copy a bower html5 shiv package into the src/script/vendor
     'copy:scripts',                 // copy any src scrips into build/../scrips
-    'copy:images',                  // copy any src images into build/../scrips
+    'copy:images',                  // copy any src images into build/../images
+    'copy:css',                     // copy any vendor css files into build/../css/vendor
     'parse-index',                  // add stub data to build/source/html/index.html using underscore templates
     'scaffold-sass',                // rip apart the build/source/html/index.html and create SASS files for each block/element and modifier in there
     'sass-imports',                 // generate a CSS file with all needed SASS @import's
