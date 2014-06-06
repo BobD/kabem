@@ -3,7 +3,7 @@
 kaBEM is a grunt.js environment for quick scaffolding and tweaking of HTML with BEM CSS (Block, Element, Modifier). kaBEM is mostly useful if you have a piece HTML which can have a lot of varying visual states. For example if you want to develop some page themes, a plugin with many possible user settings or a site with a load of responsive states.
 
 ##Who made it?
-Bob Donderwinkel, and i use kaBEM to make galleries and page layouts for [Viewbook] (http://www.viewbook.com/)
+[Bob Donderwinkel] (http://nl.linkedin.com/in/bobdonderwinkel), and i use kaBEM to make galleries and page layouts for [Viewbook] (http://www.viewbook.com/)
 
 ##What does kaBEM do for you?
 
