@@ -164,4 +164,4 @@ Every BEM modifier classname you fill with some CSS will get a seperate HTML pag
   6. Add your own HTML and BEM classes, do your thing and let me know how it works.
   
 ###Copyright
-Code released under the MIT license.
+Code released under [the MIT license] (https://github.com/viewbook/dev-kabem/blob/master/LICENSE).
