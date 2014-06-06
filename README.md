@@ -12,14 +12,6 @@ And if you are using User Stories to define your project, and have written those
 
 And of course the kaBEM grunt.js environment also has all standard grunt niceties like HTML/CSS validation and minimizing, local servers and LiveReload. And you can add your own project specific task, just give it a whirl.
 
-
-###kaBEM file structure
-
-The kaBEM scaffolding depends on 'src' folder with a index.html holding your HTML and a index.scss. It also contains a 'css' folder where all BEM CSS folders and files will be generated, plus a empty (SASS) 'helpers' and 'vendor' folder which you can use as needed.
-
-The scaffoling output will be placed in a 'build' folder. This includes a 'source' folder with all generated CSS and HTML, a 'bem' folder with all single modifier HTML pages for easy testing and a 'live' folder with deployable files.
-
-
 ###Why BEM?
 
 BEM stands for Block Element Modifier and was originally thought up by the people of <a href="http://yandex.ru/">Yandex</a>. BEM is no more then a simple CSS class naming convention which gives them purpose and meaning to other developers. In short the benefits are:
@@ -36,6 +28,11 @@ For some more BEM reading:
 * [BEM it!, BEM Methodology for small companies with high expectations] (http://www.slideshare.net/MaxShirshin/bem-dm")
 * [MindBEMding – getting your head ’round BEM syntax] (http://csswizardry.com/2013/01/mindbemding-getting-your-head-round-bem-syntax/)
 
+###kaBEM file structure
+
+The kaBEM scaffolding depends on 'src' folder with a index.html holding your HTML and a index.scss. It also contains a 'css' folder where all BEM CSS folders and files will be generated, plus a empty (SASS) 'helpers' and 'vendor' folder which you can use as needed.
+
+The scaffoling output will be placed in a 'build' folder. This includes a 'source' folder with all generated CSS and HTML, a 'bem' folder with all single modifier HTML pages for easy testing and a 'live' folder with deployable files.
 
 ###kaBEM naming conventions
 
