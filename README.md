@@ -1,24 +1,16 @@
 ##kaBEM
 
-kaBEM is a grunt.js environment for quick scaffolding and testing of HTML with BEM CSS (Block, Element, Modifier). kaBEM is mostly useful if you have a piece HTML which can have a lot of varying visual states. For example if you want to develop a plugin or theme depending on a list of different user defined settings. Or if you have a lot of responsive states to handle in your CSS.
+kaBEM is a grunt.js environment for quick scaffolding and tweaking of HTML with BEM CSS (Block, Element, Modifier). kaBEM is mostly useful if you have a piece HTML which can have a lot of varying visual states. For example if you want to develop some page themes, a plugin with many possible user settings or a site with a load of responsive states.
 
 ###What does kaBEM do for you?
 
 kaBEM uses a bit of initial HTML markup with some BEM classes to scaffold out a SASS folder structure to start developing on. Each Block or Element get's it's own folder, and inside that is a seperate SASS file for the block/element and modifiers CSS. Each Modifier BEM class you add get's it's own HTML file for quick testing and tweaking of just that feature.
 
-kaBEM also gives you single BEM classnames with mutliple modifiers. Something like '__block__elemend__modifier1_modifier2'. Just use a single BEM classname on each HTML element to rule all CSS (if you so desire).
+kaBEM also gives you single BEM classnames with mutliple modifiers. Something like '__block__elemend__modifier1_modifier2'. Just use a single BEM classname on each HTML element to rule all CSS states.
 
 And if you are using User Stories to define your project, and have written those in a [Structure/State] (https://github.com/viewbook/dev-kabem/blob/master/README.md#structurestate-user-stories) kinda way, it's easy to get some initial BEM classnames for a quick start.
 
 And of course the kaBEM grunt.js environment also has all standard grunt niceties like HTML/CSS validation and minimizing, local servers and LiveReload. And you can add your own project specific task, just give it a whirl.
-
-TODO
-* ~~Include SASS variables, SASS folder needs some restructuring no doubt~~
-* ~~Clean up debug CSS so it does not conflict with production CSS~~
-* Refactor retina device detection CSS for proper browser prefixes and dppx usage
-* Review grunt clean & backup after default grunt task (old SASS BEM folders linger on..) 
-* Add GIT Hooks for CSS/HTML validation before push
-* Add device detection CSS markers
 
 
 ###Why BEM?
@@ -170,3 +162,6 @@ Every BEM modifier classname you fill with some CSS will get a seperate HTML pag
   4. Run 'grunt connect' and 'grunt watch'
   5. Take a look at the index.html in src folder, notice the example kaBEM classes, and run 'grunt'
   6. Add your own HTML and BEM classes, do your thing and let me know how it works.
+  
+###Copyright
+Code released under the MIT license.
