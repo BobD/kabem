@@ -4,13 +4,20 @@ kaBEM is a grunt.js environment for quick scaffolding and tweaking of HTML with 
 
 ###What does kaBEM do for you?
 
-kaBEM uses a bit of initial HTML markup with some BEM classes to scaffold out a SASS folder structure to start developing on. Each Block or Element get's it's own folder, and inside that is a seperate SASS file for the block/element and modifiers CSS. Each Modifier BEM class you add get's it's own HTML file for quick testing and tweaking of just that feature.
+kaBEM uses a bit of initial HTML markup with some BEM classes to scaffold out a folder structure using (SASS) [http://sass-lang.com/] to start developing on. Each Block or Element get's it's own folder, and inside that is a seperate SASS file for the block/element and modifiers CSS. Each Modifier BEM class you add get's it's own HTML file for quick testing and tweaking of just that feature.
 
 kaBEM also gives you single BEM classnames with mutliple modifiers. Something like '__block__elemend__modifier1_modifier2'. Just use a single BEM classname on each HTML element to rule all CSS states.
 
-And if you are using User Stories to define your project, and have written those in a [Structure/State] (https://github.com/viewbook/dev-kabem/blob/master/README.md#structurestate-user-stories) kinda way, it's easy to get some initial BEM classnames for a quick start.
+And if you are using User Stories to define your project, and have written those in a [Structure/State] (https://github.com/viewbook/dev-kabem/blob/master/README.md#structurestate-user-stories) kinda way, it's rather easy to get some initial BEM classnames for a quick start.
 
 And of course the kaBEM grunt.js environment also has all standard grunt niceties like HTML/CSS validation and minimizing, local servers and LiveReload. And you can add your own project specific task, just give it a whirl.
+
+
+###kaBEM file structure
+
+The kaBEM scaffolding depends on 'src' folder with a index.html holding your HTML and a index.scss. It also contains a 'css' folder where all BEM CSS folders and files will be generated, plus a empty (SASS) 'helpers' and 'vendor' folder which you can use as needed.
+
+The scaffoling output will be placed in a 'build' folder. This includes a 'source' folder with all generated CSS and HTML, a 'bem' folder with all single modifier HTML pages for easy testing and a 'live' folder with deployable files.
 
 
 ###Why BEM?
