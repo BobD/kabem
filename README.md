@@ -41,7 +41,7 @@ The scaffoling output will be placed in a 'build' folder. This includes a 'sourc
 
 kaBEM uses these class name conventions:
 
-* '__' staring block and elements
+* '__' starting block and elements (so kaBEM can keep normal classes and single BEM 'block' classes apart)
 * '_' starting a modifier
 * '-' for multi word block, elements and modifiers. 
 
