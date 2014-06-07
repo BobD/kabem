@@ -27,7 +27,7 @@ module.exports = function(grunt) {
             css.push('@extend .' + be + ';');
     		_.each(bemGrouped[be], function(be){
                 if(_.has(be, 'm')){
-                    css.push('&[class*="_' + be.m + '"]{@extend .' + be.selector + ';}');
+                    css.push('&[class*="' + be.m + '"]{@extend .' + be.selector + ';}');
                 }
     		});
     		css .push('}');

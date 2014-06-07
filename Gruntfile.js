@@ -34,8 +34,7 @@ module.exports = function(grunt) {
     var ret = {be: BE.join('__'), selector: selector};
 
     if(M.length > 0){
-      ret.m = M[0];
-      // console.log(ret.m);
+      ret.m = '_' + M[0];
     }
 
     return ret;

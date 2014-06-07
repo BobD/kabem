@@ -1,43 +1,43 @@
 ##kaBEM
 
-kaBEM is a grunt.js environment for easy scaffolding, developing and testing of HTML pages with BEM (Block, Element, Modifier) CSS syntax. And if you are using User Stories to define your project, and have written those in a [Structure/State] (https://github.com/viewbook/dev-kabem/blob/master/README.md#structurestate-user-stories) way, it's easy to get some initial BEM classnames for a quick start.
+kaBEM is a grunt.js environment for quick scaffolding and tweaking of HTML with BEM CSS (Block, Element, Modifier). kaBEM is mostly useful if you have a piece HTML which can have a lot of varying visual states. For example if you want to develop some page themes, a plugin with many possible user settings or a site with a load of responsive states.
 
-kaBEM is mostly useful if you have a single HTML page which can have a lot of different visual states. For example if you want to develop a Gallery plugin or Page Theme depending on a list of different user defined settings.
+##Who made it?
+[Bob Donderwinkel] (http://nl.linkedin.com/in/bobdonderwinkel), and i use kaBEM to make galleries and page layouts for [Viewbook] (http://www.viewbook.com/)
 
+##What does kaBEM do for you?
 
-###What does kaBEM do for you?
+kaBEM uses a bit of initial HTML markup with some BEM classes to scaffold out a folder structure using (Sass) [http://sass-lang.com/] to start developing on. Each Block or Element get's it's own folder, and inside that is a seperate Sass file for the block/element and modifiers CSS. Each Modifier BEM class you add get's it's own HTML file for quick testing and tweaking of just that feature.
 
-kaBEM uses a bit of HTML markup with some BEM classes to scaffold out a handy SASS folder structure to start working on. Each Block or Element get's it's own folder, and inside that is a seperate SASS file for the block/element and modifiers CSS. Each new Modifier BEM class you add get's translated into a separate HTML file for easy testing. 
+kaBEM also gives you single BEM classnames with mutliple modifiers. Something like '__block__elemend__modifier1_modifier2'. Just use a single BEM classname on each HTML element to rule all CSS states.
 
-The kaBEM Grunt environment also has all standard (grunt) niceties like HTML/CSS validation and minimizing, local servers and LiveReload. And you can add your own specific tasks of course.
+And if you are using User Stories to define your project, and have written those in a [Structure/State] (https://github.com/viewbook/dev-kabem/blob/master/README.md#structurestate-user-stories) kinda way, it's rather easy to get some initial BEM classnames for a quick start.
 
-TODO
-* ~~Include SASS variables, SASS folder needs some restructuring no doubt~~
-* ~~Clean up debug CSS so it does not conflict with production CSS~~
-* Refactor retina device detection CSS for proper browser prefixes and dppx usage
-* Review grunt clean & backup after default grunt task (old SASS BEM folders linger on..) 
-* Add GIT Hooks for CSS/HTML validation before push
-* Add device detection CSS markers
+And of course the kaBEM grunt.js environment also has all standard grunt niceties like HTML/CSS validation and minimizing, local servers and LiveReload. And you can add your own project specific task, just give it a whirl.
 
+##Why BEM?
 
-###Why BEM?
-
-BEM stands for Block Element Modifier and was originally thought up by the people of <a href="http://yandex.ru/">Yandex</a>. BEM is no more then a simple CSS class naming convention which gives them purpose and meaning to other developers. Ideal for teams. In short the benefits are:
+BEM stands for Block Element Modifier and was originally thought up by the people of <a href="http://yandex.ru/">Yandex</a>. BEM is no more then a simple CSS class naming convention which gives them purpose and meaning to other developers. In short the benefits are:
  
 * See a BEM classname in your CSS and know where to use it in your HTML
 * See a BEM classname in your HTML and know where to find it in your CSS files
 * See a BEM classname and know which purpose it has
 
-BEM is no golden highway to utter development bliss though. It's (long) classnames help in understanding your CSS, but it will also bloat your HTML. It's single classname approach can prevent CSS specifity hell and helps with an OOCSS approach, but also ignores the useful cascading nature of C(cascading)SS. Luckily kaBEM nor BEM prevent you from using it with regular CSS in the way you want.
+BEM is no golden highway to utter front-end developer bliss, nothing is (well a decent mug of coffee get's close). It's long classnames help in understanding your CSS and HTML, but it will also bloat your HTML and CSS, if only from a HTML/CSS esthetic point of view. It's single classname approach can prevent CSS specifity hell and helps understand it's meaning and purpose, but also when used on it's own also ignores the useful cascading nature of C(cascading)SS. Luckily kaBEM nor BEM prevent you from using it with regular CSS in the way you want. I personally just scaffold and tweak out the main structure of my HTML with kaBEM, and then just augment it where needed with the Cascading power of CSS where needed, lovely.
 
 For some more BEM reading:
 
 * [linkBEM Methodology] (http://bem.info/method/)
-* [BEM it!, BEM Methodology for small companies with high expectations] ( href="http://www.slideshare.net/MaxShirshin/bem-dm")
+* [BEM it!, BEM Methodology for small companies with high expectations] (http://www.slideshare.net/MaxShirshin/bem-dm")
 * [MindBEMding – getting your head ’round BEM syntax] (http://csswizardry.com/2013/01/mindbemding-getting-your-head-round-bem-syntax/)
 
+##kaBEM file structure
 
-###kaBEM naming conventions
+The kaBEM scaffolding depends on 'src' folder with a index.html holding your HTML and a index.scss. It also contains a 'css' folder where all BEM CSS folders and files will be generated, plus a empty (Sass) 'helpers' and 'vendor' folder which you can use as needed.
+
+The scaffoling output will be placed in a 'build' folder. This includes a 'source' folder with all generated CSS and HTML, a 'bem' folder with all single modifier HTML pages for easy testing and a 'live' folder with deployable files.
+
+##kaBEM naming conventions
 
 kaBEM uses these class name conventions:
 
@@ -45,27 +45,61 @@ kaBEM uses these class name conventions:
 * '_' starting a modifier
 * '-' for multi word block, elements and modifiers. 
 
-So a kaBEM class would look like: '__page__container_modifier-name'
+So a kaBEM class would look like: '__page__container_modifier-name'. 
+
+kaBEM also support multople modifier classnames with a bit of semi clever-ish Sass @extend and CSS attribute selectors. It converts BEM class like these:
+
+<pre>
+.__block{
+	background-color: AliceBlue;
+}
+
+.__block_modifier1{
+	color: AntiqueWhite;
+}
+
+.__block_modifier2{
+	color: Aqua;
+}
+</pre>
+
+Into:
+
+<pre>
+.__block, *[class^="__block"] {
+  background-color: AliceBlue; 
+  }
+
+.__block_modifier1, *[class^="__block"][class*="_modifier1"] {
+  color: AntiqueWhite; 
+  }
+
+.__block_modifier2, *[class^="__block"][class*="_modifier2"] {
+  background-color: Aqua; 
+  }
+</pre>
+  
+So you can simply use '__block_modifier1_modifier2' as a single BEM classname to get all Block, Element and Modifier goodness, hooray.
 
 
-###Structure/State User Stories?
+##Structure/State User Stories?
 
-Structure and State user stories? What are you babbling about? Well kaBEM is essentially about managing the different visual states of a single HTML block using SASS. And if you would describe a visual state using User Stories, they would end up in two main categories perhaps: Structure and State.
+Structure and State user stories, what are you babbling about? Well kaBEM is essentially about managing the different visual states of a single HTML block using CSS. And if you would describe a visual state using User Stories, they would end up in two main categories i guess: Structure and State.
 
 In essence Structure describes those elements always present on screen (unless you hide them with a state, don't be nitpicky), and State describes the different states and behaviours those elements can have. And it just happens that this pretty much matches what BEM is about. Block and Elements are 'Structure', and Modifiers are 'State'. So how handy would it be if you could derive some BEM classnames directly from the User Stories and get started scaffolding your HTML and SASS folder sctructure. Very handy.
 
-For example. Considder a paragraph with a title and some text. And it has to be able to expand the full width, or alternatively take a fixed widt. This is rather stupid example, i know. But stick with me. Then you could write your User Stories this way;
+For example. Considder a paragraph with a title and some text. And it has to be able to expand the full width, or alternatively take a fixed width. This is rather painfully stupid example, but bare with me. Then you could write your User Stories this way;
 
-#####Structure
+####Structure
 
 * As a Visitor i want to see a paragraph some text with a nice title above it
 
- * It should have a title
- * It should have some text
+ * It should have a title element
+ * It should have a text element
  * The title should be above the text
 
 
-#####State
+####State
 
 * As a Visitor i want to see a paragraph stretching the full width of the screen
  * It should be 100% wide
@@ -103,7 +137,7 @@ __paragraph.scss
 __paragraph_modifiers.scss
 </pre>
 
-And finally you can put the three BEM modifier class names inside the __paragraph_modifiers.scss file, and fill them with the needed CSS to pass the User Story.
+And finally you can put the BEM modifier class names inside the __paragraph_modifiers.scss file, and fill them with the needed CSS to pass the User Story.
 
 <code>
 .__paragraph_full-width{
@@ -117,21 +151,27 @@ And finally you can put the three BEM modifier class names inside the __paragrap
 }
 </code>
 
-Nice.
+Nice, albeit a stupid example. But you get the drift.
 
-During development you might find that the HTML markup needs additional elements to make things actually work of course, no problem there. You could either modify the relevant BEM classnames with new __elements if those elements are in need of some CSS, or skip them altogether.
+During development you might find that the HTML markup needs additional elements to make things actually work, no problem there. You could either modify the relevant BEM classnames with new __elements if those elements are in need of some CSS, or skip them altogether. kaBEM does not mind.
 
 
-###Adding some dynamic HTML
+##Adding some dynamic HTML
 kaBEM supports [underscore templates](http://underscorejs.org/#template) and you can put the data used in  config/data-stub.json. You can also tweak the parse-index task (see inside the tasks folder) to use some other template or load in dynamic JSON.
 
-###Adding a BEM context for testing
+##Adding a BEM context for testing
 Every BEM modifier classname you fill with some CSS will get a seperate HTML page in the build/develop folder for easy testing. But some modifiers only make sense in combination with other modifiers. So you can sum these modifier classnames up in config/bem-context.json ("default") and they will be injected in every modifier page. Or you can add them under a different name and run grunt with --context=your-bem-context.
 
-###Getting Started
+##Adding some responsive states
+Using responsive states with kaBEM is rather easy. You can add some media queries mixins for Sass like (these) [https://github.com/paranoida/sass-mediaqueries] in your 'css/helpers/_utils.scss', and start using them in your block/element/modifiers scss files where needed. You might also define some global breakpoint values for min-width and the like in your 'css/helpers/_variables.scss' so you have those availble in all your media queries.
 
-  1. [install node.js] (http://nodejs.org/), [grunt.js] (http://gruntjs.com/getting-started) and [bower] (http://bower.io/)
-  2. Run 'npm install'
-  3. Run 'bower install'
+##Getting Started
+
+  1. [install node.js] (http://nodejs.org/) and [grunt.js] (http://gruntjs.com/getting-started).
+  3. Run 'npm install'
   4. Run 'grunt connect' and 'grunt watch'
   5. Take a look at the index.html in src folder, notice the example kaBEM classes, and run 'grunt'
+  6. Add your own HTML and BEM classes, do your thing and let me know how it works.
+  
+##Copyright
+Code released under [the MIT license] (https://github.com/viewbook/dev-kabem/blob/master/LICENSE).
