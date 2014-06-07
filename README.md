@@ -45,7 +45,7 @@ kaBEM uses these class name conventions:
 * '_' starting a modifier
 * '-' for multi word block, elements and modifiers
 
-So a kaBEM class would look like: '__page__container_modifier-name'. And kaBEM class always starts with '__' just so it can keep normal classes and single BEM 'block' classes apart. 
+So a kaBEM class would look like: '__page__container_modifier-name'.
 
 kaBEM also support multople modifier classnames with a bit of semi clever-ish Sass @extend and CSS attribute selectors. It converts BEM class like these:
 
