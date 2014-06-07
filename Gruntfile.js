@@ -23,10 +23,9 @@ module.exports = function(grunt) {
       return {selector: selector};
     }
 
-    // Only get the main BEM class name, not the descendants
-    if(selector.indexOf(' ') != -1){
-      selector = selector.split(' ')[0];
-    }
+    // Only get the main BEM class names
+    selector = selector.split(',')[0];
+    selector = selector.split(' ')[0];
 
     var BE = selector.split('__');
     var M = BE.pop().split('_');
@@ -36,6 +35,7 @@ module.exports = function(grunt) {
 
     if(M.length > 0){
       ret.m = M[0];
+      // console.log(ret.m);
     }
 
     return ret;

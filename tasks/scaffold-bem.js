@@ -84,7 +84,8 @@ module.exports = function(grunt) {
 
         // Create pages for testing, and apply the relevant modifier classes
         if(createPage){
-          bemClasses.push({selector: '.' + bem.be, attribute: 'class', value: ' ' + selector});
+          bemClasses.push({selector: '.' + bem.be, attribute: 'class', value: '_' + bem.m});
+
           grunt.config('dom_munger.a' + selector + '.options', {
             append: append, 
             suffix: bemClasses
