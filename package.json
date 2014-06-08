@@ -8,7 +8,9 @@
   "main": "Gruntfile.js",
   "keywords": [
     "bem",
-    "css"
+    "css",
+    "html",
+    "scaffold"
   ],
   "dependencies": {
     "cssom": "^0.3.0",

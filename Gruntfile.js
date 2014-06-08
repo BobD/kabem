@@ -12,33 +12,6 @@ module.exports = function(grunt) {
   grunt.option('source-path', grunt.option('source-path') || rootCWD + '/src');
   grunt.option('backup-path', grunt.option('backup-path') || rootCWD + '/backup');
   grunt.option('kabem-path', grunt.option('source-path') + '/css/kabem');
-
-  // Splits a CSS selector inti it's Block, Element and Modifier parts
-  grunt.splitBEM = function(selector){
-    if(selector.indexOf('.') == 0){
-      selector = selector.substring(1);
-    }
-
-    if(selector.indexOf('__') != 0){
-      return {selector: selector};
-    }
-
-    // Only get the main BEM class names
-    selector = selector.split(',')[0];
-    selector = selector.split(' ')[0];
-
-    var BE = selector.split('__');
-    var M = BE.pop().split('_');
-    BE.push(M.shift());
-
-    var ret = {be: BE.join('__'), selector: selector};
-
-    if(M.length > 0){
-      ret.m = '_' + M[0];
-    }
-
-    return ret;
-  };
   
   // Project configuration.
   grunt.config.merge({
@@ -195,7 +168,7 @@ module.exports = function(grunt) {
         expand: true,
         files: {'<%= grunt.option("build-path") %>/source/css/index.source.prefixed.min.css': '<%= grunt.option("build-path") %>/source/css/index.source.prefixed.css'},
         options: {
-          banner: '/* Minified with https://www.npmjs.org/package/grunt-contrib-cssmin */'
+          banner: '<%= banner %>'
         }
       }
     },

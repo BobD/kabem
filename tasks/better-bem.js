@@ -1,4 +1,3 @@
-// Uses http://underscorejs.org/#template
 module.exports = function(grunt) {
 	 // https://www.npmjs.org/package/rework-npm
 	 grunt.registerTask('better-bem', 'Makes the use of multiple modifiers in a bem classname possible: "block__element_modifier1_modifier_2"', function() {
