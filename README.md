@@ -41,11 +41,11 @@ The scaffoling output will be placed in a 'build' folder. This includes a 'sourc
 
 kaBEM uses these class name conventions:
 
-* '__' staring block and elements
+* '__' starting block and elements
 * '_' starting a modifier
-* '-' for multi word block, elements and modifiers. 
+* '-' for multi word block, elements and modifiers
 
-So a kaBEM class would look like: '__page__container_modifier-name'. 
+So a kaBEM class would look like: '__page__container_modifier-name'.
 
 kaBEM also support multople modifier classnames with a bit of semi clever-ish Sass @extend and CSS attribute selectors. It converts BEM class like these:
 
