@@ -1,20 +1,15 @@
 /*global module:false*/
 module.exports = function(grunt) {
-  var rootCWD = process.cwd();
-
-  // Needed when kabem is used as a dependency module. Otherwise the loadTasks/loadNpmTasks will look for the needed node_modules in the wrong place (top level root)
-  grunt.file.setBase(__dirname);
-
   require('time-grunt')(grunt);
 
   // grunt.option.init() method overwrites the entire internal option state, https://github.com/gruntjs/grunt/issues/1023
-  grunt.option('build-path', grunt.option('build-path') || rootCWD + '/build');
-  grunt.option('source-path', grunt.option('source-path') || rootCWD + '/src');
-  grunt.option('backup-path', grunt.option('backup-path') || rootCWD + '/backup');
+  grunt.option('build-path', grunt.option('build-path') || 'build');
+  grunt.option('source-path', grunt.option('source-path') || 'src');
+  grunt.option('backup-path', grunt.option('backup-path') || 'backup');
   grunt.option('kabem-path', grunt.option('source-path') + '/css/kabem');
   
   // Project configuration.
-  grunt.config.merge({
+  grunt.initConfig({
 
     // Metadata.
     pkg: grunt.file.readJSON('package.json'),
@@ -212,17 +207,14 @@ module.exports = function(grunt) {
     // watch needs to reset it's cwd due to the grunt.file.setBase above, bit it's weird it does not work with cwd: grunt.option('source-path') directly..
     watch: {
       html: {
-        options: {cwd: rootCWD},
         files: [grunt.option('source-path') + '/index.html'],
         tasks: ['vb-kabem']
       },
       sass_modifiers: {
-        options: {cwd: rootCWD},
         files: [grunt.option('kabem-path') + '/**/*_modifiers.scss'],
         tasks: ['vb-kabem']
       },
       sass_the_rest: {
-        options: {cwd: rootCWD},
         files: [grunt.option('source-path') + '/**/**.scss', '!kabem'],
         tasks: ['sass', 'import-css-modules', 'autoprefixer', 'cssmin', 'copy:bem', 'copy:live']
       },
@@ -268,7 +260,7 @@ module.exports = function(grunt) {
   grunt.registerTask('validate', ['html-validation', 'cssmetrics', 'css-validation']);
   
   // WOW... loads!
-  grunt.registerTask('vb-kabem', [
+  grunt.registerTask('default', [
     'clean:build',                  // clean up folders
     'copy:files:scripts',           // copy any src scrips into build/../scrips
     'copy:files:images',            // copy any src images into build/../images
@@ -279,7 +271,6 @@ module.exports = function(grunt) {
     'sass:bem',                     // sass up a CSS with all BEM classes
     'better-bem',                   // use that CSS to generate CSS selectors for 'better' BEM classnames multy modifiers possible block__element_modifier1_modifier_2
     'sass:all',                     // SASS up the resulting build/source/css/index.source.css
-    'import-css-modules',           // import CSS from npm modules using rework
     'autoprefixer',                 // prefix CSS shizzle
     'cssmin',                       // minify CSS shizzle
     'copy:html',                    // copy the build/source/html/index.html to build/live/index.html
