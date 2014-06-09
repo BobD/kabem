@@ -66,7 +66,7 @@ kaBEM also support multople modifier classnames with a bit of semi clever-ish Sa
 Into:
 
 <pre>
-.__block, *[class^="__block"] {
+.__block, *[class="__block"] {
   background-color: AliceBlue; 
   }
 
