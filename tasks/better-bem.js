@@ -14,13 +14,13 @@ module.exports = function(grunt) {
         var beListing = _.keys(bemListingGrouped);
 
         _.each(beListing, function(be){
-            css.push('*[class="' + be + '"]{@extend .' + be + ' !optional;');
+            css.push('*[class="' + be + '"]{@extend .' + be + ' !optional;}');
             _.each(bemListingGrouped[be], function(bem){
                 if(_.has(bem, 'm')){
-                    css.push('&*[class*="' + be + '_"][class*="' + bem.m.substring(1) + '"]{@extend .' + bem.selector + ' !optional;}');
+                    css.push('*[class^="' + be + '_"][class*="' + bem.m.substring(1) + '"]{@extend .' + be + ' !optional; @extend .' + bem.selector + ' !optional;}');
                 }
             });
-            css .push('}');
+            // css .push('');
         });
 
         var cssString = css.join('');
