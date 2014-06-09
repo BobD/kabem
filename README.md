@@ -9,7 +9,8 @@ kaBEM is a grunt.js environment for quick scaffolding and tweaking of HTML with 
 
 kaBEM uses a bit of initial HTML markup with some BEM classes to scaffold out a folder structure using [Sass] (http://sass-lang.com/) to start developing on. Each Block or Element get's it's own folder, and inside that is a seperate Sass file for the block/element and modifiers CSS. Each Modifier BEM class you add get's it's own HTML file for quick testing and tweaking of just that feature.
 
-kaBEM also gives you single BEM classnames with mutliple modifiers. Something like '__block__elemend__modifier1_modifier2'. Just use a single BEM classname on each HTML element to rule all CSS states.
+kaBEM also gives you single BEM classnames with mutliple modifiers. Something like: __block__elemend__modifier1_modifier2'
+Just use a single BEM classname on each HTML element to rule all CSS.
 
 And if you are using User Stories to define your project, and have written those in a [Structure/State] (https://github.com/viewbook/dev-kabem/blob/master/README.md#structurestate-user-stories) kinda way, it's rather easy to get some initial BEM classnames for a quick start.
 
