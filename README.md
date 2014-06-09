@@ -70,11 +70,11 @@ Into:
   background-color: AliceBlue; 
   }
 
-.__block_modifier1, *[class^="__block"][class*="_modifier1"] {
+.__block_modifier1, *[class^="__block_"][class*="modifier1"] {
   color: AntiqueWhite; 
   }
 
-.__block_modifier2, *[class^="__block"][class*="_modifier2"] {
+.__block_modifier2, *[class^="__block_"][class*="modifier2"] {
   background-color: Aqua; 
   }
 </pre>
