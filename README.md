@@ -177,7 +177,7 @@ Using responsive states with kaBEM is rather easy. You can add some media querie
   3. Run 'npm install'
   4. Run 'grunt connect' and 'grunt watch'
   5. Take a look at the index.html in src folder, notice the example kaBEM classes, and run 'grunt'
-  6. Add your own HTML and fill the scaffolded BEM classes (see src/css/kabem/bem) with CSS goodness and let me know how it works.
+  6. Add your HTML and fill the scaffolded BEM CSS (inside src/css/kabem/bem) with CSS goodness and let me know how it works.
   
 ##Copyright
 Code released under [the MIT license] (https://github.com/viewbook/dev-kabem/blob/master/LICENSE).
