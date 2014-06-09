@@ -15,7 +15,6 @@ module.exports = function(grunt) {
 
         _.each(beListing, function(be){
             css.push('*[class="' + be + '"]{@extend .' + be + ' !optional;');
-            // css.push('@extend .' + be + ' !optional;');
             _.each(bemListingGrouped[be], function(bem){
                 if(_.has(bem, 'm')){
                     css.push('&*[class*="' + be + '_"][class*="' + bem.m.substring(1) + '"]{@extend .' + bem.selector + ' !optional;}');
