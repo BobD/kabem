@@ -24,7 +24,7 @@ BEM stands for Block Element Modifier and was originally thought up by the peopl
 * See a BEM classname in your HTML and know where to find it in your CSS files
 * See a BEM classname and know which purpose it has
 
-BEM is no golden highway to utter front-end developer bliss, nothing is (well a decent mug of coffee get's close). It's long classnames help in understanding your CSS and HTML, but it will also bloat your HTML and CSS, if only from a HTML/CSS esthetic point of view. It's single classname approach can prevent CSS specifity hell and helps understand it's meaning and purpose, but also when used on it's own also ignores the useful cascading nature of C(cascading)SS. Luckily kaBEM nor BEM prevent you from using it with regular CSS in the way you want. I personally just scaffold and tweak out the main structure of my HTML with kaBEM, and then just augment it where needed with the Cascading power of CSS where needed, lovely.
+BEM is no golden highway to utter front-end developer bliss, nothing is (well a decent mug of coffee get's close). It's long classnames help in understanding your CSS and HTML, but it will also bloat your HTML and CSS, if only from a HTML/CSS esthetic point of view. It's single classname approach can prevent CSS specifity hell and helps understand it's meaning and purpose, but also when used on it's own ignores the useful cascading nature of C(cascading)SS. Luckily kaBEM does not prevent you from using it with regular CSS in the way you want. I personally just scaffold and tweak out the main structure of my HTML with kaBEM, and then augment it where needed with the Cascading power of CSS where needed, lovely.
 
 For some more BEM reading:
 
@@ -34,7 +34,7 @@ For some more BEM reading:
 
 ##kaBEM file structure
 
-The kaBEM scaffolding depends on 'src' folder with a index.html holding your HTML and a index.scss. It also contains a 'css' folder where all BEM CSS folders and files will be generated, plus a empty (Sass) 'helpers' and 'vendor' folder which you can use as needed.
+The kaBEM scaffolding depends on a 'src' folder with an index.html holding your HTML and an index.scss. It also contains a 'css' folder where all BEM CSS folders and files will be generated, plus an empty (Sass) 'helpers' and 'vendor' folder which you can use as needed.
 
 The scaffoling output will be placed in a 'build' folder. This includes a 'source' folder with all generated CSS and HTML, a 'bem' folder with all single modifier HTML pages for easy testing and a 'live' folder with deployable files.
 
@@ -48,7 +48,7 @@ kaBEM uses these class name conventions:
 
 So a kaBEM class would look like: '__page__container_modifier-name'.
 
-kaBEM also support multople modifier classnames with a bit of semi clever-ish Sass @extend and CSS attribute selectors. It converts BEM class like these:
+kaBEM also support multople modifier classnames with a bit of semi clever-ish Sass @extend and CSS attribute selectors. It converts BEM classes like these:
 
 <pre>
 .__block{
@@ -85,16 +85,16 @@ Into:
   }
 </pre>
   
-So you can simply use '__block_modifier1_modifier2' as a single BEM classname to get all Block, Element and Modifier goodness, hooray.
+So you can simply use '__block_modifier1_modifier2' as a single BEM classname to get all Block, Element and Modifier CSS goodness, hooray.
 
 
 ##Structure/State User Stories?
 
 Structure and State user stories, what are you babbling about? Well kaBEM is essentially about managing the different visual states of a single HTML block using CSS. And if you would describe a visual state using User Stories, they would end up in two main categories i guess: Structure and State.
 
-In essence Structure describes those elements always present on screen (unless you hide them with a state, don't be nitpicky), and State describes the different states and behaviours those elements can have. And it just happens that this pretty much matches what BEM is about. Block and Elements are 'Structure', and Modifiers are 'State'. So how handy would it be if you could derive some BEM classnames directly from the User Stories and get started scaffolding your HTML and SASS folder sctructure. Very handy.
+In essence Structure describes those elements always present on screen (unless you hide them with a state, don't be nitpicky). State describes the different states and behaviours those elements can have. It just happens that this pretty much matches what BEM is about. Block and Elements are 'Structure', and Modifiers are 'State'. So how handy would it be if you could derive some BEM classnames directly from the User Stories and get started scaffolding your HTML and SASS folder sctructure. Very handy.
 
-For example. Considder a paragraph with a title and some text. And it has to be able to expand the full width, or alternatively take a fixed width. This is rather painfully stupid example, but bare with me. Then you could write your User Stories this way;
+For example. Considder a paragraph with a title and some text. It has to be able to expand the full width, or alternatively take a fixed width. This is a rather painfully stupid example, but bare with me. Then you can write your User Stories this way;
 
 ####Structure
 
@@ -110,11 +110,11 @@ For example. Considder a paragraph with a title and some text. And it has to be 
 * As a Visitor i want to see a paragraph stretching the full width of the screen
  * It should be 100% wide
  
-* As a Visitor i want to see a paragraph stay the same width even if the screen resizes.
+* As a Visitor i want to see a paragraph remain the same width even if the screen resizes.
  * It should be 600 pixels wide
 
  
-Reading these User Stories you end up with three Structure elements, and two States. Putting those in kaBEM classnames you would end up with this:
+Reading these User Stories you end up with three Structure elements, and two States. Putting those in kaBEM classnames you could end up with this:
 
 * __paragraph
 * __paragraph__title
@@ -159,11 +159,11 @@ And finally you can put the BEM modifier class names inside the __paragraph_modi
 
 Nice, albeit a stupid example. But you get the drift.
 
-During development you might find that the HTML markup needs additional elements to make things actually work, no problem there. You could either modify the relevant BEM classnames with new __elements if those elements are in need of some CSS, or skip them altogether. kaBEM does not mind.
+During development you might find that the HTML markup needs additional elements to make things actually work, no problem there. You could either modify the relevant BEM classnames with new '__elements' if those elements are in need of some CSS, or skip them altogether. kaBEM does not mind.
 
 
 ##Adding some dynamic HTML
-kaBEM supports [underscore templates](http://underscorejs.org/#template) and you can put the data used in  config/data-stub.json. You can also tweak the parse-index task (see inside the tasks folder) to use some other template or load in dynamic JSON.
+kaBEM supports [underscore templates](http://underscorejs.org/#template) and you can put the data used in  config/data-stub.json. You can also tweak the parse-index task (see inside the tasks folder) to use some other template.
 
 ##Adding a BEM context for testing
 Every BEM modifier classname you fill with some CSS will get a seperate HTML page in the build/develop folder for easy testing. But some modifiers only make sense in combination with other modifiers. So you can sum these modifier classnames up in config/bem-context.json ("default") and they will be injected in every modifier page. Or you can add them under a different name and run grunt with --context=your-bem-context.
