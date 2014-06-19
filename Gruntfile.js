@@ -2,6 +2,7 @@
 module.exports = function(grunt) {
 
   // grunt.option.init() method overwrites the entire internal option state, https://github.com/gruntjs/grunt/issues/1023
+  grunt.option('config-path', grunt.option('config-path') || 'config');
   grunt.option('build-path', grunt.option('build-path') || 'build');
   grunt.option('source-path', grunt.option('source-path') || 'src');
   grunt.option('backup-path', grunt.option('backup-path') || 'backup');

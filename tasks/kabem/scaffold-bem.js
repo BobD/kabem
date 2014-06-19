@@ -22,7 +22,7 @@ module.exports = function(grunt) {
     var CSSTree = CSSOM.parse(CSSFile);
     var classes = [];
     var context = grunt.option('context') || 'default';
-    var contextBEM = grunt.file.readJSON(grunt.option('source-path') + '/config/context.json')[context] || [];
+    var contextBEM = grunt.file.readJSON(grunt.option('config-path') + '/context.json')[context] || [];
     var tasks = [];
 
     if(debugOn){
