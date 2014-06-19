@@ -1,4 +1,4 @@
-// Uses http://underscorejs.org/#template
+// Uses http://handlebarsjs.com/
 module.exports = function(grunt) {
 	grunt.registerTask('parse-index', 'Parses a underscore template and returns the HTML', function() {
 		var _ = require("underscore");

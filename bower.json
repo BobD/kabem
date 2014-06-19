@@ -1,0 +1,22 @@
+{
+  "name": "kabem",
+  "version": "0.0.4",
+  "homepage": "https://github.com/BobD/kabem",
+  "authors": [
+    "Bob Donderwinkel <b.donderwinkel@gmail.com>"
+  ],
+  "description": "BEM CSS scaffolding on some steroids",
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "devDependencies": {
+    "html5shiv": "~3.7.2",
+    "normalize-css": "~3.0.1"
+  }
+}

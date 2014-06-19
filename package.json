@@ -3,7 +3,7 @@
     "node": ">= 0.10.0"
   },
   "name": "vb-kabem",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "BEM CSS scaffolding on some steroids",
   "main": "Gruntfile.js",
   "keywords": [
