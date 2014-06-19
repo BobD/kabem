@@ -17,18 +17,10 @@ module.exports = function(grunt) {
 
     // https://github.com/gruntjs/grunt-contrib-connect
     connect: {
-      bem: {
+      server: {
         options: {
           port: 9001,
           base: grunt.option('build-path') + '/bem',
-          keepalive: true,
-          open: true
-        }
-      },
-      live: {
-        options: {
-          port: 9002,
-          base: grunt.option('build-path') + '/live',
           keepalive: true,
           open: true
         }
@@ -59,17 +51,15 @@ module.exports = function(grunt) {
       },
       files: {
         files: [
-          {expand: true, cwd: grunt.option('source-path') + '/<%= grunt.task.current.args[0] %>/', src: ['**/*'], dest: grunt.option('build-path') + '/live/<%= grunt.task.current.args[0] %>/', filter: 'isFile'},
+          {expand: true, cwd: grunt.option('source-path') + '/<%= grunt.task.current.args[0] %>/', src: ['**/*'], dest: './dist/<%= grunt.task.current.args[0] %>/', filter: 'isFile'},
           {expand: true, cwd: grunt.option('source-path') + '/<%= grunt.task.current.args[0] %>/', src: ['**/*'], dest: grunt.option('build-path') + '/bem/<%= grunt.task.current.args[0] %>/', filter: 'isFile'}
         ]
       },
-      html: {
-        src: grunt.option('build-path') + '/source/html/index.html',
-        dest: grunt.option('build-path') + '/live/index.html'
-      },
-      live: {
-        src: grunt.option('build-path') + '/source/css/index.source.prefixed.min.css',
-        dest: grunt.option('build-path') + '/live/css/index.min.css'
+      dist: {
+        files:[
+          {src: grunt.option('build-path') + '/source/html/index.html', dest: './dist/index.html'},
+          {src: grunt.option('build-path') + '/source/css/index.source.prefixed.min.css', dest: './dist/css/index.min.css'}
+        ]
       },
       bem: {
         src: grunt.option('build-path') + '/source/css/index.source.prefixed.min.css',
@@ -185,7 +175,7 @@ module.exports = function(grunt) {
         relaxerror: [] //ignores these errors
       },
       files: {
-        src: [grunt.option('build-path') + '/live/index.html']
+        src: ['./dist/index.html']
       }
     },
 
@@ -259,9 +249,8 @@ module.exports = function(grunt) {
     'sass:all',                     // SASS up the resulting build/source/css/index.source.css
     'autoprefixer',                 // prefix CSS shizzle
     'cssmin',                       // minify CSS shizzle
-    'copy:html',                    // copy the build/source/html/index.html to build/live/index.html
     'dom_munger:source_index',      // create a index HTML file used the source for all other pages
-    'copy:live',                    // copy a minified/prefixed CSS to the build/live
+    'copy:dist',                    // copy a minified/prefixed CSS to the build/live
     'copy:bem',                     // the same for the build/bem pages
     'scaffold-bem',                 // generate testing pages for all defined BEM modifiers
     'prettify:all'                  // clean the resulting HTML up a bit

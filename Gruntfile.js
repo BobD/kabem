@@ -10,12 +10,12 @@ module.exports = function(grunt) {
     copy: {
       normalize: {
         src: './bower_components/normalize-css/normalize.css',
-        dest: grunt.option('build-path') + '/live/css/normalize.css',
-      },
+        dest: './dist/css/normalize.css',
+      }, 
 
       html5shiv: {
         src: './bower_components/html5shiv/dist/html5shiv.min.js',
-        dest: grunt.option('build-path') + '/live/scripts/html5shiv.min.js',
+        dest: './dist/scripts/html5shiv.min.js',
       }
     }
   });
@@ -24,7 +24,8 @@ module.exports = function(grunt) {
 
   grunt.registerTask('default', [
     'kabem',
-    'copy'
+    'copy:normalize',
+    'copy:html5shiv'
   ]);
 
 };
