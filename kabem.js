@@ -2,6 +2,9 @@
 module.exports = function(grunt) {
   require('time-grunt')(grunt);
 
+  grunt.option('backup-path', 'backup');
+  grunt.option('kabem-path', grunt.option('source-path') + '/css/kabem');
+
   var config = {
 
     pkg: grunt.file.readJSON('package.json'),

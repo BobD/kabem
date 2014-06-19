@@ -5,8 +5,6 @@ module.exports = function(grunt) {
   grunt.option('config-path', grunt.option('config-path') || 'config');
   grunt.option('build-path', grunt.option('build-path') || 'build');
   grunt.option('source-path', grunt.option('source-path') || 'src');
-  grunt.option('backup-path', grunt.option('backup-path') || 'backup');
-  grunt.option('kabem-path', grunt.option('source-path') + '/css/kabem');
 
   grunt.initConfig({
     copy: {
