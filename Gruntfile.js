@@ -10,12 +10,12 @@ module.exports = function(grunt) {
     copy: {
       normalize: {
         src: './bower_components/normalize-css/normalize.css',
-        dest: './dist/css/normalize.css',
+        dest: grunt.option('build-path') + '/source/css/vendor/normalize.css',
       }, 
 
       html5shiv: {
         src: './bower_components/html5shiv/dist/html5shiv.min.js',
-        dest: './dist/scripts/html5shiv.min.js',
+        dest: grunt.option('build-path') + '/scripts/vendor/html5shiv.min.js',
       }
     }
   });
