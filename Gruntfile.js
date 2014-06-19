@@ -59,9 +59,7 @@ module.exports = function(grunt) {
     copy: {
       css: {
         files: [
-          // {expand: true, cwd: grunt.option('source-path') + '/css', src: ['**/*', '!**/*.scss'], dest: grunt.option('build-path') + '/live/css', filter: 'isFile'},
-          {expand: true, cwd: grunt.option('source-path') + '/css', src: ['**/*', '!**/*.scss'], dest: grunt.option('build-path') + '/source/css', filter: 'isFile'},
-          // {expand: true, cwd: grunt.option('source-path') + '/css', src: ['**/*', '!**/*.scss'], dest: grunt.option('build-path') + '/bem/css', filter: 'isFile'}
+          {expand: true, cwd: grunt.option('source-path') + '/css', src: ['**/*', '!**/*.scss'], dest: grunt.option('build-path') + '/source/css', filter: 'isFile'}
         ]
       },
       files: {

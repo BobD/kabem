@@ -6,19 +6,13 @@ module.exports = function(grunt) {
         var CSSOM = require('cssom');
         var CSSFile = grunt.file.read(grunt.option('build-path') + '/source/css/bem.source.css');
         var CSSTree = CSSOM.parse(CSSFile);
-        var classes = [];
-        var selector;
-        var bemListing = bemSelectors(CSSTree.cssRules, []);
         var css = ['@import "bem";'];
-        var bemListingGrouped = _.groupBy(bemListing, function(bem){ return bem.be; });
-        var beListing = _.keys(bemListingGrouped);
-
-        _.each(beListing, function(be){
-            _.each(bemListingGrouped[be], function(bem){
-                if(_.has(bem, 'm')){
-                    css.push('*[class^="' + be + '_"][class*="' + bem.m.substring(1) + '"]{@extend .' + be + ' !optional; @extend .' + bem.selector + ' !optional;}');
-                }
-            });
+        var bemListing = grunt.listBEM(CSSTree.cssRules);
+        
+        _.each(bemListing, function(mList, be){
+          _.each(mList, function(m){
+            css.push('*[class^="' + be + '_"][class*="' + m.substring(1) + '"]{@extend .' + be + ' !optional; @extend .' + be + m + ' !optional;}');
+          });
         });
 
         var cssString = css.join('');

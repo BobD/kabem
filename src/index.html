@@ -20,7 +20,9 @@
 				<p>BEM CSS scaffolding on some steroids</p>
 			</header>
 
-			<% _.each(images, function(img) { %> <img width="100" src='<%= img.src %>' class='__block__element__image'/> <% }); %>
+			{{#each images}}
+				{{> image}}
+			{{/each}}
 
 		</div>
 

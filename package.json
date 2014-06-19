@@ -28,6 +28,7 @@
     "grunt-prettify": "^0.3.4",
     "grunt-prompt": "^1.1.0",
     "grunt-w3c-validation": "^0.1.16",
+    "handlebars": "^2.0.0-alpha.4",
     "jsdom": "^0.10.5",
     "load-grunt-tasks": "^0.4.0",
     "time-grunt": "^0.3.1",

@@ -1,5 +1,5 @@
 module.exports = function(grunt) {
-	// Splits apart a selector into its Block, Element, Modifier parts
+    // Splits apart a selector into its Block, Element, Modifier parts
     grunt.splitBEM = function(selector){
         if(selector.indexOf('.') == 0){
           selector = selector.substring(1);
@@ -12,6 +12,7 @@ module.exports = function(grunt) {
         // Only get the actuals BEM class names
         selector = selector.split(',')[0];
         selector = selector.split(' ')[0];
+        selector = selector.split(':')[0];
 
         // Some extensive splitting die to kaBEM class starting with '__' WHICH INCLUDES the modifier '_' splitter
         var BE = selector.split('__');
@@ -26,4 +27,38 @@ module.exports = function(grunt) {
 
         return ret;
     };
+
+    // Return a list of all Block/Elements and a list of the Modifiers they have
+    grunt.listBEM = function(cssRules){
+        var _ = require("underscore");
+        var bemList = bemSelectors(cssRules, {});
+
+        _.each(bemList, function(mList, be){
+            bemList[be] = _.uniq(mList);
+        });
+
+        function bemSelectors(cssRules, bemList){
+            _.each(cssRules, function(rule){
+                if(_.has(rule, 'cssRules')){
+                    return;
+                }
+
+                selector = rule.selectorText;
+                bem = grunt.splitBEM(selector);
+                if(_.has(bem, 'be')){
+                    if(!_.has(bemList, bem.be)){
+                        bemList[bem.be] = [];
+                    }
+                    
+                    if(_.has(bem, 'm')){
+                        bemList[bem.be].push(bem.m);
+                    }
+                }
+            });
+
+            return bemList;
+        }
+
+        return bemList;
+    }
 }
