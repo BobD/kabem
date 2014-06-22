@@ -9,13 +9,31 @@ module.exports = function(grunt) {
   grunt.initConfig({
     copy: {
       normalize: {
-        src: './bower_components/normalize-css/normalize.css',
-        dest: grunt.option('build-path') + '/source/css/vendor/normalize.css',
+        files: [
+          {src: './bower_components/normalize-css/normalize.css', dest: './dist/css/normalize.css'},
+          {src: './bower_components/normalize-css/normalize.css', dest: grunt.option('build-path') + '/bem/css/normalize.css'}
+        ]
       }, 
 
       html5shiv: {
-        src: './bower_components/html5shiv/dist/html5shiv.min.js',
-        dest: grunt.option('build-path') + '/source/scripts/vendor/html5shiv.min.js',
+        files: [
+          {src: './bower_components/html5shiv/dist/html5shiv.min.js', dest: './dist/scripts/html5shiv.min.js'},
+          {src: './bower_components/html5shiv/dist/html5shiv.min.js', dest: grunt.option('build-path') + '/bem/scripts/html5shiv.min.js'}
+        ]
+      },
+
+      css: {
+        files: [
+          {expand: true, cwd: grunt.option('source-path') + '/css', src: ['**/*', '!**/*.scss'], dest: './dist/css', filter: 'isFile'},
+          {expand: true, cwd: grunt.option('source-path') + '/css', src: ['**/*', '!**/*.scss'], dest: grunt.option('build-path') + '/bem/css', filter: 'isFile'}
+        ]
+      },
+
+      files: {
+        files: [
+          {expand: true, cwd: grunt.option('source-path') + '/<%= grunt.task.current.args[0] %>/', src: ['**/*'], dest: './dist/<%= grunt.task.current.args[0] %>/', filter: 'isFile'},
+          {expand: true, cwd: grunt.option('source-path') + '/<%= grunt.task.current.args[0] %>/', src: ['**/*'], dest: grunt.option('build-path') + '/bem/<%= grunt.task.current.args[0] %>/', filter: 'isFile'}
+        ]
       }
     }
   });
@@ -23,9 +41,12 @@ module.exports = function(grunt) {
   require('./kabem')(grunt);
 
   grunt.registerTask('default', [
-    'kabem',
-    'copy:normalize',
-    'copy:html5shiv'
+    'kabem',                          // Perform some kaBEM on your index.html
+    'copy:normalize',                 // Copy some bower assets into the dist and build/bem folders
+    'copy:html5shiv',                 // ..
+    'copy:css',                       // Copy any other css/scripts assets
+    'copy:files:scripts',             // ..
+    'copy:files:images'               // ..
   ]);
 
 };

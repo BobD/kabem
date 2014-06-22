@@ -34,6 +34,7 @@ module.exports = function(grunt) {
       },
       build: [grunt.option('build-path')],
       backup: [grunt.option('backup-path')],
+      dist: './dist',
       reset: [
         grunt.option('build-path'), 
         grunt.option('kabem-path') + '/bem/**/*', 
@@ -44,17 +45,6 @@ module.exports = function(grunt) {
 
     // https://github.com/gruntjs/grunt-contrib-copy
     copy: {
-      css: {
-        files: [
-          {expand: true, cwd: grunt.option('source-path') + '/css', src: ['**/*', '!**/*.scss'], dest: grunt.option('build-path') + '/source/css', filter: 'isFile'}
-        ]
-      },
-      files: {
-        files: [
-          {expand: true, cwd: grunt.option('source-path') + '/<%= grunt.task.current.args[0] %>/', src: ['**/*'], dest: './dist/<%= grunt.task.current.args[0] %>/', filter: 'isFile'},
-          {expand: true, cwd: grunt.option('source-path') + '/<%= grunt.task.current.args[0] %>/', src: ['**/*'], dest: grunt.option('build-path') + '/bem/<%= grunt.task.current.args[0] %>/', filter: 'isFile'}
-        ]
-      },
       dist: {
         files:[
           {src: grunt.option('build-path') + '/source/html/index.html', dest: './dist/index.html'},
@@ -64,17 +54,6 @@ module.exports = function(grunt) {
       bem: {
         src: grunt.option('build-path') + '/source/css/index.source.prefixed.min.css',
         dest: grunt.option('build-path') + '/bem/css/index.min.css'
-      }
-    },
-
-    // https://www.npmjs.org/package/grunt-dom-munger
-    dom_munger: {
-      source_index: {
-        options: {
-          append: [
-            {selector: 'head', html: '<link rel="stylesheet" href="/css/index.min.css">'}          ]
-        },
-        src: grunt.option('build-path') + '/source/html/index.html'
       }
     },
 
@@ -238,9 +217,7 @@ module.exports = function(grunt) {
   // WOW... loads!
   grunt.registerTask('kabem', [
     'clean:build',                  // clean up folders
-    'copy:files:scripts',           // copy any src scrips into build/../scrips
-    'copy:files:images',            // copy any src images into build/../images
-    'copy:css',                     // copy any vendor css files into build/../css/vendor
+    'clean:dist',                   // ..
     'parse-index',                  // add stub data to build/source/html/index.html using underscore templates
     'scaffold-sass',                // rip apart the build/source/html/index.html and create SASS files for each block/element and modifier in there
     'sass-imports',                 // generate a CSS file with all needed SASS @import's
@@ -249,7 +226,6 @@ module.exports = function(grunt) {
     'sass:all',                     // SASS up the resulting build/source/css/index.source.css
     'autoprefixer',                 // prefix CSS shizzle
     'cssmin',                       // minify CSS shizzle
-    'dom_munger:source_index',      // create a index HTML file used the source for all other pages
     'copy:dist',                    // copy a minified/prefixed CSS to the build/live
     'copy:bem',                     // the same for the build/bem pages
     'scaffold-bem',                 // generate testing pages for all defined BEM modifiers
