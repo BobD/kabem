@@ -13,7 +13,7 @@ Sources:
 $device-number: 0;
 
 @mixin device-type($type) {
-	$device-number: $device-number + 1;
+	$device-number: $device-number + 1 !global;
 
 	.device-#{$device-number} {
 		display: block !important;

@@ -15,7 +15,7 @@ module.exports = function(grunt) {
 
       html5shiv: {
         src: './bower_components/html5shiv/dist/html5shiv.min.js',
-        dest: grunt.option('build-path') + '/scripts/vendor/html5shiv.min.js',
+        dest: grunt.option('build-path') + '/source/scripts/vendor/html5shiv.min.js',
       }
     }
   });
