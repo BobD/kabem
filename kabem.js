@@ -168,7 +168,7 @@ module.exports = function(grunt) {
     // https://github.com/gruntjs/grunt-contrib-watch
     // watch needs to reset it's cwd due to the grunt.file.setBase above, bit it's weird it does not work with cwd: grunt.option('source-path') directly..
     watch: {
-      html: {
+       html: {
         files: [grunt.option('source-path') + '/index.html'],
         tasks: ['vb-kabem']
       },
@@ -178,7 +178,7 @@ module.exports = function(grunt) {
       },
       sass_the_rest: {
         files: [grunt.option('source-path') + '/**/**.scss', '!kabem'],
-        tasks: ['sass', 'import-css-modules', 'autoprefixer', 'cssmin', 'copy:bem', 'copy:live']
+        tasks: ['sass', 'autoprefixer', 'cssmin', 'copy:bem', 'copy:dist']
       },
       grunt: {
         files: ['Gruntfile.js', 'tasks/*.js'],
